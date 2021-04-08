@@ -33,8 +33,8 @@ function Order () {
         <h3>Оформить заказ</h3>
         <Box>
           <TextField required id="standard-required" label="Required" defaultValue="" placeholder="Введите номер телефона"/>
-          <TextField required id="standard-required" label="Required" defaultValue="" placeholder="Введите номер телефона"/>
-          <TextField required id="standard-required" label="Required" defaultValue="" placeholder="Введите номер телефона"/>
+          <TextField required id="standard-required" label="Required" defaultValue="" placeholder="Укажите породу"/>
+          <TextField required id="standard-required" label="Required" defaultValue="" placeholder="Укажите вес"/>
         </Box>
 
       </Container>
