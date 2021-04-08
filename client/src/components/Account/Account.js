@@ -1,6 +1,6 @@
 import { Button, Avatar, List, ListItem, ListItemText, Divider } from '@material-ui/core'
 import React from 'react'
-
+import Info from '../Info/Info'
 
 function Account() {
 
@@ -14,23 +14,24 @@ function Account() {
 			}),
 		);
 	}
-	
+
 
 	return (
 		<div>
 			<h3>Личный кабинет</h3>
-			<Avatar />
-			<Button fullWidth variant='contained' disabled={false}> my button </Button>
-            <List dense={dense}>
-						{generate(
-                <ListItem>
-                  <ListItemText
-                    primary="Single-line item"
-                    secondary={secondary ? 'Secondary text' : null}
-                  />
-                </ListItem>,
-               )}
-            </List>
+			<Info />
+			
+			{/* <Button fullWidth variant='contained' disabled={false}> my button </Button>
+			<List dense={dense}>
+				{generate(
+					<ListItem>
+						<ListItemText
+							primary="Single-line item"
+							secondary={secondary ? 'Secondary text' : null}
+						/>
+					</ListItem>,
+				)}
+			</List> */}
 		</div>
 	);
 }
