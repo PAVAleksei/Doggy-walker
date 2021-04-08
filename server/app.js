@@ -10,16 +10,20 @@ const cors = require('cors');
 // const createError = require('http-errors');
 
 const userRouter = require('./routes/userRouter');
-const passport = require('passport');
+const authRouter = require('./routes/authGoogle');
+
 
 const app = express();
 
 app.set('cookieName', 'sid');
 
 app.use(cors());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(process.env.PWD, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 
 app.use(sessions({
   name: app.get('cookieName'),
@@ -51,10 +55,10 @@ app.use(sessions({
 //   next();
 // });
 
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 app.use('/user', userRouter);
+app.use('/auth', authRouter);
 
 const PORT = process.env.PORT ?? 3000;
 

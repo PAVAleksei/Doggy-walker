@@ -22,6 +22,9 @@ import styles from './header.module.css';
       <div className={styles.wrap}>
       <Link className="links" to="/services">Услуги</Link>
       </div>
+      <div className={styles.wrap}>
+      <a className="links" href="http://localhost:3001/auth/google">Google</a>
+      </div>
     </AppBar>
   );
 };

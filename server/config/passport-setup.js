@@ -1,7 +1,7 @@
 require('dotenv').config();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-// const User = require('../models/user.model')
+const { User } = require('../db/models/user.model');
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -16,8 +16,8 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new GoogleStrategy({
     // options for google strategy
-    clientID: process.env.googleClientID,
-    clientSecret: process.env.googleClientSecret,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: '/auth/google/redirect',
   }, (accessToken, refreshToken, profile, done) => {
     // check if user already exists in our own db
@@ -30,7 +30,7 @@ passport.use(
         // if not, create user in our db
         new User({
           googleId: profile.id,
-          name: profile.displayName,
+          googleName: profile.displayName,
         }).save().then((newUser) => {
           // console.log('created new user: ', newUser)
           done(null, newUser);
