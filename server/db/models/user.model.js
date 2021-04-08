@@ -1,5 +1,5 @@
 
-const {model, Schema} = require('mongoose')
+const { model, Schema } = require('mongoose')
 
 const UserSchema = new Schema({
 	// Имя пользователя
@@ -48,19 +48,18 @@ const UserSchema = new Schema({
 		type: String,
 	},
 	avatar: {
-		type: Schema.Types.ObjectId,
-		ref: 'Image'
+		type: String,
 	},
 	specialization: {
 		type: Array,
 		default: []
 	}
 },
-{ timestamps: true }
+	{ timestamps: true }
 );
 
 
 module.exports = {
 	User: model('User', UserSchema)
 }
-console.log(UserSchema);
+
