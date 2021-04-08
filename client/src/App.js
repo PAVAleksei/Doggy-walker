@@ -8,31 +8,37 @@ import Register from './components/Register/Register';
 import Services from './components/Services/Services';
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Header />
+	return (
+		<div className="App">
+			<Router>
+				<Header />
 
-        <Switch>
-            <Route exact path="/">
-              <MainPage />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/account">
-              <Account />
-            </Route>
-            <Route path="/services">
-              <Services />
-            </Route>
-        </Switch>
-      </Router>
-    </div>
-  );
+				<Switch>
+
+					<Route exact path="/">
+						<MainPage />
+					</Route>
+
+					<Route path="/register">
+						<Register />
+					</Route>
+
+					<Route path="/login">
+						<Login />
+					</Route>
+
+					<Route path="/account">
+						<Account />
+					</Route>
+
+					<Route path="/services">
+						<Services />
+					</Route>
+
+				</Switch>
+			</Router>
+		</div>
+	);
 }
 
 export default App;

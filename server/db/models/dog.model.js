@@ -1,5 +1,4 @@
-
-const { model, Schema } = require('mongoose')
+const { model, Schema } = require('mongoose');
 
 const DogSchema = new Schema({
 	// Кличка собаки
@@ -44,14 +43,11 @@ const DogSchema = new Schema({
 	},
 	// Фото собакена
 	avatar: {
-		type: String
+		type: String,
 	},
 },
-	{ timestamps: true },
-);
-
+	{ timestamps: true });
 
 module.exports = {
-	Dog: model('Dog', DogSchema)
-}
-
+	Dog: model('Dog', DogSchema),
+};
