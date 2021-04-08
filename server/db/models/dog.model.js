@@ -44,10 +44,11 @@ const DogSchema = new Schema({
 	},
 	// Фото собакена
 	avatar: {
-		type: Schema.Types.ObjectId,
-		ref: 'Image'
-	}
-});
+		type: String
+	},
+},
+	{ timestamps: true },
+);
 
 
 module.exports = {
