@@ -5,7 +5,8 @@ import styles from './header.module.css';
  function Header () {
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="static">
+   
       <Typography>DOG WALKER</Typography>
       <div className={styles.wrap}>
       <Link className="links" to="/">Главная</Link>
@@ -22,7 +23,8 @@ import styles from './header.module.css';
       <div className={styles.wrap}>
       <Link className="links" to="/services">Услуги</Link>
       </div>
-    </AppBar>
+    
+     </AppBar>
   );
 };
 
