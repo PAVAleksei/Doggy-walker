@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 require('dotenv').config();
+const passport = require('passport');
 const express = require('express');
 const sessions = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -7,6 +8,9 @@ const path = require('path');
 const { connect } = require('mongoose');
 const cors = require('cors');
 // const createError = require('http-errors');
+
+const userRouter = require('./routes/userRouter');
+const passport = require('passport');
 
 const app = express();
 
@@ -46,6 +50,11 @@ app.use(sessions({
 //   }
 //   next();
 // });
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/user', userRouter);
 
 const PORT = process.env.PORT ?? 3000;
 
