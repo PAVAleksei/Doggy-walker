@@ -1,39 +1,82 @@
 import { Box, Container, Typography } from "@material-ui/core";
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import EmailIcon from '@material-ui/icons/Email';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import LockIcon from '@material-ui/icons/Lock';
-import Button from '@material-ui/core/Button';
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import EmailIcon from "@material-ui/icons/Email";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import LockIcon from "@material-ui/icons/Lock";
+import Button from "@material-ui/core/Button";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
+import { sagaSignupAC } from "../../redux/actionCreators/userAC";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& .MuiTextField-root': {
+    "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: '35ch',
+      width: "35ch",
     },
   },
 }));
 
-
+const currencies = [
+  {
+    value: "Заказчик",
+    label: "Заказчик",
+  },
+  {
+    value: "Исполнитель",
+    label: "Исполнитель",
+  },
+];
 
 function Register() {
   const classes = useStyles();
+  const [kind, setKind] = React.useState("");
 
+  const handleChange = (event) => {
+    setKind(event.target.value);
+  };
 
+  const formRef = useRef(null);
+  const dispatch = useDispatch();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const valuesOfFields = Object.fromEntries(
+      new FormData(formRef.current).entries()
+    );
+    // console.log(valuesOfFields);
+    if (
+      Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
+    ) {
+      dispatch(sagaSignupAC(valuesOfFields));
+
+      formRef.current.reset();
+    }
+  };
+
+  let history = useHistory();
+  let location = useLocation();
 
   return (
     <Box m={3}>
-      <Container >
-        <Typography variant="h4" >
-          Регистрация
-      </Typography>
+      <Container>
+        <Typography variant="h4">Регистрация</Typography>
         <Box m={3}>
-          <form className={classes.root} noValidate autoComplete="off">
+          <form
+            className={classes.root}
+            validate="true"
+            autoComplete="off"
+            ref={formRef}
+            onSubmit={submitHandler}
+          >
             <Grid item>
               <TextField
+                name="firstname"
                 required
                 id="outlined-required"
                 label="Имя"
@@ -49,8 +92,8 @@ function Register() {
             </Grid>
             <Grid>
               <TextField
+                name="lastname"
                 required
-                id="outlined-required"
                 label="Фамилия"
                 variant="outlined"
                 InputProps={{
@@ -59,10 +102,12 @@ function Register() {
                       <AccountCircle />
                     </InputAdornment>
                   ),
-                }} />
+                }}
+              />
             </Grid>
             <Grid>
               <TextField
+                name="email"
                 required
                 id="outlined-email-input"
                 label="Email"
@@ -74,12 +119,34 @@ function Register() {
                       <EmailIcon />
                     </InputAdornment>
                   ),
-                }} />
+                }}
+              />
             </Grid>
             <Grid>
               <TextField
+                id="outlined-select-currency-native"
+                name="kind"
+                select
+                label="Категория"
+                value={kind}
+                onChange={handleChange}
+                SelectProps={{
+                  native: true,
+                }}
+                helperText="Выберите вашу роль"
+                variant="outlined"
+              >
+                {currencies.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid>
+              <TextField
+                name="password"
                 required
-                id="outlined-password-input"
                 label="Пароль"
                 type="password"
                 autoComplete="current-password"
@@ -90,28 +157,26 @@ function Register() {
                       <LockIcon />
                     </InputAdornment>
                   ),
-                }} />
+                }}
+              />
             </Grid>
 
             <Grid>
               <Box m={3}>
-                <Button variant="contained" size="large" color="primary">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                >
                   Регистрация
-              </Button>
-                <a href="http://localhost:3001/auth/google">
-                  google
-                </a>
+                </Button>
               </Box>
-
             </Grid>
-
-
           </form>
-
         </Box>
       </Container>
     </Box>
-
   );
 }
 
