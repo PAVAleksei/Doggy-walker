@@ -1,16 +1,17 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Account from './components/Account/Account';
+import ExecutorAccount from './components/ExecutorAccount/ExecutorAccount';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import MainPage from './components/MainPage/MainPage';
 import Order from './components/Order/Order';
 import Register from './components/Register/Register';
 import Services from './components/Services/Services';
-import CenteredGrid from './components/Grid/Grid';
+
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {signupAC} from './redux/actionCreators/userAC'
+import UserAccount from './components/UserAccount/UserAccount';
 
 function App() {
 
@@ -42,10 +43,14 @@ function App() {
             <Login />
           </Route>
 
-          <Route path="/account">
+          {/* <Route path="/account">
             <Account />
             <CenteredGrid />
-          </Route>
+          </Route> */}
+
+          <Route path="/account">
+						<UserAccount />
+					</Route>
 
           <Route path="/services">
             <Services />
@@ -55,10 +60,17 @@ function App() {
             <Order />
           </Route>
 
+          <Route path="/exaccount">
+						<ExecutorAccount />
+					</Route>
+
+
         </Switch>
       </Router>
     </div>
   );
+
 }
 
 export default App;
+//Attention!

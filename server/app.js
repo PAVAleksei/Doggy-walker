@@ -12,6 +12,7 @@ const passportSetup = require('./config/passport-setup');
 
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authGoogle');
+const orderRouter = require('./routes/orderRouter');
 
 const app = express();
 
@@ -61,6 +62,8 @@ app.use(passport.session());
 
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
+app.use('/api', orderRouter);
+// app.use('/api/orders', orderRouter);
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -75,7 +78,7 @@ app.listen(
       useCreateIndex: true,
       useFindAndModify: false,
     }, () => {
-      console.log('Connection to databse is successful.');
+      console.log('Connection to database is successful.');
     });
   },
 );
