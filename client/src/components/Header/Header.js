@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
           <Button color="inherit"><Link className={styles.navlinks} to="/register">Регистрация</Link></Button>
           <Button color="inherit"><Link className={styles.navlinks} to="/login">Вход</Link></Button>
           <Button color="inherit"><Link className={styles.navlinks} to="/account">Личный кабинет</Link></Button>
+          <Button color="inherit"><Link className={styles.navlinks} to="/exaccount">ЛК исполнителя</Link></Button>
           <a href="http://localhost:3001/auth/logout">
                   google logout
                 </a>
