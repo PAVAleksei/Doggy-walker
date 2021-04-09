@@ -6,7 +6,7 @@ function Services() {
 
   const history = useHistory();
 
-  const addOrderHandler = () => {
+  const addOrderFormHandler = () => {
 
     history.push('/order');
   }
@@ -16,7 +16,7 @@ function Services() {
     <div>
       <h3>Услуги</h3>
       {/* <img src={ dogMainPage }></img> */}
-      <Button onClick={ addOrderHandler }>Заказать выгул</Button>
+      <Button onClick={ addOrderFormHandler }>Заказать выгул</Button>
     </div>
   );
 }
