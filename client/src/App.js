@@ -7,36 +7,44 @@ import MainPage from './components/MainPage/MainPage';
 import Order from './components/Order/Order';
 import Register from './components/Register/Register';
 import Services from './components/Services/Services';
+import CenteredGrid from './components/Grid/Grid';
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Header />
+	return (
+		<div className="App">
+			<Router>
+				<Header />
+				<Switch>
 
-        <Switch>
-            <Route exact path="/">
-              <MainPage />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/account">
-              <Account />
-            </Route>
-            <Route path="/services">
-              <Services />
-            </Route>
-            <Route path="/order">
-              <Order />
-            </Route>
-        </Switch>
-      </Router>
-    </div>
-  );
+					<Route exact path="/">
+						<MainPage />
+					</Route>
+
+					<Route path="/register">
+						<Register />
+					</Route>
+
+					<Route path="/login">
+						<Login />
+					</Route>
+
+					<Route path="/account">
+						<Account />
+						<CenteredGrid />
+					</Route>
+
+					<Route path="/services">
+						<Services />
+					</Route>
+
+					<Route path="/order">
+						<Order />
+					</Route>
+
+				</Switch>
+			</Router>
+		</div>
+	);
 }
 
 export default App;

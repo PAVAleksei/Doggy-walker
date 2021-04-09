@@ -13,9 +13,10 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
-		minWidth: 175,
-		maxWidth: 175,
-	  
+		// minWidth: 175,
+		// maxWidth: 175,
+		margin: 10,
+		paddingTop: 7,
   },
   bullet: {
     display: 'inline-block',
