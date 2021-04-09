@@ -7,10 +7,10 @@ const MongoStore = require('connect-mongo');
 const path = require('path');
 const { connect } = require('mongoose');
 const cors = require('cors');
-const passportSetup = require('./config/passport-setup')
+const passportSetup = require('./config/passport-setup');
 // const createError = require('http-errors');
 
-const userRouter = require('./routes/userRouter');
+// const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authGoogle');
 const orderRouter = require('./routes/orderRouter');
 
@@ -19,7 +19,7 @@ const app = express();
 app.set('cookieName', 'sid');
 
 app.use(cors({
-  origin: 'http://localhost:3001',
+  origin: 'http://localhost:3000',
   credentials: true,
 }));
 
@@ -60,7 +60,7 @@ app.use(passport.session());
 //   next();
 // });
 
-app.use('/user', userRouter);
+// app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/api', orderRouter);
 // app.use('/api/orders', orderRouter);
