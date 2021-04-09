@@ -11,19 +11,23 @@ import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
-    border: "1px solid #1C3E6A",
+    // maxWidth: 345,
+		border: "1px solid #1C3E6A",
+
   },
   media: {
     height: 140,
-  },
+	},
+	pos: {
+		margin: 0,
+	}
 });
 
 function CardOrder() {
   const classes = useStyles();
 
   return (
-    <Box m={4}>
+		<Box className={classes.pos} m={4}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
