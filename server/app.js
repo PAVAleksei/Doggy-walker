@@ -1,18 +1,28 @@
 /* eslint-disable max-len */
 require('dotenv').config();
+const passport = require('passport');
 const express = require('express');
 const sessions = require('express-session');
 const MongoStore = require('connect-mongo');
 const path = require('path');
 const { connect } = require('mongoose');
 const cors = require('cors');
+const passportSetup = require('./config/passport-setup')
 // const createError = require('http-errors');
+
+const userRouter = require('./routes/userRouter');
+const authRouter = require('./routes/authGoogle');
+
 
 const app = express();
 
 app.set('cookieName', 'sid');
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3001',
+  credentials: true,
+}));
+
 app.use(express.static(path.join(process.env.PWD, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -31,6 +41,9 @@ app.use(sessions({
   },
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 // app.use(async (req, res, next) => {
 //   const userId = req.session?.user?.id;
 //   if (userId) {
@@ -46,6 +59,9 @@ app.use(sessions({
 //   }
 //   next();
 // });
+
+app.use('/user', userRouter);
+app.use('/auth', authRouter);
 
 const PORT = process.env.PORT ?? 3000;
 
