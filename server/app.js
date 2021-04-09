@@ -10,7 +10,7 @@ const cors = require('cors');
 const passportSetup = require('./config/passport-setup');
 // const createError = require('http-errors');
 
-// const userRouter = require('./routes/userRouter');
+const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authGoogle');
 
 const app = express();
@@ -59,7 +59,7 @@ app.use(passport.session());
 //   next();
 // });
 
-// app.use('/user', userRouter);
+app.use('/user', userRouter);
 app.use('/auth', authRouter);
 
 const PORT = process.env.PORT ?? 3000;

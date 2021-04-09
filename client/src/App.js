@@ -8,43 +8,57 @@ import Order from './components/Order/Order';
 import Register from './components/Register/Register';
 import Services from './components/Services/Services';
 import CenteredGrid from './components/Grid/Grid';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import {signupAC} from './redux/actionCreators/userAC'
 
 function App() {
-	return (
-		<div className="App">
-			<Router>
-				<Header />
-				<Switch>
 
-					<Route exact path="/">
-						<MainPage />
-					</Route>
+  const dispatch = useDispatch()
 
-					<Route path="/register">
-						<Register />
-					</Route>
+  useEffect(() => {
+    fetch('http://localhost:3001/user/checkAuth', {
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .then(resFromServer => dispatch(signupAC(resFromServer.email)))
 
-					<Route path="/login">
-						<Login />
-					</Route>
+  }, [])
+  return (
+    <div className="App">
+      <Router>
+        <Header />
+        <Switch>
 
-					<Route path="/account">
-						<Account />
-						<CenteredGrid />
-					</Route>
+          <Route exact path="/">
+            <MainPage />
+          </Route>
 
-					<Route path="/services">
-						<Services />
-					</Route>
+          <Route path="/register">
+            <Register />
+          </Route>
 
-					<Route path="/order">
-						<Order />
-					</Route>
+          <Route path="/login">
+            <Login />
+          </Route>
 
-				</Switch>
-			</Router>
-		</div>
-	);
+          <Route path="/account">
+            <Account />
+            <CenteredGrid />
+          </Route>
+
+          <Route path="/services">
+            <Services />
+          </Route>
+
+          <Route path="/order">
+            <Order />
+          </Route>
+
+        </Switch>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
