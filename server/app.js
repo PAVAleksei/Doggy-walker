@@ -7,6 +7,7 @@ const MongoStore = require('connect-mongo');
 const path = require('path');
 const { connect } = require('mongoose');
 const cors = require('cors');
+const passportSetup = require('./config/passport-setup')
 // const createError = require('http-errors');
 
 const userRouter = require('./routes/userRouter');
@@ -17,13 +18,14 @@ const app = express();
 
 app.set('cookieName', 'sid');
 
-app.use(cors());
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(cors({
+  origin: 'http://localhost:3001',
+  credentials: true,
+}));
+
 app.use(express.static(path.join(process.env.PWD, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 
 app.use(sessions({
   name: app.get('cookieName'),
@@ -38,6 +40,9 @@ app.use(sessions({
     maxAge: 86400 * 1e3, // устанавливаем время жизни cookie
   },
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // app.use(async (req, res, next) => {
 //   const userId = req.session?.user?.id;
@@ -54,8 +59,6 @@ app.use(sessions({
 //   }
 //   next();
 // });
-
-
 
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
