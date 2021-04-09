@@ -15,40 +15,37 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-
-const authUser = async (req, email, pass, done) => {
+const authUser = async (req, email, password, done) => {
   try {
     if (/login/.test(req.path)) {
       const user = await User.findOne({ email }).lean().exec();
       if (!user)
-        return done(null, false, { message: "Неверный логин или пароль" });
-      if (await bcrypt.compare(pass, user.password)) return done(null, user);
-      return done(null, false, { message: "Неверный логин или пароль" });
+        return done(null, false, { message: 'Неверный логин или пароль' });
+      if (await bcrypt.compare(password, user.password)) return done(null, user);
+      return done(null, false, { message: 'Неверный логин или пароль' });
     }
-    if ((email && pass && req.body.name, req.body.phone, req.body.city)) {
+    if ((email && password && req.body.firstname, req.body.lastname, req.body.kind)) {
       const user = await User.findOne({ email }).lean().exec();
       if (!user) {
         try {
-          const hashPass = await bcrypt.hash(pass, 10);
+          const hashPass = await bcrypt.hash(password, 10);
           const newUser = new User({
-            name: req.body.name,
-            surname: req.body.surname,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
             email,
-            phone: req.body.phone,
-            telegram: req.body.telegram,
-            city: req.body.city,
+            kind: req.body.kind,
             password: hashPass,
           });
           await newUser.save();
           return done(null, newUser);
         } catch (error) {
-          return done(null, false, { message: "Error" });
+          return done(null, false, { message: 'Error' });
         }
       } else {
-        return done(null, false, { message: "Mail is already used" });
+        return done(null, false, { message: 'Mail is already used' });
       }
     }
-    return done(null, false, { message: "Error" });
+    return done(null, false, { message: 'Error' });
   } catch (error) {
     done(error);
   }
@@ -63,8 +60,6 @@ passport.use(
     authUser,
   ),
 );
-
-/////////////////////////////
 
 passport.use(
   new GoogleStrategy({
