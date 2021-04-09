@@ -44,11 +44,14 @@ router.get('/customer/orders', async(req, res) => {
 
 // add
 
-router.post('/customer/orders', async (req,res) => {
+router.post('/customer/orders', async (req, res) => {
 
+  // console.log('======>');
+  console.log(req.body);
   const { selectedDate, description, userEmail } = req.body;
+  const userId = await User.findOne( { email: 'sara@test.com' });
 
-  const userId = await User.findOne( { email: userEmail });
+  console.log(userId);
 
   // const { description,
   //         dogName,
@@ -70,6 +73,7 @@ router.post('/customer/orders', async (req,res) => {
 
     const order = await Order.findOne({ description });
 
+    console.log(order);
     // setTimeout(() => {
     return res.json(order);
     // }, 500)

@@ -11,7 +11,9 @@ export const setOrders = (orders) => {
 export const addOrder = (order) => async (dispatch, setState) => {
 
   if (order) {
-    fetch(`http://localhost:3001/api/customer/orders`, {
+    console.log('=====> fetch');
+    
+    fetch('http://localhost:3001/api/customer/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -20,9 +22,6 @@ export const addOrder = (order) => async (dispatch, setState) => {
     })
     .then(response => response.json())
     .then(newOrder => dispatch(addOrderFromServer(newOrder)))
-    .catch(() => {
-      dispatch(setError({ status: true, text: 'Не удалось добавить новый заказ.'}))
-    })
 }
 
 };

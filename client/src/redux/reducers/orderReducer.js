@@ -6,7 +6,9 @@ function orderReducer(state = [], action) {
       return action.payload;
 
     case ADD_ORDER:
-      return action.payload;
+      return [
+        ...state, action.payload
+      ];
 
     
     default:
