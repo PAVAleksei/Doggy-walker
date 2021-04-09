@@ -23,7 +23,7 @@ function Login() {
       <Container>
         <Typography variant="h4">Вход</Typography>
         <Box m={3}>
-          <form className={classes.root} noValidate autoComplete="off">
+          <form className={classes.root} validate="true" autoComplete="off">
             <Grid>
               <TextField
                 required
