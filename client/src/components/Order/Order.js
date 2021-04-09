@@ -1,6 +1,6 @@
-import { Box, Button, Container, Grid, TextField } from '@material-ui/core';
+import { Box, Button, Container, Grid, TextareaAutosize, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import DateFnsUtils from '@date-io/date-fns';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -34,11 +34,17 @@ function Order () {
 
   const classes = useStyles();
 
-  const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
-  
+  const [selectedDate, setSelectedDate] = useState(new Date('2021-04-09T21:11:54'));
+  const [inputDescription, setInputDescription] = useState('');
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    // console.log(date);
   };
+
+  const handleDescriptionChange = (e) => {
+    setInputDescription(e.target.value);
+  }
 
   const addNewOrderHandler = () => {
 
@@ -53,25 +59,27 @@ function Order () {
           <Grid>
             <TextField required id="standard-required" placeholder="Введите телефон"  />
           </Grid>
-          {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Grid container justify="space-around">
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid>
             <KeyboardDatePicker
               disableToolbar
               variant="inline"
               format="MM/dd/yyyy"
               margin="normal"
               id="date-picker-inline"
-              label="Date picker inline"
+              label="Дата"
               value={selectedDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
             />
+            </Grid>
+            <Grid>
             <KeyboardTimePicker
               margin="normal"
               id="time-picker"
-              label="Time picker"
+              label="Время"
               value={selectedDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{
@@ -79,14 +87,16 @@ function Order () {
               }}
             />
           </Grid>
-          </MuiPickersUtilsProvider> */}
-
+          </MuiPickersUtilsProvider>
           <Grid>
+            <TextareaAutosize onChange={handleDescriptionChange} value={inputDescription} aria-label="minimum height" rowsMin={3} placeholder="Добавьте дополнительную информацию" />
+          </Grid>
+          {/* <Grid>
             <TextField required id="standard-required" placeholder="Укажите породу" />
           </Grid>
           <Grid>
             <TextField required id="standard-required" placeholder="Укажите вес" />
-          </Grid>
+          </Grid> */}
         </Box>
         <Box m={2}>
           <Button variant="contained" onClick={ addNewOrderHandler }>Оформить заказ</Button>
