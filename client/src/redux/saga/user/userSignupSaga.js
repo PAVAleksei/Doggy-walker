@@ -3,7 +3,7 @@ import { SAGA_SIGNUP } from "../../types/usertypes";
 import { signupAC } from "../../actionCreators/userAC";
 
 function signupFetch(action) {
-  return fetch("http://localhost:3000/user/signup", {
+  return fetch("http://localhost:3001/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
