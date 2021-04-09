@@ -7,7 +7,9 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { useState } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addOrder } from '../../redux/actionCreators/orderAc';
+import { setError } from '../../redux/actionCreators/errorAC'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,29 +27,44 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     width: '25ch',
   },
+  area: {
+    width: "32ch",
+  }
 }));
 
 
 function Order () {
 
-  
-
   const classes = useStyles();
 
-  const [selectedDate, setSelectedDate] = useState(new Date('2021-04-09T21:11:54'));
-  const [inputDescription, setInputDescription] = useState('');
+  // const [selectedDate, setSelectedDate] = useState(new Date('2020-04-01T21:11:54'));
+  const dispatch = useDispatch();
+  const userEmail = useSelector(state => state.user.email);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const [description, setDescription] = useState('');
+
+  
   const handleDateChange = (date) => {
     setSelectedDate(date);
     // console.log(date);
   };
 
   const handleDescriptionChange = (e) => {
-    setInputDescription(e.target.value);
+    setDescription(e.target.value);
   }
 
   const addNewOrderHandler = () => {
+    console.log(selectedDate, description, userEmail);
+    
+    if (selectedDate && description) {
+      try {
+        dispatch(addOrder( { selectedDate, description, userEmail } ))
+      } catch (error) {
+        dispatch(setError({ status: true, text: 'Не удалось добавить новое задание.'}))
+      }
 
+    }
   }
 
   
@@ -57,7 +74,7 @@ function Order () {
         <h3>Оформить заказ</h3>
         <Box>
           <Grid>
-            <TextField required id="standard-required" placeholder="Введите телефон"  />
+            <TextField disabled id="standard-required" label="Услуга" defaultValue="Выгул" />
           </Grid>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid>
@@ -89,7 +106,9 @@ function Order () {
           </Grid>
           </MuiPickersUtilsProvider>
           <Grid>
-            <TextareaAutosize onChange={handleDescriptionChange} value={inputDescription} aria-label="minimum height" rowsMin={3} placeholder="Добавьте дополнительную информацию" />
+          <Box m={3}>
+            <TextareaAutosize className={classes.area} onChange={handleDescriptionChange} value={description} aria-label="minimum height" rowsMin={5} placeholder="Добавьте дополнительную информацию" />
+          </Box>
           </Grid>
           {/* <Grid>
             <TextField required id="standard-required" placeholder="Укажите породу" />

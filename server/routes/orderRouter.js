@@ -2,7 +2,7 @@ const router = require('express').Router();
 const authenticated = require('./middleware');
 const { Order }= require('../db/models/order.model');
 const { Dog } = require('../db/models/dog.model');
-
+const { User } = require('../db/models/user.model');
 
 // все заказы /api/orders
 
@@ -24,10 +24,12 @@ router.get('/orders', async(req, res) => {
 
 // orders конкретного заказчика /api/:userid/orders
 
-router.get('/:userid/orders', async(req, res) => {
+router.get('/customer/orders', async(req, res) => {
   
+  const { userEmail } = req.body;
   try {
-    const orders = await Order.find({ clientId: userid });
+    const userId = await User.findOne( { email: userEmail });
+    const orders = await Order.find({ clientId: userId });
 
     setTimeout(() => {
       return res.json(orders);
@@ -42,27 +44,31 @@ router.get('/:userid/orders', async(req, res) => {
 
 // add
 
-router.post('/:userid/orders', async (req,res) => {
+router.post('/customer/orders', async (req,res) => {
 
-  const { description,
-          dogName,
-          price,
-          date
-        } = req.body;
+  const { selectedDate, description, userEmail } = req.body;
 
-  const dogId = (await Dog.findOne({ nickname: dogName }))._id;
+  const userId = await User.findOne( { email: userEmail });
+
+  // const { description,
+  //         dogName,
+  //         price,
+  //         date
+  //       } = req.body;
+
+  // const dogId = (await Dog.findOne({ nickname: dogName }))._id;
 
   try {
     await Order.create({
       description,
-      clientId: req.params.userid,
-      dogId,  
-      price,
-      date,
+      clientId: userId,
+      // dogId,  
+      // price,
+      date: selectedDate,
       completed: false,
     });
 
-    const order = await Order.findOne({ task: req.body.text});
+    const order = await Order.findOne({ description });
 
     // setTimeout(() => {
     return res.json(order);
@@ -75,7 +81,7 @@ router.post('/:userid/orders', async (req,res) => {
 })
 
 // edit
-router.patch('/:userid/orders', (req, res) => {
+router.patch('/customer/orders', (req, res) => {
 
 
   

@@ -1,0 +1,5 @@
+export const SET_ORDERS = 'SET_ORDERS'
+export const ADD_ORDER = 'ADD_ORDER'
+export const DELETE_ORDER = 'DELETE_ORDER'
+export const CHANGE_STATUS = 'CHANGE_STATUS'
+export const EDIT_ORDER = 'EDIT_ORDER'
