@@ -62,6 +62,7 @@ app.use(passport.session());
 
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
+app.use('/api/orders', orderRouter);
 
 const PORT = process.env.PORT ?? 3000;
 
