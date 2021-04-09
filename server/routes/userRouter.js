@@ -4,6 +4,8 @@ const { User } = require('../db/models/user.model');
 
 const saltRound = 10;
 
+//регистрация
+ 
 router.post('/signup', async (req, res) => {
   const { email, password, name } = req.body;
   if (email && password && name) {
@@ -22,6 +24,8 @@ router.post('/signup', async (req, res) => {
   }
   return res.sendStatus(418);
 });
+
+// логин
 
 router.post('/signin', async (req, res) => {
   const { email, password } = req.body;
