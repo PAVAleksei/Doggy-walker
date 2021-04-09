@@ -21,23 +21,11 @@ router.post('/register', (req, res, next) => {
   })(req, res, next);
 });
 
-router.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      return res.send(info.message);
-    }
-    if (!user) {
-      return res.send(info.message);
-    }
-    req.logIn(user, (err) => {
-      if (err) {
-        return res.send(info.message);
-      }
-      req.session.user = user._id;
-      return res.json({ name: user.name });
-    });
-  })(req, res, next);
-});
+router.post('/login', passport.authenticate("local", { failureRedirect: "/profile" }),
+  function (req, res) {
+    // console.log("from login post", req.user);
+    res.json({ name: req.user.name, layout: req.user.layout });
+  });
 
 // // auth logout
 router.get('/logout', async (req, res) => {

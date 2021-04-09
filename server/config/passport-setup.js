@@ -6,7 +6,8 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { User } = require('../db/models/user.model');
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  console.log(user);
+  done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
@@ -19,6 +20,7 @@ const authUser = async (req, email, password, done) => {
   try {
     if (/login/.test(req.path)) {
       const user = await User.findOne({ email }).lean().exec();
+      console.log(user);
       if (!user)
         return done(null, false, { message: 'Неверный логин или пароль' });
       if (await bcrypt.compare(password, user.password)) return done(null, user);
