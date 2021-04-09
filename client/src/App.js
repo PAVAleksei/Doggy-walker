@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Account from './components/Account/Account';
+import ExecutorAccount from './components/ExecutorAccount/ExecutorAccount';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import MainPage from './components/MainPage/MainPage';
 import Order from './components/Order/Order';
 import Register from './components/Register/Register';
 import Services from './components/Services/Services';
-import CenteredGrid from './components/Grid/Grid';
+import UserAccount from './components/UserAccount/UserAccount';
 
 function App() {
 	return (
@@ -29,8 +29,11 @@ function App() {
 					</Route>
 
 					<Route path="/account">
-						<Account />
-						<CenteredGrid />
+						<UserAccount />
+					</Route>
+
+					<Route path="/exaccount">
+						<ExecutorAccount />
 					</Route>
 
 					<Route path="/services">
