@@ -3,20 +3,47 @@ const express = require('express');
 
 const router = express.Router();
 
+router.post('/register', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return next(info.message);
+    }
+    if (!user) {
+      return res.send(info.message);
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(info.message);
+      }
+      req.session.user = user._id;
+      return res.sendStatus(200);
+    });
+  })(req, res, next);
+});
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return res.send(info.message);
+    }
+    if (!user) {
+      return res.send(info.message);
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return res.send(info.message);
+      }
+      req.session.user = user._id;
+      return res.json({ name: user.name });
+    });
+  })(req, res, next);
+});
+
 // // auth logout
 router.get('/logout', async (req, res) => {
   await req.logout();
-
   res.clearCookie(req.app.get('cookieName'));
-
-  // req.session.destroy((err) => {
-  //   if (err) return res.redirect('http://localhost:3000/register');
-
-  //   res.clearCookie('cookieName');
-  //   return res.redirect('http://localhost:3000/register');
-  // });
-
-  res.redirect('http://localhost:3000/register');
+  res.redirect('http://localhost:3000/register').sendStatus(200);
 });
 
 // auth with google+
