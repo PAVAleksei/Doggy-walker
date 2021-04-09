@@ -13,6 +13,10 @@ const OrderSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 	},
+  dogId: {
+    type: Schema.Types.ObjectId,
+		ref: 'Dog',
+  }
 	price: {
 		type: Number,
 		default: 0,

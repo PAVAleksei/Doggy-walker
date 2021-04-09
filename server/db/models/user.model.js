@@ -15,7 +15,7 @@ const UserSchema = new Schema({
 		minlength: 2,
 		// match: /^[A-Z]\w+$/i,
 	},
-	// Мы не храним пароль, а только его хэш
+// Мы не храним пароль, а только его хэш
 	password: {
 		type: String,
 		required: true,
