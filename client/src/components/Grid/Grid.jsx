@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Info from '../Info/Info';
 import DogInfo from '../DogInfo/DogInfo';
 import Order from '../Order/Order';
+import CardOrder from '../CardOrder/CardOrder';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -50,7 +51,7 @@ export default function CenteredGrid() {
 					<Grid container spacing={5}>
 						<Grid item xs={4}>
 							<Paper className={classes.paper}>xs=4</Paper>
-							<Order />
+							<CardOrder />
 						</Grid>
 						<Grid item xs={4}>
 							<Paper className={classes.paper}>xs=4</Paper>
