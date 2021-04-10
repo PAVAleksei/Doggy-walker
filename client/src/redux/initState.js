@@ -5,6 +5,7 @@ const initState = {
     lastname: "",
     kind: "",
     isAuth: false,
+    verification: false,
   },
 };
 
