@@ -39,6 +39,10 @@ function Header() {
             {
               checkAuth ?
                 <>
+                  <Button color="inherit"><Link className={styles.navlinks} to="/">Главная</Link>
+                  </Button>
+                  <Button color="inherit"><Link className={styles.navlinks} to="/services">Услуги</Link>
+                  </Button>
                   <Button color="inherit"><Link className={styles.navlinks} to="/account">Личный кабинет</Link></Button>
                   <Button color="inherit">
                     <a className={styles.navlinks} href="http://localhost:3001/auth/logout">

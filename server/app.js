@@ -13,6 +13,7 @@ const passportSetup = require('./config/passport-setup');
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authGoogle');
 const orderRouter = require('./routes/orderRouter');
+const dogRouter = require('./routes/dogRouter');
 
 const app = express();
 
@@ -63,6 +64,7 @@ app.use(passport.session());
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/api', orderRouter);
+app.use('/api/v1/dog', dogRouter);
 // app.use('/api/orders', orderRouter);
 
 const PORT = process.env.PORT ?? 3000;

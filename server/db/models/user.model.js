@@ -31,10 +31,10 @@ const UserSchema = new Schema(
       type: Number,
       default: 0,
     },
-    animal: {
+    animal: [{
       type: Schema.Types.ObjectId,
       ref: "Dog",
-    },
+    }],
     // Заказчик или исполнитель
     kind: {
       type: String,

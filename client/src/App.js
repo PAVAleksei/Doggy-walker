@@ -7,11 +7,13 @@ import MainPage from './components/MainPage/MainPage';
 import Order from './components/Order/Order';
 import Register from './components/Register/Register';
 import Services from './components/Services/Services';
+import AddDog from './components/DogInfo/AddDog'
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {signupAC} from './redux/actionCreators/userAC'
 import UserAccount from './components/UserAccount/UserAccount';
+import EditDog from './components/DogInfo/Edit';
 
 function App() {
 
@@ -64,6 +66,13 @@ function App() {
 						<ExecutorAccount />
 					</Route>
 
+          <Route path="/addAnimal">
+            <AddDog />
+          </Route>
+
+          <Route path="/dog/:id">
+            <EditDog />
+          </Route>
 
         </Switch>
       </Router>
