@@ -4,7 +4,7 @@ const OrderSchema = new Schema({
   service: String,
 	description: {
 		type: String,
-		required: true
+		required: true,
 	},
 	clientId: {
 		type: Schema.Types.ObjectId,
@@ -24,11 +24,11 @@ const OrderSchema = new Schema({
 	},
 	date: {
 		type: Date,
-		default: () => Date.now(),
-		min: () => Date.now() + 1 * 2 * 60 * 60 * 1000,
-		max: () => Date.now() + 100 * 24 * 60 * 60 * 1000,
+		// default: () => Date.now(),
+		// min: () => Date.now() + 1 * 2 * 60 * 60 * 1000,
+		// max: () => Date.now() + 100 * 24 * 60 * 60 * 1000,
 	},
-  completed: Boolean
+  completed: Boolean,
 },
 	{ timestamps: true },
 );

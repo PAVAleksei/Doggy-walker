@@ -174,6 +174,11 @@ function Register() {
                 </Button>
               </Box>
             </Grid>
+            <Grid>
+              <Box m={3}>
+                <a href='http://localhost:3001/auth/google'>Google</a>
+              </Box>
+            </Grid>
           </form>
         </Box>
       </Container>

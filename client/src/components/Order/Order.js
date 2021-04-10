@@ -60,7 +60,7 @@ function Order () {
     
     if (selectedDate && description) {
       try {
-        dispatch(addOrder( { selectedDate, description, userEmail } ))
+        dispatch(addOrder( { description } ))
       } catch (error) {
         dispatch(setError({ status: true, text: 'Не удалось добавить новое задание.'}))
       }
