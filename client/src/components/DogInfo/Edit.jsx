@@ -26,11 +26,11 @@ export default function EditDog() {
 
   const dog = useSelector(state => state.dog)
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:3001/api/v1/dog/${id}`)
-  //   .then(response => response.json())
-  //   .then(responseFromServer => dispatch(getDogAC(responseFromServer)))
-  // }, [])
+  useEffect(() => {
+    fetch(`http://localhost:3001/api/v1/dog/${id}`)
+    .then(response => response.json())
+    .then(responseFromServer => dispatch(getDogAC(responseFromServer)))
+  }, [])
 
   const submitHandler = (e) => {
     e.preventDefault();

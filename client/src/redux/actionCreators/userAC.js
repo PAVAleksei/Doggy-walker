@@ -6,6 +6,8 @@ export const sagaSignupAC = ({
   lastname,
   kind,
   password,
+  district,
+  passport,
 }) => {
   return {
     type: SAGA_SIGNUP,
@@ -15,6 +17,8 @@ export const sagaSignupAC = ({
       lastname,
       kind,
       password,
+      district,
+      passport,
     },
   };
 };
@@ -38,6 +42,7 @@ export const SagaSignInAC = (loginData = {}) => {
 };
 
 export const signinAC = (resFromServer) => {
+	// console.log(resFromServer)
   return {
     type: SIGN_IN,
     payload: {

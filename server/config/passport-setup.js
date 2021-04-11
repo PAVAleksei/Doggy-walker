@@ -19,7 +19,7 @@ passport.deserializeUser((id, done) => {
 const authUser = async (req, email, password, done) => {
   try {
     if (/login/.test(req.path)) {
-      const user = await User.findOne({ email }).lean().exec();
+      const user = await User.findOne({ email }).populate('orders').lean().exec();
 
       if (!user)
         return done(null, false, { message: "Неверный логин или пароль" });
@@ -29,16 +29,31 @@ const authUser = async (req, email, password, done) => {
     }
     if (
       (email && password && req.body.firstname,
-      req.body.lastname,
-      req.body.kind)
+        req.body.lastname,
+        req.body.kind)
     ) {
-      const user = await User.findOne({ email }).lean().exec();
+      const user = await User.findOne({ email }).populate('orders').lean().exec();
       if (!user) {
         try {
           const hashPass = await bcrypt.hash(password, 10);
+
+          if (req.body.passport && req.body.district) {
+            const newUser = new User({
+              firstname: req.body.firstname.trim(),
+              lastname: req.body.lastname.trim(),
+              email,
+              kind: req.body.kind,
+              password: hashPass,
+              verification: true,
+              passport: req.body.passport,
+              district: req.body.district.trim(),
+            });
+            await newUser.save();
+            return done(null, newUser);
+          }
           const newUser = new User({
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
+            firstname: req.body.firstname.trim(),
+            lastname: req.body.lastname.trim(),
             email,
             kind: req.body.kind,
             password: hashPass,
@@ -78,7 +93,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // check if user already exists in our own db
-      User.findOne({ googleId: profile.id }).then((currentUser) => {
+      User.findOne({ googleId: profile.id }).populate('orders').then((currentUser) => {
         if (currentUser) {
           // already have this user
           // console.log('user is: ', currentUser)

@@ -10,7 +10,7 @@ function signupFetch(action) {
     },
     credentials: "include",
     body: JSON.stringify(action.payload),
-  }).then((response) => response.json());
+  }).then((response) => response.json())
 }
 
 function* signupWorker(action) {

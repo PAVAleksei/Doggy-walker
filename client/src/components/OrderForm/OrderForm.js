@@ -17,6 +17,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addOrder } from "../../redux/actionCreators/orderAc";
 import { setError } from "../../redux/actionCreators/errorAC";
+import { AddressSuggestions } from 'react-dadata';
+import 'react-dadata/dist/react-dadata.css'
+import { useHistory } from "react-router";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,10 +51,16 @@ function OrderForm() {
   const userEmail = useSelector((state) => state.user.email);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const error = useSelector((state) => state.error);
+  const [address, setAddress] = useState();
+  const [description, setDescription] = useState('');
+  // const history = useHistory('/')
 
-  const [description, setDescription] = useState("");
+  // console.log(address.data);
 
   const handleDateChange = (date) => {
+    // console.log(date)
+    // const dateRu = date.toLocaleString('ru-RU');
+    // console.log(dateRu);
     setSelectedDate(date);
     // console.log(date);
   };
@@ -61,12 +71,20 @@ function OrderForm() {
 
   const addNewOrderHandler = () => {
     console.log(selectedDate, description, userEmail);
+    setError({ status: false, text: "" });
+
+    const addressToBack = { 
+      name: address.value,
+      coordinates: [Number(address.data.geo_lat), Number(address.data.geo_lon)]
+    }
 
     if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description) {
       setError({ status: false, text: "" });
 
       try {
-        return dispatch(addOrder({ selectedDate, description, userEmail }));
+        return dispatch(addOrder({ selectedDate, description, addressToBack, userEmail }));
+        // return history.push('/account');
+
       } catch (error) {
         return dispatch(
           setError({ status: true, text: "Не удалось добавить новое задание." })
@@ -126,6 +144,11 @@ function OrderForm() {
           </MuiPickersUtilsProvider>
           <Grid>
             <Box m={3}>
+              <AddressSuggestions token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} />
+            </Box>
+          </Grid>
+          <Grid>
+            <Box m={3}>
               <TextareaAutosize
                 className={classes.area}
                 onChange={handleDescriptionChange}
@@ -136,6 +159,7 @@ function OrderForm() {
               />
             </Box>
           </Grid>
+          
           {/* <Grid>
             <TextField required id="standard-required" placeholder="Укажите породу" />
             </Grid>

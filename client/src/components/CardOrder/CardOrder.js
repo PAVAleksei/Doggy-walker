@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 	}
 });
 
-function CardOrder() {
+function CardOrder({ description, date, price, address }) {
   const classes = useStyles();
 
   return (
@@ -36,12 +36,17 @@ function CardOrder() {
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              Выгул собак
+            <Typography gutterBottom component="h2">
+              Запланированная дата:{ date.toLocaleString('ru-RU') }
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
+              Задание: { description }
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Адрес: { address }
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Стоимость: { price } рублей
             </Typography>
           </CardContent>
         </CardActionArea>
