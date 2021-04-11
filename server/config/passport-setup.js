@@ -36,12 +36,16 @@ const authUser = async (req, email, password, done) => {
       if (!user) {
         try {
           const hashPass = await bcrypt.hash(password, 10);
+
           const newUser = new User({
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
+            firstname: req.body.firstname.trim(),
+            lastname: req.body.lastname.trim(),
             email,
             kind: req.body.kind,
             password: hashPass,
+            verification: true,
+            passport: req.body.passport,
+            district: req.body.district.trim(),
           });
           await newUser.save();
           return done(null, newUser);

@@ -31,14 +31,20 @@ const UserSchema = new Schema(
       type: Number,
       default: 0,
     },
-    animal: [{
-      type: Schema.Types.ObjectId,
-      ref: "Dog",
-    }],
+    animal: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Dog",
+      },
+    ],
     // Заказчик или исполнитель
     verification: {
       type: Boolean,
       default: false,
+    },
+    passport: {
+      type: Number,
+      default: 0,
     },
 
     kind: {
@@ -50,6 +56,7 @@ const UserSchema = new Schema(
     // Район выгула собаки
     district: {
       type: String,
+      default: 0,
     },
     avatar: {
       type: String,

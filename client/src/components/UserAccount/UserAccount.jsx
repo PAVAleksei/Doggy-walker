@@ -45,9 +45,7 @@ export default function UserAccount() {
   const addOrderFormHandler = () => {
     history.push("/order");
   };
-  const handlerVerifPage = () => {
-    history.push("/verification");
-  };
+  
 
   return (
     <div className={classes.root}>
@@ -62,16 +60,7 @@ export default function UserAccount() {
           <button>Мои заказы</button>
           <button>Мои отзывы</button>
         </Grid>
-        <Box m={3}>
-          <Button
-            onClick={handlerVerifPage}
-            variant="contained"
-            size="small"
-            color="primary"
-          >
-            Верифицировать аккаунт
-          </Button>
-        </Box>
+       
 
         <Grid item xs={9}>
           <Paper className={classes.paper}>Мои питомцы</Paper>
