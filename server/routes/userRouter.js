@@ -14,6 +14,8 @@ router.get("/checkAuth", async (req, res) => {
       lastname: user.lastname,
       kind: user.kind,
       verification: user.verification,
+      dogcoins: user.dogcoins,
+      district: user.district,
       orders: user.orders.populate('orders')
     });
   }
