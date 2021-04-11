@@ -28,7 +28,11 @@ const OrderSchema = new Schema({
 		// min: () => Date.now() + 1 * 2 * 60 * 60 * 1000,
 		// max: () => Date.now() + 100 * 24 * 60 * 60 * 1000,
 	},
-  completed: Boolean,
+  address: {
+    name: String,
+    coordinates: [],
+  },
+  completed: Boolean
 },
 	{ timestamps: true },
 );
