@@ -70,7 +70,7 @@ const UserSchema = new Schema(
       ref: 'orders'
     }]
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = {
