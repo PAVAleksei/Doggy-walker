@@ -4,7 +4,7 @@ import ExecutorAccount from './components/ExecutorAccount/ExecutorAccount';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import MainPage from './components/MainPage/MainPage';
-import Order from './components/Order/Order';
+import OrderForm from './components/OrderForm/OrderForm';
 import Register from './components/Register/Register';
 import Services from './components/Services/Services';
 
@@ -57,7 +57,7 @@ function App() {
           </Route>
 
           <Route path="/order">
-            <Order />
+            <OrderForm />
           </Route>
 
           <Route path="/exaccount">

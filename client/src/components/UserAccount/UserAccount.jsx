@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import Info from '../Info/Info';
 import DogInfo from '../DogInfo/DogInfo';
 import CardOrder from '../CardOrder/CardOrder';
+import { Button } from '@material-ui/core';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -20,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserAccount() {
 	const classes = useStyles();
+  const history = useHistory();
+
+  const addOrderFormHandler = () => {
+
+    history.push('/order');
+  }
 
 	return (
 		<div className={classes.root}>
@@ -29,7 +37,8 @@ export default function UserAccount() {
 					<Paper className={classes.paper}>Мои данные</Paper>
 					<Info />
 					<button>Добавить питомца</button>
-					<button>Добавить заказ</button>
+          <Button onClick={ addOrderFormHandler }>Добавить заказ</Button>
+					{/* <button>Добавить заказ</button> */}
 					<button>Мои заказы</button>
 					<button>Мои отзывы</button>
 				</Grid>
