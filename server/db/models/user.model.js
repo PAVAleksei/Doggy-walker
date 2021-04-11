@@ -25,6 +25,7 @@ const UserSchema = new Schema(
       type: String,
       unique: true,
       minlength: 3,
+      default: "",
       // match: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
     },
     dogcoins: {
@@ -36,11 +37,17 @@ const UserSchema = new Schema(
       ref: "Dog",
     },
     // Заказчик или исполнитель
+    verification: {
+      type: Boolean,
+      default: false,
+    },
+
     kind: {
       type: String,
-      role: String,
-      verification: Boolean,
+      default: "Заказчик",
     },
+    // match: /^[A-Z]\w+$/i,
+
     // Район выгула собаки
     district: {
       type: String,
@@ -57,5 +64,5 @@ const UserSchema = new Schema(
 );
 
 module.exports = {
-  User: model('User', UserSchema),
+  User: model("User", UserSchema),
 };

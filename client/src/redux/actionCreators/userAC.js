@@ -1,4 +1,4 @@
-import { AUTH, SAGA_SIGNUP } from "../types/usertypes";
+import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN } from "../types/usertypes";
 
 export const sagaSignupAC = ({
   email,
@@ -19,12 +19,36 @@ export const sagaSignupAC = ({
   };
 };
 
-export const signupAC = (email = "") => {
+export const signupAC = (resFromServer) => {
+  // console.log(resFromServer);
   return {
     type: AUTH,
     payload: {
-      email,
+      ...resFromServer,
       isAuth: true,
     },
   };
 };
+
+export const SagaSignInAC = (loginData = {}) => {
+  return {
+    type: SAGA_SIGN_IN,
+    payload: loginData,
+  };
+};
+
+export const signinAC = (resFromServer) => {
+  return {
+    type: SIGN_IN,
+    payload: {
+      ...resFromServer,
+      isAuth: true,
+    },
+  };
+};
+
+// export const registerWithGoogleThunk = () => async (dispatch, getState) => {
+//   const response = await fetch("http://localhost:3001/auth/google");
+//   const dataFromServer = await response.json();
+//   dispatch(signupAC(dataFromServer));
+// };

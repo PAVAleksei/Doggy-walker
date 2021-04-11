@@ -6,6 +6,10 @@ import EmailIcon from "@material-ui/icons/Email";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import LockIcon from "@material-ui/icons/Lock";
 import Button from "@material-ui/core/Button";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { SagaSignInAC } from "../../redux/actionCreators/userAC";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,14 +22,40 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
   const classes = useStyles();
+  const formRef = useRef(null);
+  const dispatch = useDispatch();
+  let history = useHistory();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const valuesOfFields = Object.fromEntries(
+      new FormData(formRef.current).entries()
+    );
+    if (
+      Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
+    ) {
+      dispatch(SagaSignInAC(valuesOfFields));
+      formRef.current.reset();
+      history.push("/account");
+    }
+  };
+
   return (
     <Box m={3}>
       <Container>
         <Typography variant="h4">Вход</Typography>
         <Box m={3}>
-          <form className={classes.root} validate="true" autoComplete="off">
+          <form
+            className={classes.root}
+            validate="true"
+            autoComplete="off"
+            ref={formRef}
+            onSubmit={submitHandler}
+          >
             <Grid>
               <TextField
+                name="email"
                 required
                 label="Email"
                 type="email"
@@ -42,6 +72,7 @@ function Login() {
             <Grid>
               <TextField
                 required
+                name="password"
                 label="Пароль"
                 type="password"
                 autoComplete="current-password"
@@ -58,8 +89,20 @@ function Login() {
 
             <Grid>
               <Box m={3}>
-                <Button variant="contained" size="large" color="primary">
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  type="submit"
+                >
                   Вход
+                </Button>
+              </Box>
+            </Grid>
+            <Grid>
+              <Box m={3}>
+                <Button variant="contained" size="large" color="secondary">
+                  <a href="http://localhost:3001/auth/google">Google</a>
                 </Button>
               </Box>
             </Grid>

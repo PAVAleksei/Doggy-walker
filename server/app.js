@@ -1,45 +1,52 @@
 /* eslint-disable max-len */
-require('dotenv').config();
-const passport = require('passport');
-const express = require('express');
-const sessions = require('express-session');
-const MongoStore = require('connect-mongo');
-const path = require('path');
-const { connect } = require('mongoose');
-const cors = require('cors');
-const passportSetup = require('./config/passport-setup');
+require("dotenv").config();
+const passport = require("passport");
+const express = require("express");
+const sessions = require("express-session");
+const MongoStore = require("connect-mongo");
+const path = require("path");
+const { connect } = require("mongoose");
+const cors = require("cors");
+const passportSetup = require("./config/passport-setup");
 // const createError = require('http-errors');
 
-// const userRouter = require('./routes/userRouter');
-const authRouter = require('./routes/authGoogle');
-const orderRouter = require('./routes/orderRouter');
+const userRouter = require("./routes/userRouter");
+const authRouter = require("./routes/authGoogle");
+const orderRouter = require("./routes/orderRouter");
+const verificationRouter = require("./routes/verificationRouter");
 
 const app = express();
 
-app.set('cookieName', 'sid');
+app.set("cookieName", "sid");
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
-app.use(express.static(path.join(process.env.PWD, 'public')));
+app.use(express.static(path.join(process.env.PWD, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(sessions({
-  name: app.get('cookieName'),
-  secret: process.env.SECRET_KEY,
-  resave: false, // Не сохранять сессию, если мы ее не изменим
-  saveUninitialized: false, // не сохранять пустую сессию
-  store: MongoStore.create({ // выбираем в качестве хранилища mongoDB
-    mongoUrl: process.env.DB_CONNECTION,
-  }),
-  cookie: { // настройки, необходимые для корректного работы cookie
-    httpOnly: true, // не разрещаем модифицировать данную cookie через javascript
-    maxAge: 86400 * 1e3, // устанавливаем время жизни cookie
-  },
-}));
+app.use(
+  sessions({
+    name: app.get("cookieName"),
+    secret: process.env.SECRET_KEY,
+    resave: false, // Не сохранять сессию, если мы ее не изменим
+    saveUninitialized: false, // не сохранять пустую сессию
+    store: MongoStore.create({
+      // выбираем в качестве хранилища mongoDB
+      mongoUrl: process.env.DB_CONNECTION,
+    }),
+    cookie: {
+      // настройки, необходимые для корректного работы cookie
+      httpOnly: true, // не разрещаем модифицировать данную cookie через javascript
+      maxAge: 86400 * 1e3, // устанавливаем время жизни cookie
+    },
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -60,27 +67,29 @@ app.use(passport.session());
 //   next();
 // });
 
-// app.use('/user', userRouter);
-app.use('/auth', authRouter);
-app.use('/api', orderRouter);
+app.use("/user", userRouter);
+app.use("/verification", verificationRouter);
+app.use("/auth", authRouter);
+app.use("/api", orderRouter);
 // app.use('/api/orders', orderRouter);
 
 const PORT = process.env.PORT ?? 3000;
 
-app.listen(
-  PORT,
-  () => {
-    console.log(`Server started on port ${PORT}.`);
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}.`);
 
-    connect(process.env.DB_CONNECTION, {
+  connect(
+    process.env.DB_CONNECTION,
+    {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
-    }, () => {
-      console.log('Connection to database is successful.');
-    });
-  },
-);
+    },
+    () => {
+      console.log("Connection to database is successful.");
+    }
+  );
+});
 
 module.exports = app;

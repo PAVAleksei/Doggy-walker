@@ -7,6 +7,7 @@ const initState = {
     isAuth: false,
     verification: false,
   },
+  orders: []
 };
 
 export default initState;

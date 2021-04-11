@@ -10,7 +10,10 @@ import Button from "@material-ui/core/Button";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
-import { sagaSignupAC } from "../../redux/actionCreators/userAC";
+import {
+  registerWithGoogleThunk,
+  sagaSignupAC,
+} from "../../redux/actionCreators/userAC";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +38,8 @@ const currencies = [
 function Register() {
   const classes = useStyles();
   const [kind, setKind] = React.useState("");
+  let history = useHistory();
+  let location = useLocation();
 
   const handleChange = (event) => {
     setKind(event.target.value);
@@ -45,23 +50,18 @@ function Register() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
     const valuesOfFields = Object.fromEntries(
       new FormData(formRef.current).entries()
     );
-    console.log(valuesOfFields);
-    // console.log(valuesOfFields);
     if (
       Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
     ) {
       dispatch(sagaSignupAC(valuesOfFields));
+      history.push("/account");
 
       formRef.current.reset();
     }
   };
-
-  let history = useHistory();
-  let location = useLocation();
 
   return (
     <Box m={3}>
@@ -171,6 +171,13 @@ function Register() {
                   color="primary"
                 >
                   Регистрация
+                </Button>
+              </Box>
+            </Grid>
+            <Grid>
+              <Box m={3}>
+                <Button variant="contained" size="large" color="secondary">
+                  <a href="http://localhost:3001/auth/google">Google</a>
                 </Button>
               </Box>
             </Grid>
