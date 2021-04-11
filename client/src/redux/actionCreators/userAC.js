@@ -1,4 +1,4 @@
-import { AUTH, SAGA_SIGNUP } from "../types/usertypes";
+import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN } from "../types/usertypes";
 
 export const sagaSignupAC = ({
   email,
@@ -24,6 +24,23 @@ export const signupAC = (email = "") => {
     type: AUTH,
     payload: {
       email,
+      isAuth: true,
+    },
+  };
+};
+
+export const SagaSignInAC = (login = {}) => {
+  return {
+    type: SAGA_SIGN_IN,
+    payload: login,
+  };
+};
+
+export const signinAC = (login) => {
+  return {
+    type: SIGN_IN,
+    payload: {
+      login,
       isAuth: true,
     },
   };

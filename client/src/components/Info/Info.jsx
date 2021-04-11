@@ -41,7 +41,6 @@ const useStyles = makeStyles({
 
 export default function Info() {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
 	  <Card className={classes.root}>

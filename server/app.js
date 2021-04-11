@@ -10,7 +10,7 @@ const cors = require('cors');
 const passportSetup = require('./config/passport-setup');
 // const createError = require('http-errors');
 
-// const userRouter = require('./routes/userRouter');
+const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authGoogle');
 const orderRouter = require('./routes/orderRouter');
 
@@ -60,7 +60,7 @@ app.use(passport.session());
 //   next();
 // });
 
-// app.use('/user', userRouter);
+app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/api', orderRouter);
 // app.use('/api/orders', orderRouter);
