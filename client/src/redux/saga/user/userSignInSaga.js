@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { SAGA_SIGN_IN } from "../../types/usertypes";
-import { signinAC} from "../../actionCreators/userAC";
+import { signinAC } from "../../actionCreators/userAC";
 
 function signInFetch(action) {
   return fetch("http://localhost:3001/auth/login", {
@@ -10,13 +10,13 @@ function signInFetch(action) {
     },
     credentials: "include",
     body: JSON.stringify(action.payload),
-  }).then((response) => response.status);
+  }).then((response) => response.json());
 }
 
 function* signInWorker(action) {
   try {
-    const signInStatus = yield call(signInFetch, action);
-    if (signInStatus === 200) yield put(signinAC(action.payload.email));
+    const dataFromServer = yield call(signInFetch, action);
+    if (dataFromServer) yield put(signinAC(dataFromServer));
   } catch (e) {
     yield put({ type: "USER_FETCH_FAILED", message: e.message });
   }

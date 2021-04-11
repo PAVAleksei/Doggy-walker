@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -8,6 +9,8 @@ import CardOrder from '../CardOrder/CardOrder';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import {getDogsAC } from '../../redux/actionCreators/dogAC';
+import { Box, Button } from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,11 +21,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     paddingTop: 10
+
   },
 }));
 
 export default function UserAccount() {
   const classes = useStyles();
+
   const dispatch = useDispatch()
 
   const dogs = useSelector(state => state.dogs)
@@ -34,6 +39,15 @@ export default function UserAccount() {
       .then(responseFromServer => dispatch(getDogsAC(responseFromServer)))
       
   }, [])
+  
+    const history = useHistory();
+
+  const addOrderFormHandler = () => {
+    history.push("/order");
+  };
+  const handlerVerifPage = () => {
+    history.push("/verification");
+  };
 
   return (
     <div className={classes.root}>
@@ -43,21 +57,35 @@ export default function UserAccount() {
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
           <Link to='/addAnimal'>Добавить питомца</Link>
-          <button>Добавить заказ</button>
+          <Button onClick={addOrderFormHandler}>Добавить заказ</Button>
+          {/* <button>Добавить заказ</button> */}
           <button>Мои заказы</button>
           <button>Мои отзывы</button>
         </Grid>
+        <Box m={3}>
+          <Button
+            onClick={handlerVerifPage}
+            variant="contained"
+            size="small"
+            color="primary"
+          >
+            Верифицировать аккаунт
+          </Button>
+        </Box>
+
         <Grid item xs={9}>
           <Paper className={classes.paper}>Мои питомцы</Paper>
           <Grid container spacing={5}>
             <Grid item xs={4}>
               <Paper className={classes.paper}>xs=4</Paper>
+
 {
   dogs ? 
   dogs[0]?.map(dog => ( <DogInfo key={dog.id} id={dog._id} nickname={dog.nickname} breed={dog.breed} gender={dog.gender} weight={dog.weight} pullsTheLeash={dog.pullsTheLeash} contactWithOther={dog.contactWithOther} phobia={dog.phobia} letGo={dog.letGo} avatar={dog.avatar} />)) : <p>Добавьте вашу собаку</p>
 }
 
               
+
             </Grid>
             <Grid item xs={4}>
               <Paper className={classes.paper}>xs=4</Paper>

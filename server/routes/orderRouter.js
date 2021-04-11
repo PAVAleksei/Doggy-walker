@@ -47,11 +47,11 @@ router.get('/customer/orders', async(req, res) => {
 router.post('/customer/orders', async (req, res) => {
 
   // console.log('======>');
-  console.log(req.body);
+  // console.log(req.body);
   const { selectedDate, description, userEmail } = req.body;
-  const userId = await User.findOne( { email: 'sara@test.com' });
+  const userId = (await User.findOne( { email: 'sara@test.com' }))._id;
 
-  console.log(userId);
+  // console.log(userId);
 
   // const { description,
   //         dogName,
@@ -60,26 +60,28 @@ router.post('/customer/orders', async (req, res) => {
   //       } = req.body;
 
   // const dogId = (await Dog.findOne({ nickname: dogName }))._id;
-
+  
   try {
+    
     await Order.create({
-      description,
+      description: description,
       clientId: userId,
       // dogId,  
       // price,
       date: selectedDate,
       completed: false,
     });
+    
+    // const order = await Order.findOne({ description: description });
 
-    const order = await Order.findOne({ description });
-
-    console.log(order);
-    // setTimeout(() => {
-    return res.json(order);
-    // }, 500)
+    // console.log(order);
+    // // setTimeout(() => {
+    // return res.json(order);
+    // // }, 500)
 
   } catch (error) {
-    return res.sendStatus(501);
+    console.log('error');
+    return res.sendStatus(500);
   }
 
 })

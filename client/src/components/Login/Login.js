@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { SagaSignInAC } from "../../redux/actionCreators/userAC";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login() {
-
   const classes = useStyles();
   const formRef = useRef(null);
   const dispatch = useDispatch();
+  let history = useHistory();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -31,16 +32,14 @@ function Login() {
     const valuesOfFields = Object.fromEntries(
       new FormData(formRef.current).entries()
     );
-    console.log(valuesOfFields, 'valuesOfFields');
-    // console.log(valuesOfFields);
     if (
       Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
     ) {
       dispatch(SagaSignInAC(valuesOfFields));
       formRef.current.reset();
+      history.push("/account");
     }
   };
-
 
   return (
     <Box m={3}>
@@ -56,7 +55,7 @@ function Login() {
           >
             <Grid>
               <TextField
-                name='email'
+                name="email"
                 required
                 label="Email"
                 type="email"
@@ -73,7 +72,7 @@ function Login() {
             <Grid>
               <TextField
                 required
-                name='password'
+                name="password"
                 label="Пароль"
                 type="password"
                 autoComplete="current-password"
@@ -102,7 +101,9 @@ function Login() {
             </Grid>
             <Grid>
               <Box m={3}>
-                <a href='http://localhost:3001/auth/google'>Google</a>
+                <Button variant="contained" size="large" color="secondary">
+                  <a href="http://localhost:3001/auth/google">Google</a>
+                </Button>
               </Box>
             </Grid>
           </form>

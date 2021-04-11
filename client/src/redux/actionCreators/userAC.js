@@ -19,29 +19,36 @@ export const sagaSignupAC = ({
   };
 };
 
-export const signupAC = (email = "") => {
+export const signupAC = (resFromServer) => {
+  // console.log(resFromServer);
   return {
     type: AUTH,
     payload: {
-      email,
+      ...resFromServer,
       isAuth: true,
     },
   };
 };
 
-export const SagaSignInAC = (login = {}) => {
+export const SagaSignInAC = (loginData = {}) => {
   return {
     type: SAGA_SIGN_IN,
-    payload: login,
+    payload: loginData,
   };
 };
 
-export const signinAC = (login) => {
+export const signinAC = (resFromServer) => {
   return {
     type: SIGN_IN,
     payload: {
-      login,
+      ...resFromServer,
       isAuth: true,
     },
   };
 };
+
+// export const registerWithGoogleThunk = () => async (dispatch, getState) => {
+//   const response = await fetch("http://localhost:3001/auth/google");
+//   const dataFromServer = await response.json();
+//   dispatch(signupAC(dataFromServer));
+// };
