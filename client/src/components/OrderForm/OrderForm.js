@@ -39,13 +39,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Order() {
+function OrderForm() {
   const classes = useStyles();
 
   // const [selectedDate, setSelectedDate] = useState(new Date('2020-04-01T21:11:54'));
   const dispatch = useDispatch();
   const userEmail = useSelector((state) => state.user.email);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const error = useSelector((state) => state.error);
 
   const [description, setDescription] = useState("");
 
@@ -59,16 +60,25 @@ function Order() {
   };
 
   const addNewOrderHandler = () => {
-    // console.log(selectedDate, description, userEmail);
+    console.log(selectedDate, description, userEmail);
 
-    if (selectedDate && description) {
+    if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description) {
+      setError({ status: false, text: "" });
+
       try {
-        dispatch(addOrder({ selectedDate, description, userEmail }));
+        return dispatch(addOrder({ selectedDate, description, userEmail }));
       } catch (error) {
-        dispatch(
+        return dispatch(
           setError({ status: true, text: "Не удалось добавить новое задание." })
         );
       }
+    } else {
+      dispatch(
+        setError({
+          status: true,
+          text: "Заказ можно оформить на время через 2 часа минимум.",
+        })
+      );
     }
   };
 
@@ -128,8 +138,8 @@ function Order() {
           </Grid>
           {/* <Grid>
             <TextField required id="standard-required" placeholder="Укажите породу" />
-          </Grid>
-          <Grid>
+            </Grid>
+            <Grid>
             <TextField required id="standard-required" placeholder="Укажите вес" />
           </Grid> */}
         </Box>
@@ -138,9 +148,10 @@ function Order() {
             Оформить заказ
           </Button>
         </Box>
+        {error?.status ? <div>{error.text}</div> : ""}
       </Container>
     </div>
   );
 }
 
-export default Order;
+export default OrderForm;

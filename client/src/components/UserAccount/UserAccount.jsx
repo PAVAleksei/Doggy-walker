@@ -22,8 +22,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserAccount() {
   const classes = useStyles();
-  let history = useHistory();
+  const history = useHistory();
 
+  const addOrderFormHandler = () => {
+    history.push("/order");
+  };
   const handlerVerifPage = () => {
     history.push("/verification");
   };
@@ -36,20 +39,21 @@ export default function UserAccount() {
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
           <button>Добавить питомца</button>
-          <button>Добавить заказ</button>
+          <Button onClick={addOrderFormHandler}>Добавить заказ</Button>
+          {/* <button>Добавить заказ</button> */}
           <button>Мои заказы</button>
           <button>Мои отзывы</button>
-          <Box m={3}>
-            <Button
-              onClick={handlerVerifPage}
-              variant="contained"
-              size="small"
-              color="primary"
-            >
-              Верифицировать аккаунт
-            </Button>
-          </Box>
         </Grid>
+        <Box m={3}>
+          <Button
+            onClick={handlerVerifPage}
+            variant="contained"
+            size="small"
+            color="primary"
+          >
+            Верифицировать аккаунт
+          </Button>
+        </Box>
         <Grid item xs={9}>
           <Paper className={classes.paper}>Мои питомцы</Paper>
           <Grid container spacing={5}>
