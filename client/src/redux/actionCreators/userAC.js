@@ -6,6 +6,8 @@ export const sagaSignupAC = ({
   lastname,
   kind,
   password,
+  district,
+  passport,
 }) => {
   return {
     type: SAGA_SIGNUP,
@@ -15,6 +17,8 @@ export const sagaSignupAC = ({
       lastname,
       kind,
       password,
+      district,
+      passport,
     },
   };
 };

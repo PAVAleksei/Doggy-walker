@@ -22,6 +22,7 @@ router.post("/register", (req, res, next) => {
         lastname: user.lastname,
         kind: user.kind,
         verification: user.verification,
+        district: user.district,
       });
     });
   })(req, res, next);
@@ -46,6 +47,7 @@ router.post("/login", (req, res, next) => {
         lastname: user.lastname,
         kind: user.kind,
         verification: user.verification,
+        district: user.district,
       });
     });
   })(req, res, next);
