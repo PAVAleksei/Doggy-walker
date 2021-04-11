@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Info from '../Info/Info';
 import DogInfo from '../DogInfo/DogInfo';
 import CardOrder from '../CardOrder/CardOrder';
-import { Button } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,11 +36,19 @@ export default function UserAccount() {
 				<Grid item xs={3}>
 					<Paper className={classes.paper}>Мои данные</Paper>
 					<Info />
-					<button>Добавить питомца</button>
-          <Button onClick={ addOrderFormHandler }>Добавить заказ</Button>
-					{/* <button>Добавить заказ</button> */}
-					<button>Мои заказы</button>
-					<button>Мои отзывы</button>
+          <Box m={1}>
+					  <Button variant="outlined">Мои заказы</Button>
+          </Box>
+          <Box m={1}>
+					  <Button variant="outlined">Мои отзывы</Button>
+          </Box>
+          <Box m={1}>
+					  <Button variant="outlined">Добавить питомца</Button>
+          </Box>
+          <Box m={1}>
+            <Button variant="outlined" onClick={ addOrderFormHandler }>Добавить заказ</Button>
+          </Box>
+          {/* <button>Добавить заказ</button> */}
 				</Grid>
 				<Grid item xs={9}>
 					<Paper className={classes.paper}>Мои питомцы</Paper>
