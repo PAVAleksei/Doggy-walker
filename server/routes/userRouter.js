@@ -14,8 +14,8 @@ router.get("/checkAuth", async (req, res) => {
       verification: user.verification,
       dogcoins: user.dogcoins,
       district: user.district,
-      orders: user.orders
-S    });
+      orders: user.orders,
+    });
   }
 });
 module.exports = router;
