@@ -46,13 +46,12 @@ router.get('/customer/orders', async (req, res) => {
 
 router.post('/customer/orders', async (req, res) => {
 
-	// console.log('======>');
-	console.log(req.body);
-	const { selectedDate, description } = req.body;
-	console.log('-----> ', selectedDate, description);
-	// const userId = await User.findOne({ email: 'sara@test.com' });
+  // console.log('======>');
+  // console.log(req.body);
+  const { selectedDate, description, userEmail } = req.body;
+  const userId = (await User.findOne( { email: 'sara@test.com' }))._id;
 
-	// console.log(userId);
+  // console.log(userId);
 
 	// const { description,
 	//         dogName,
@@ -60,29 +59,30 @@ router.post('/customer/orders', async (req, res) => {
 	//         date
 	//       } = req.body;
 
-	// const dogId = (await Dog.findOne({ nickname: dogName }))._id;
+  // const dogId = (await Dog.findOne({ nickname: dogName }))._id;
+  
+  try {
+    
+    await Order.create({
+      description: description,
+      clientId: userId,
+      // dogId,  
+      // price,
+      date: selectedDate,
+      completed: false,
+    });
+    
+    // const order = await Order.findOne({ description: description });
 
-	try {
-		await Order.create({
-			description,
-			// clientId: userId,
-			// dogId,
-			// price,
-			date: selectedDate,
-			completed: false,
-		});
+    // console.log(order);
+    // // setTimeout(() => {
+    // return res.json(order);
+    // // }, 500)
 
-		const order = await Order.findOne({ description });
-
-		console.log({ order });
-		// setTimeout(() => {
-		return res.json(order);
-		// }, 500)
-
-	} catch (error) {
-		console.log(error);
-		return res.sendStatus(501);
-	}
+  } catch (error) {
+    console.log('error');
+    return res.sendStatus(500);
+  }
 
 })
 
