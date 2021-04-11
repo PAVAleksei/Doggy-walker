@@ -3,62 +3,49 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import EmailIcon from "@material-ui/icons/Email";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import LockIcon from "@material-ui/icons/Lock";
+import HomeIcon from "@material-ui/icons/Home";
 import Button from "@material-ui/core/Button";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
-import {
-  registerWithGoogleThunk,
-  sagaSignupAC,
-} from "../../redux/actionCreators/userAC";
+import { sagaSignupAC } from "../../redux/actionCreators/userAC";
+import { verificationUserThunk } from "../../redux/actionCreators/verificationAC";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: "35ch",
+      width: "34ch",
+    },
+    "& .MuiInputBase-input": {
+      height: "0.6ch",
     },
   },
 }));
 
-const currencies = [
-  {
-    value: "Заказчик",
-    label: "Заказчик",
-  },
-  {
-    value: "Исполнитель",
-    label: "Исполнитель",
-  },
-];
-
-function Register() {
+function Verification() {
   const classes = useStyles();
-  const [kind, setKind] = React.useState("");
+  const formRef = useRef(null);
+  const dispatch = useDispatch();
   let history = useHistory();
   let location = useLocation();
 
-  const handleChange = (event) => {
-    setKind(event.target.value);
-  };
-
-  const formRef = useRef(null);
-  const dispatch = useDispatch();
-
   const submitHandler = (e) => {
     e.preventDefault();
+
     const valuesOfFields = Object.fromEntries(
       new FormData(formRef.current).entries()
     );
+
     if (
       Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
     ) {
-      dispatch(sagaSignupAC(valuesOfFields));
+      dispatch(verificationUserThunk(valuesOfFields));
       history.push("/account");
-
       formRef.current.reset();
     }
   };
@@ -66,7 +53,7 @@ function Register() {
   return (
     <Box m={3}>
       <Container>
-        <Typography variant="h4">Регистрация</Typography>
+        <Typography variant="h4">Верификация пользователя</Typography>
         <Box m={3}>
           <form
             className={classes.root}
@@ -108,16 +95,14 @@ function Register() {
             </Grid>
             <Grid>
               <TextField
-                name="email"
+                name="district"
                 required
-                id="outlined-email-input"
-                label="Email"
-                type="email"
+                label="Метро"
                 variant="outlined"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <EmailIcon />
+                      <HomeIcon />
                     </InputAdornment>
                   ),
                 }}
@@ -125,37 +110,15 @@ function Register() {
             </Grid>
             <Grid>
               <TextField
-                id="outlined-select-currency-native"
-                name="kind"
-                select
-                label="Категория"
-                value={kind}
-                onChange={handleChange}
-                SelectProps={{
-                  native: true,
-                }}
-                helperText="Выберите вашу роль"
-                variant="outlined"
-              >
-                {currencies.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid>
-              <TextField
-                name="password"
+                name="passport"
+                type="number"
                 required
-                label="Пароль"
-                type="password"
-                autoComplete="current-password"
+                label="Паспортные данные"
                 variant="outlined"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LockIcon />
+                      <AssignmentIndIcon />
                     </InputAdornment>
                   ),
                 }}
@@ -170,14 +133,7 @@ function Register() {
                   size="large"
                   color="primary"
                 >
-                  Регистрация
-                </Button>
-              </Box>
-            </Grid>
-            <Grid>
-              <Box m={3}>
-                <Button variant="contained" size="large" color="secondary">
-                  <a href="http://localhost:3001/auth/google">Google</a>
+                  Подтвердить
                 </Button>
               </Box>
             </Grid>
@@ -188,4 +144,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Verification;
