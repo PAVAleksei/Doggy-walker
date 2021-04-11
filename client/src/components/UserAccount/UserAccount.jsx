@@ -1,12 +1,16 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Info from "../Info/Info";
-import DogInfo from "../DogInfo/DogInfo";
-import CardOrder from "../CardOrder/CardOrder";
+
+import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Info from '../Info/Info';
+import DogInfo from '../DogInfo/DogInfo';
+import CardOrder from '../CardOrder/CardOrder';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import {getDogsAC } from '../../redux/actionCreators/dogAC';
 import { Box, Button } from "@material-ui/core";
-import { useHistory, useLocation } from "react-router";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,15 +18,29 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(1),
-    textAlign: "center",
+    textAlign: 'center',
     color: theme.palette.text.secondary,
-    paddingTop: 10,
+    paddingTop: 10
+
   },
 }));
 
 export default function UserAccount() {
   const classes = useStyles();
-  const history = useHistory();
+
+  const dispatch = useDispatch()
+
+  const dogs = useSelector(state => state.dogs)
+  console.log(dogs);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/api/v1/dog')
+      .then(response => response.json())
+      .then(responseFromServer => dispatch(getDogsAC(responseFromServer)))
+      
+  }, [])
+  
+    const history = useHistory();
 
   const addOrderFormHandler = () => {
     history.push("/order");
@@ -38,7 +56,7 @@ export default function UserAccount() {
         <Grid item xs={3}>
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
-          <button>Добавить питомца</button>
+          <Link to='/addAnimal'>Добавить питомца</Link>
           <Button onClick={addOrderFormHandler}>Добавить заказ</Button>
           {/* <button>Добавить заказ</button> */}
           <button>Мои заказы</button>
@@ -54,12 +72,20 @@ export default function UserAccount() {
             Верифицировать аккаунт
           </Button>
         </Box>
+
         <Grid item xs={9}>
           <Paper className={classes.paper}>Мои питомцы</Paper>
           <Grid container spacing={5}>
             <Grid item xs={4}>
               <Paper className={classes.paper}>xs=4</Paper>
-              <DogInfo />
+
+{
+  dogs ? 
+  dogs[0]?.map(dog => ( <DogInfo key={dog.id} id={dog._id} nickname={dog.nickname} breed={dog.breed} gender={dog.gender} weight={dog.weight} pullsTheLeash={dog.pullsTheLeash} contactWithOther={dog.contactWithOther} phobia={dog.phobia} letGo={dog.letGo} avatar={dog.avatar} />)) : <p>Добавьте вашу собаку</p>
+}
+
+              
+
             </Grid>
             <Grid item xs={4}>
               <Paper className={classes.paper}>xs=4</Paper>
