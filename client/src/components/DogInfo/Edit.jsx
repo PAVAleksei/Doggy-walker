@@ -44,7 +44,7 @@ export default function EditDog() {
       dispatch(editDogFetch(valuesOfFields, dog._id));
 
       formRef.current.reset();
-      // history(-1)
+      history.push("/account");
     }
   };
 

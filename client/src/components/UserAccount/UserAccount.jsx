@@ -86,28 +86,28 @@ export default function UserAccount() {
             <Paper className={classes.paper}>Мои питомцы</Paper>
             <Box m={3}>
               <Grid item container spacing={2} direction="row">
-                  {/* <Box m={4}> */}
-                    {dogs.length ? 
-                      dogs.map((dog) => 
-                        <Grid item xs={12} sm={3}>
-                          <DogInfo
-                          key={dog._id}
-                          id={dog._id}
-                          nickname={dog.nickname}
-                          breed={dog.breed}
-                          gender={dog.gender}
-                          weight={dog.weight}
-                          pullsTheLeash={dog.pullsTheLeash}
-                          contactWithOther={dog.contactWithOther}
-                          phobia={dog.phobia}
-                          letGo={dog.letGo}
-                          avatar={dog.avatar}
-                        />
-                        </Grid>
-                      )
-                     : <p>Пока нет сохраненных питомцев</p>
-                    }
-                  {/* </Box> */}
+                {/* <Box m={4}> */}
+                {dogs.length ?
+                  dogs.map((dog) =>
+                    <Grid item xs={12} sm={3}>
+                      <DogInfo
+                        key={dog._id}
+                        id={dog._id}
+                        nickname={dog.nickname}
+                        breed={dog.breed}
+                        gender={dog.gender}
+                        weight={dog.weight}
+                        pullsTheLeash={dog.pullsTheLeash}
+                        contactWithOther={dog.contactWithOther}
+                        phobia={dog.phobia}
+                        letGo={dog.letGo}
+                        avatar={dog.avatar}
+                      />
+                    </Grid>
+                  )
+                  : <p>Пока нет сохраненных питомцев</p>
+                }
+                {/* </Box> */}
               </Grid>
             </Box>
           </Grid>
@@ -117,62 +117,27 @@ export default function UserAccount() {
               <Grid item container spacing={2} direction="row">
                 {/* <Box m={4}> */}
 
-                      {
-                        orders?.length ? 
-                          orders.map((order) => 
-                          <Grid item xs={12} sm={3}>
-                            <CardOrder 
-                              key={order._id} 
-                              description={order.description} 
-                              date={order.date.toLocaleString()} 
-                              price={order.price}
-                              address={order.address.name}
-                              />
-                              
-                          </Grid>
-                          ) : <p>Нет заказов</p>
-                      }
-                    {/* </Box> */}
+                {
+                  orders?.length ?
+                    orders.map((order) =>
+                      <Grid item xs={12} sm={3}>
+                        <CardOrder
+                          key={order._id}
+                          description={order.description}
+                          date={order.date}
+                          price={order.price}
+                          address={order.address.name}
+                        />
+
+                      </Grid>
+                    ) : <p>Нет заказов</p>
+                }
+                {/* </Box> */}
               </Grid>
             </Box>
           </Grid>
         </Grid>
       </Grid>
-
-      {/* <Grid item xs={9}>
-          <Paper className={classes.paper}>Мои питомцы</Paper>
-          <Grid container spacing={5}>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-
-              {
-                dogs ?
-                  dogs.map((dog) => (<DogInfo key={dog._id} id={dog._id} nickname={dog.nickname} breed={dog.breed} gender={dog.gender} weight={dog.weight} pullsTheLeash={dog.pullsTheLeash} contactWithOther={dog.contactWithOther} phobia={dog.phobia} letGo={dog.letGo} avatar={dog.avatar} />)) : <p>Добавьте вашу собаку</p>
-              }
-
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-          </Grid>
-          <Paper className={classes.paper}>Текущие заказы</Paper>
-          <Grid container spacing={5}>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-              <CardOrder />
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid> */}
     </div>
   );
 }

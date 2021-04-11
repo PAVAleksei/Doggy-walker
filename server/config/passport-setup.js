@@ -29,23 +29,34 @@ const authUser = async (req, email, password, done) => {
     }
     if (
       (email && password && req.body.firstname,
-      req.body.lastname,
-      req.body.kind)
+        req.body.lastname,
+        req.body.kind)
     ) {
       const user = await User.findOne({ email }).populate('orders').lean().exec();
       if (!user) {
         try {
           const hashPass = await bcrypt.hash(password, 10);
 
+          if (req.body.passport && req.body.district) {
+            const newUser = new User({
+              firstname: req.body.firstname.trim(),
+              lastname: req.body.lastname.trim(),
+              email,
+              kind: req.body.kind,
+              password: hashPass,
+              verification: true,
+              passport: req.body.passport,
+              district: req.body.district.trim(),
+            });
+            await newUser.save();
+            return done(null, newUser);
+          }
           const newUser = new User({
             firstname: req.body.firstname.trim(),
             lastname: req.body.lastname.trim(),
             email,
             kind: req.body.kind,
             password: hashPass,
-            verification: true,
-            passport: req.body.passport,
-            district: req.body.district.trim(),
           });
           await newUser.save();
           return done(null, newUser);
@@ -95,6 +106,7 @@ passport.use(
             googleId: profile.id,
             firstname,
             lastname,
+            email: profile.emails[0].value,
           })
             .save()
             .then((newUser) => {

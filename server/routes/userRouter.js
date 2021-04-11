@@ -23,4 +23,12 @@ router.get("/checkAuth", async (req, res) => {
     });
   }
 });
+
+router.post('/edit', async (req, res) => {
+  if (req.user) {
+    const userId = req.user._id;
+    const user = await User.findByIdAndUpdate(userId, { ...req.body }, { new: true }).populate('orders');
+    res.json(user);
+  }
+});
 module.exports = router;
