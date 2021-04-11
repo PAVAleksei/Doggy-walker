@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {signupAC} from './redux/actionCreators/userAC'
 import UserAccount from './components/UserAccount/UserAccount';
+import Test from './components/Test/Test';
 
 function App() {
 
@@ -43,6 +44,9 @@ function App() {
             <Login />
           </Route>
 
+          <Route path="/test">
+            <Test />
+          </Route>
           {/* <Route path="/account">
             <Account />
             <CenteredGrid />
