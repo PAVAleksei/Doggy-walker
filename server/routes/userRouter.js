@@ -5,9 +5,12 @@ const { Order } = require('../db/models/order.model')
 router.get("/checkAuth", async (req, res) => {
   if (req.user) {
     const userId = req.session.passport.user;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate('orders');
     // console.log("==============>", user);
     
+    // const orders = user.populate('orders');
+    console.log(user);
+
     res.json({
       email: user.email,
       firstname: user.firstname,
@@ -16,7 +19,7 @@ router.get("/checkAuth", async (req, res) => {
       verification: user.verification,
       dogcoins: user.dogcoins,
       district: user.district,
-      orders: user.orders.populate('orders')
+      orders: user.orders
     });
   }
 });

@@ -124,9 +124,9 @@ export default function UserAccount() {
                             <CardOrder 
                               key={order._id} 
                               description={order.description} 
-                              date={order.date} 
+                              date={order.date.toLocaleString()} 
                               price={order.price}
-                              // address={order.address.name}
+                              address={order.address.name}
                               />
                               
                           </Grid>

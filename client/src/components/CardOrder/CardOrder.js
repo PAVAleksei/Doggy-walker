@@ -36,17 +36,17 @@ function CardOrder({ description, date, price, address }) {
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              { description }
+            <Typography gutterBottom component="h2">
+              Запланированная дата:{ date.toLocaleString('ru-RU') }
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              { description }
+              Задание: { description }
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {/* { address } */}
+              Адрес: { address }
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              { price } рублей
+              Стоимость: { price } рублей
             </Typography>
           </CardContent>
         </CardActionArea>
