@@ -18,7 +18,7 @@ const dogRouter = require('./routes/dogRouter');
 const app = express();
 
 app.set('cookieName', 'sid');
-
+//cors
 app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true,
