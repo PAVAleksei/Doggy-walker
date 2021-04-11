@@ -42,6 +42,7 @@ export const SagaSignInAC = (loginData = {}) => {
 };
 
 export const signinAC = (resFromServer) => {
+	// console.log(resFromServer)
   return {
     type: SIGN_IN,
     payload: {
