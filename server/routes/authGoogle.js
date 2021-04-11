@@ -21,6 +21,7 @@ router.post("/register", (req, res, next) => {
         firstname: user.firstname,
         lastname: user.lastname,
         kind: user.kind,
+        orders: user.orders.populate('orders'),
         verification: user.verification,
       });
     });
@@ -45,6 +46,7 @@ router.post("/login", (req, res, next) => {
         firstname: user.firstname,
         lastname: user.lastname,
         kind: user.kind,
+        orders: user.orders.populate('orders'),
         verification: user.verification,
       });
     });
