@@ -36,7 +36,9 @@ const useStyles = makeStyles({
 	}
 });
 
-export default function DogInfo() {
+export default function DogInfo({id, nickname, breed, gender}) {
+
+  
 	const classes = useStyles();
 	const bull = <span className={classes.bullet}>•</span>;
 
@@ -45,15 +47,17 @@ export default function DogInfo() {
 			<Avatar className={classes.big} src='https://lapkins.ru/upload/iblock/bd2/bd20f15bbc1ed4fba71b161ccd44d08d.jpg' />
 			<CardContent>
 				<Typography variant="h6" component="h4">
-					Мурзик
+        Имя: {nickname}
         </Typography>
-				{/* <Typography className={classes.title} color="textSecondary">
-          e-mail: v1@mail.ru
-        </Typography> */}
+				<Typography className={classes.title} color="textSecondary">
+        Порода: {breed}
+        </Typography>
 			</CardContent>
 			<CardActions>
-				{/* <Button size="small">Редактировать</Button> */}
-				<Link to="/"><EditIcon className={classes.posi} /></Link>
+				
+				<Link to={`/dog/${id}`}><EditIcon className={classes.posi} /></Link>
+        <Link to={`/dog/${id}`} ><Button size="small">Подробнее</Button></Link>
+
 			</CardActions>
 		</Card>
 	);

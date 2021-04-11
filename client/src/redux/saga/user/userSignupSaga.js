@@ -10,13 +10,13 @@ function signupFetch(action) {
     },
     credentials: "include",
     body: JSON.stringify(action.payload),
-  }).then((response) => response.status);
+  }).then((response) => response.json());
 }
 
 function* signupWorker(action) {
   try {
-    const signupStatus = yield call(signupFetch, action);
-    if (signupStatus === 200) yield put(signupAC(action.payload.email));
+    const dataFromServer = yield call(signupFetch, action);
+    if (dataFromServer) yield put(signupAC(dataFromServer));
   } catch (e) {
     yield put({ type: "USER_FETCH_FAILED", message: e.message });
   }

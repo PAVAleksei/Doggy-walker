@@ -1,10 +1,10 @@
-const passport = require('passport');
-const express = require('express');
+const passport = require("passport");
+const express = require("express");
 
 const router = express.Router();
 
-router.post('/register', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
+router.post("/register", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
     if (err) {
       return next(info.message);
     }
@@ -16,33 +16,76 @@ router.post('/register', (req, res, next) => {
         return next(info.message);
       }
       req.session.user = user._id;
-      return res.sendStatus(200);
+      return res.json({
+        email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        kind: user.kind,
+        verification: user.verification,
+        district: user.district,
+      });
     });
   })(req, res, next);
 });
 
-router.post('/login', passport.authenticate("local", { failureRedirect: "/profile" }),
-  function (req, res) {
-    console.log("from login post", req.user);
-    res.json({ name: req.user.name, layout: req.user.layout });
-  });
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return res.send(info.message);
+    }
+    if (!user) {
+      return res.send(info.message);
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return res.send(info.message);
+      }
+      req.session.user = user._id;
+      return res.json({
+        email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        kind: user.kind,
+        verification: user.verification,
+        district: user.district,
+      });
+    });
+  })(req, res, next);
+});
+
+router.get("/tes");
 
 // // auth logout
-router.get('/logout', async (req, res) => {
+router.get("/logout", async (req, res) => {
   await req.logout();
-  res.clearCookie(req.app.get('cookieName'));
-  res.redirect('http://localhost:3000/register').sendStatus(200);
+  res.clearCookie(req.app.get("cookieName"));
+  res.redirect("http://localhost:3000/register");
 });
 
 // auth with google+
-router.get('/google', passport.authenticate('google', {
-  scope: ['profile'],
-}));
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile"],
+  })
+);
 
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  res.redirect('http://localhost:3000');
+router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
+  res.redirect("http://localhost:3000");
 });
+
+// router.get("/google/redirect", (req, res) => {
+//   passport.authenticate("google", (user) => {
+//     res.json({
+//       email: user.email,
+//       firstname: user.firstname,
+//       lastname: user.lastname,
+//       kind: user.kind,
+//       verification: user.verification,
+//     });
+//   });
+// });
 
 module.exports = router;

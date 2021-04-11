@@ -18,7 +18,7 @@ const DogSchema = new Schema({
   },
   // Вес собаки
   weight: {
-    type: Number,
+    type: String,
     required: true,
   },
   // Тянет за поводок
@@ -28,22 +28,26 @@ const DogSchema = new Schema({
   },
   // Контакт с другими собаками
   contactWithOther: {
-    type: Boolean,
+    type: String,
     required: true,
   },
   // Длительность прогулки
-  duration: {
-    type: Number,
+  phobia: {
+    type: String,
     required: true,
   },
   // Отпускать на собачьей площадке
   letGo: {
-    type: Boolean,
+    type: String,
     required: true,
   },
   // Фото собакена
   avatar: {
     type: String,
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
   },
 },
 { timestamps: true });

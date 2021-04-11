@@ -29,13 +29,9 @@ const currencies = [
     value: "Заказчик",
     label: "Заказчик",
   },
-  {
-    value: "Исполнитель",
-    label: "Исполнитель",
-  },
 ];
 
-function Register() {
+const CustomerSelect = () => {
   const classes = useStyles();
   const [kind, setKind] = React.useState("");
   let history = useHistory();
@@ -61,6 +57,10 @@ function Register() {
 
       formRef.current.reset();
     }
+  };
+
+  const handlerClickLoginCustomer = () => {
+    history.push("/customerLogin");
   };
 
   return (
@@ -183,9 +183,22 @@ function Register() {
             </Grid>
           </form>
         </Box>
+        <Grid>
+          <Box m={3}>
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={handlerClickLoginCustomer}
+            >
+              У меня уже сть аккаунт, Войти
+            </Button>
+          </Box>
+        </Grid>
+        <Grid></Grid>
       </Container>
     </Box>
   );
-}
+};
 
-export default Register;
+export default CustomerSelect;

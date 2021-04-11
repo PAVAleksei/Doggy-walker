@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login() {
+const ExecutorLogin = () => {
   const classes = useStyles();
   const formRef = useRef(null);
   const dispatch = useDispatch();
@@ -99,18 +99,11 @@ function Login() {
                 </Button>
               </Box>
             </Grid>
-            <Grid>
-              <Box m={3}>
-                <Button variant="contained" size="large" color="secondary">
-                  <a href="http://localhost:3001/auth/google">Google</a>
-                </Button>
-              </Box>
-            </Grid>
           </form>
         </Box>
       </Container>
     </Box>
   );
-}
+};
 
-export default Login;
+export default ExecutorLogin;

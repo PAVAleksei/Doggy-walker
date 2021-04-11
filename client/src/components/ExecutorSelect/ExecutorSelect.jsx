@@ -14,6 +14,8 @@ import {
   registerWithGoogleThunk,
   sagaSignupAC,
 } from "../../redux/actionCreators/userAC";
+import HomeIcon from "@material-ui/icons/Home";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,16 +28,12 @@ const useStyles = makeStyles((theme) => ({
 
 const currencies = [
   {
-    value: "Заказчик",
-    label: "Заказчик",
-  },
-  {
     value: "Исполнитель",
     label: "Исполнитель",
   },
 ];
 
-function Register() {
+const ExecutorSelect = () => {
   const classes = useStyles();
   const [kind, setKind] = React.useState("");
   let history = useHistory();
@@ -61,6 +59,10 @@ function Register() {
 
       formRef.current.reset();
     }
+  };
+
+  const handlerClickLoginExecutor = () => {
+    history.push("/executorLogin");
   };
 
   return (
@@ -144,6 +146,40 @@ function Register() {
                 ))}
               </TextField>
             </Grid>
+
+            <Grid>
+              <TextField
+                name="district"
+                required
+                label="Адрес"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <HomeIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+
+            <Grid>
+              <TextField
+                name="passport"
+                type="number"
+                required
+                label="Паспортные данные"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AssignmentIndIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+
             <Grid>
               <TextField
                 name="password"
@@ -174,18 +210,24 @@ function Register() {
                 </Button>
               </Box>
             </Grid>
-            <Grid>
-              <Box m={3}>
-                <Button variant="contained" size="large" color="secondary">
-                  <a href="http://localhost:3001/auth/google">Google</a>
-                </Button>
-              </Box>
-            </Grid>
           </form>
         </Box>
+        <Grid>
+          <Box m={3}>
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={handlerClickLoginExecutor}
+            >
+              У меня уже сть аккаунт, Войти
+            </Button>
+          </Box>
+        </Grid>
+        <Grid></Grid>
       </Container>
     </Box>
   );
-}
+};
 
-export default Register;
+export default ExecutorSelect;
