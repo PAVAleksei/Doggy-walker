@@ -1,4 +1,4 @@
-import {  EDIT_DOG, GET_EDIT_DOG } from "../types/dogTypes"
+import { EDIT_DOG, GET_EDIT_DOG, } from "../types/dogTypes"
 
 const dogReducer = (state = {}, action) => {
 
@@ -7,10 +7,9 @@ const dogReducer = (state = {}, action) => {
     case GET_EDIT_DOG:
       return action.payload
 
-      case EDIT_DOG:
+    case EDIT_DOG:
       return action.payload;
 
-      
     default:
       return state
   }

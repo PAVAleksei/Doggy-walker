@@ -62,7 +62,7 @@ export default function UserAccount() {
           <button>Мои заказы</button>
           <button>Мои отзывы</button>
         </Grid>
-        <Box m={3}>
+        {/* <Box m={3}>
           <Button
             onClick={handlerVerifPage}
             variant="contained"
@@ -71,7 +71,7 @@ export default function UserAccount() {
           >
             Верифицировать аккаунт
           </Button>
-        </Box>
+        </Box> */}
 
         <Grid item xs={9}>
           <Paper className={classes.paper}>Мои питомцы</Paper>
@@ -83,7 +83,6 @@ export default function UserAccount() {
                 dogs ?
                   dogs.map((dog) => (<DogInfo key={dog._id} id={dog._id} nickname={dog.nickname} breed={dog.breed} gender={dog.gender} weight={dog.weight} pullsTheLeash={dog.pullsTheLeash} contactWithOther={dog.contactWithOther} phobia={dog.phobia} letGo={dog.letGo} avatar={dog.avatar} />)) : <p>Добавьте вашу собаку</p>
               }
-
 
 
             </Grid>

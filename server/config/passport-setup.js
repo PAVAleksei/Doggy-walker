@@ -91,6 +91,7 @@ passport.use(
             googleId: profile.id,
             firstname,
             lastname,
+            email: profile.emails[0].value,
           })
             .save()
             .then((newUser) => {

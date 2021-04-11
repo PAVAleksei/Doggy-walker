@@ -1,4 +1,4 @@
-import { ADD_DOG, GET_DOGS, EDIT_DOG, GET_EDIT_DOG } from "../types/dogTypes";
+import { ADD_DOG, GET_DOGS, EDIT_DOG, GET_EDIT_DOG, DELETE_DOG } from "../types/dogTypes";
 
 
 export const addNewDogFetch = (newDog) => async (dispatch) => {
@@ -8,7 +8,7 @@ export const addNewDogFetch = (newDog) => async (dispatch) => {
       'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body: JSON.stringify({newDog})
+    body: JSON.stringify({ newDog })
   })
   const responseFromServ = await response.json()
   dispatch(addDogAC(responseFromServ))
@@ -54,5 +54,23 @@ export const getDogAC = (dog) => {
   return {
     type: GET_EDIT_DOG,
     payload: dog,
+  }
+};
+
+export const deleteFetchDogAC = (id) => async (dispatch) => {
+  console.log(id);
+  const response = await fetch(`http://localhost:3001/api/v1/dog/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+  if (response.status === 200) {
+    dispatch(deleteDogAC(id))
+  }
+}
+
+export const deleteDogAC = (id) => {
+  return {
+    type: DELETE_DOG,
+    payload: id,
   }
 };

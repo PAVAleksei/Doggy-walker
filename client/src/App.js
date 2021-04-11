@@ -12,10 +12,11 @@ import AddDog from './components/DogInfo/AddDog'
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {signupAC} from './redux/actionCreators/userAC'
+import { signupAC } from './redux/actionCreators/userAC'
 import UserAccount from './components/UserAccount/UserAccount';
 import EditDog from './components/DogInfo/Edit';
 import Verification from "./components/Verification/Verification";
+import EditUser from "./components/UserAccount/EditUser"
 
 
 function App() {
@@ -67,8 +68,8 @@ function App() {
           </Route>
           <Route path="/exaccount">
 
-						<ExecutorAccount />
-					</Route>
+            <ExecutorAccount />
+          </Route>
 
           <Route path="/addAnimal">
             <AddDog />
@@ -76,6 +77,10 @@ function App() {
 
           <Route path="/dog/:id">
             <EditDog />
+          </Route>
+
+          <Route path="/user/:id">
+            <EditUser />
           </Route>
 
         </Switch>
