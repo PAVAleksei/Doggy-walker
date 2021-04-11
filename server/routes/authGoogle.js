@@ -23,6 +23,7 @@ router.post("/register", (req, res, next) => {
         kind: user.kind,
         verification: user.verification,
         district: user.district,
+        orders: user.orders,
       });
     });
   })(req, res, next);
@@ -48,6 +49,7 @@ router.post("/login", (req, res, next) => {
         kind: user.kind,
         verification: user.verification,
         district: user.district,
+        orders: user.orders,
       });
     });
   })(req, res, next);
