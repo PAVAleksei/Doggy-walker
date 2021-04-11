@@ -27,6 +27,7 @@ router.get('/orders', async(req, res) => {
 router.get('/customer/orders', async(req, res) => {
   
   const { userEmail } = req.body;
+
   try {
     const userId = await User.findOne( { email: userEmail });
     const orders = await Order.find({ clientId: userId });
@@ -48,9 +49,11 @@ router.post('/customer/orders', async (req, res) => {
 
   // console.log('======>');
   // console.log(req.body);
-  const { selectedDate, description, userEmail } = req.body;
-  const userId = (await User.findOne( { email: 'sara@test.com' }))._id;
+  const { selectedDate, description, addressToBack, userEmail } = req.body;
+  const user = await User.findOne( { email: 'sara@t.com' })
+  const userId = user._id;
 
+  
   // console.log(userId);
 
   // const { description,
@@ -66,18 +69,23 @@ router.post('/customer/orders', async (req, res) => {
     await Order.create({
       description: description,
       clientId: userId,
+      address: addressToBack,
       // dogId,  
       // price,
       date: selectedDate,
       completed: false,
     });
     
-    // const order = await Order.findOne({ description: description });
+    const order = await Order.findOne({ description: description });
 
-    // console.log(order);
-    // // setTimeout(() => {
-    // return res.json(order);
-    // // }, 500)
+    const ordersId = (await Order.find({clientId: userId})).map(el => el._id);
+    // console.log(orders);
+    console.log(order);
+    const user = await User.findByIdAndUpdate(userId, { orders: ordersId });
+    // setTimeout(() => {
+      console.log(user);
+    return res.json(order);
+    // }, 500)
 
   } catch (error) {
     console.log('error');
