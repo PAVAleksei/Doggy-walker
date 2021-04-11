@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Info from '../Info/Info';
 import DogInfo from '../DogInfo/DogInfo';
-import Order from '../Order/Order';
+import Order from '../OrderForm/OrderForm';
 import CardOrder from '../CardOrder/CardOrder';
 
 const useStyles = makeStyles((theme) => ({
