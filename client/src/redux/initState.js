@@ -6,6 +6,7 @@ const initState = {
     kind: "",
     isAuth: false,
     verification: false,
+    orders: [],
   },
   dogs: [],
   dog: {},
