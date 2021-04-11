@@ -48,13 +48,12 @@ router.post("/login", (req, res, next) => {
         kind: user.kind,
         verification: user.verification,
 				district: user.district,
-				orders: user.orders,
+				orders: user.orders
       });
     });
   })(req, res, next);
 });
 
-router.get("/tes");
 
 // // auth logout
 router.get("/logout", async (req, res) => {
