@@ -19,7 +19,7 @@ passport.deserializeUser((id, done) => {
 const authUser = async (req, email, password, done) => {
   try {
     if (/login/.test(req.path)) {
-      const user = await User.findOne({ email }).lean().exec();
+      const user = await User.findOne({ email }).populate('orders').lean().exec();
 
       if (!user)
         return done(null, false, { message: "Неверный логин или пароль" });
@@ -32,7 +32,7 @@ const authUser = async (req, email, password, done) => {
       req.body.lastname,
       req.body.kind)
     ) {
-      const user = await User.findOne({ email }).lean().exec();
+      const user = await User.findOne({ email }).populate('orders').lean().exec();
       if (!user) {
         try {
           const hashPass = await bcrypt.hash(password, 10);
@@ -82,7 +82,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // check if user already exists in our own db
-      User.findOne({ googleId: profile.id }).then((currentUser) => {
+      User.findOne({ googleId: profile.id }).populate('orders').then((currentUser) => {
         if (currentUser) {
           // already have this user
           // console.log('user is: ', currentUser)

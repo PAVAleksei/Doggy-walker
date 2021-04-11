@@ -21,6 +21,7 @@ router.post("/register", (req, res, next) => {
         firstname: user.firstname,
         lastname: user.lastname,
         kind: user.kind,
+        orders: user.orders,
         verification: user.verification,
         district: user.district,
       });
@@ -46,6 +47,7 @@ router.post("/login", (req, res, next) => {
         firstname: user.firstname,
         lastname: user.lastname,
         kind: user.kind,
+        orders: user.orders,
         verification: user.verification,
 				district: user.district,
 				orders: user.orders,
