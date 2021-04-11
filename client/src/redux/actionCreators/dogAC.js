@@ -39,7 +39,7 @@ export const editDogFetch = (editDog, id) => async (dispatch) => {
     body: JSON.stringify(editDog, id)
   })
   const responseFromServ = await response.json()
-  console.log(responseFromServ);
+  console.log(responseFromServ, 'responseFromServ');
   dispatch(editDogAC(responseFromServ))
 }
 

@@ -9,8 +9,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   orders: orderReducer,
   error: errorReducer,
-  dogs: DogsReducer,
   dog: dogReducer,
+  dogs: DogsReducer,
 });
 
 export default rootReducer;

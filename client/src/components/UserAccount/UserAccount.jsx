@@ -6,9 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import Info from '../Info/Info';
 import DogInfo from '../DogInfo/DogInfo';
 import CardOrder from '../CardOrder/CardOrder';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import {getDogsAC } from '../../redux/actionCreators/dogAC';
+import { getDogsAC } from '../../redux/actionCreators/dogAC';
 import { Box, Button } from "@material-ui/core";
 
 
@@ -37,10 +37,10 @@ export default function UserAccount() {
     fetch('http://localhost:3001/api/v1/dog')
       .then(response => response.json())
       .then(responseFromServer => dispatch(getDogsAC(responseFromServer)))
-      
+
   }, [])
-  
-    const history = useHistory();
+
+  const history = useHistory();
 
   const addOrderFormHandler = () => {
     history.push("/order");
@@ -79,12 +79,12 @@ export default function UserAccount() {
             <Grid item xs={4}>
               <Paper className={classes.paper}>xs=4</Paper>
 
-{
-  dogs ? 
-  dogs[0]?.map(dog => ( <DogInfo key={dog.id} id={dog._id} nickname={dog.nickname} breed={dog.breed} gender={dog.gender} weight={dog.weight} pullsTheLeash={dog.pullsTheLeash} contactWithOther={dog.contactWithOther} phobia={dog.phobia} letGo={dog.letGo} avatar={dog.avatar} />)) : <p>Добавьте вашу собаку</p>
-}
+              {
+                dogs ?
+                  dogs.map((dog) => (<DogInfo key={dog._id} id={dog._id} nickname={dog.nickname} breed={dog.breed} gender={dog.gender} weight={dog.weight} pullsTheLeash={dog.pullsTheLeash} contactWithOther={dog.contactWithOther} phobia={dog.phobia} letGo={dog.letGo} avatar={dog.avatar} />)) : <p>Добавьте вашу собаку</p>
+              }
 
-              
+
 
             </Grid>
             <Grid item xs={4}>

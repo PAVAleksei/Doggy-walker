@@ -11,13 +11,8 @@ const addDogsReducer = (state = [], action) => {
       ]
       
       case GET_DOGS:
-      return [
-        ...state,
-        action.payload
-      ]
-
-      case EDIT_DOG:
-      return action.payload;
+      return action.payload
+  
 
       
     default:
