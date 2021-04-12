@@ -46,15 +46,8 @@ const useStyles = makeStyles((theme) => ({
 
 function OrderForm() {
   
-  const dogs = useSelector(state => state.user.animal).map(dog => ({ value: dog._id, label: dog.nickname}));
+  const dogs = useSelector(state => state.user.animal)?.map(dog => ({ value: dog._id, label: dog.nickname}));
 
-
-  const currencies = [
-    {
-      value: "Заказчик",
-      label: "Заказчик",
-    },
-  ];
 
   const classes = useStyles();
 
@@ -64,11 +57,14 @@ function OrderForm() {
   const error = useSelector((state) => state.error);
   const [address, setAddress] = useState();
   const [description, setDescription] = useState('');
-  const [curDog, setCurDog] = useState('');
+
+
+  const [curDog, setCurDog] = useState(dogs?.length ? dogs[0]?.value : '');
   const history = useHistory();
 
   const dogSelectHandler = (event) => {
     setCurDog(event.target.value);
+    console.log('===curDog', curDog);
   };
 
   const handleDateChange = (date) => {
@@ -95,7 +91,7 @@ function OrderForm() {
 
      console.log(addressToServer);
 
-    if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description.trim() && addressToServer) {
+    if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description.trim() && addressToServer && curDog) {
       setError({ status: false, text: "" });
 
       try {
@@ -169,7 +165,7 @@ function OrderForm() {
           <Grid>
             <TextField
                 id="outlined-select-currency-native"
-                name="dogId"
+                name="curDog"
                 select
                 label="Выберите питомца"
                 value={curDog}
