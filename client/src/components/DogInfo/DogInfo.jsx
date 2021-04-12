@@ -62,9 +62,9 @@ export default function DogInfo({ id, nickname, breed, gender }) {
       </CardContent>
       <CardActions>
 
-        <Link to={`/dog/${id}`}><EditIcon className={classes.posi} /></Link>
-        <Link to={`/more/${id}`} ><Button className={classes.posi} size="small">Подробнее</Button></Link>
-        <Button onClick={onClickHandler} className={classes.posi} size="small" >Удалить</Button>
+        <Link to={`/edit/${id}`}><EditIcon className={classes.posi} /></Link>
+        <Link to={`/dog/${id}`} ><Button className={classes.posi} size="small">Подробнее...</Button></Link>
+        
 
       </CardActions>
     </Card>
