@@ -45,6 +45,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function OrderForm() {
+  
+  const dogs = useSelector(state => state.user.animal).map(dog => ({ value: dog._id, label: dog.nickname}));
+
+
+  const currencies = [
+    {
+      value: "Заказчик",
+      label: "Заказчик",
+    },
+  ];
+
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -53,9 +64,12 @@ function OrderForm() {
   const error = useSelector((state) => state.error);
   const [address, setAddress] = useState();
   const [description, setDescription] = useState('');
+  const [curDog, setCurDog] = useState('');
   const history = useHistory();
 
-  // console.log(address.data);
+  const dogSelectHandler = (event) => {
+    setCurDog(event.target.value);
+  };
 
   const handleDateChange = (date) => {
     // console.log(date)
@@ -79,11 +93,13 @@ function OrderForm() {
       coordinates: [Number(address.data.geo_lat), Number(address.data.geo_lon)]
     }
 
+     console.log(addressToServer);
+
     if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description.trim() && addressToServer) {
       setError({ status: false, text: "" });
 
       try {
-        dispatch(addOrderCustomer({ selectedDate, description, addressToServer }))
+        dispatch(addOrderCustomer({ selectedDate, description, addressToServer, curDog }))
           // .then((newOrder) => {
           //   console.log(newOrder); 
           //   dispatch(addOrderCustomerFromServer(newOrder))
@@ -150,6 +166,27 @@ function OrderForm() {
               />
             </Grid>
           </MuiPickersUtilsProvider>
+          <Grid>
+            <TextField
+                id="outlined-select-currency-native"
+                name="dogId"
+                select
+                label="Выберите питомца"
+                value={curDog}
+                onChange={dogSelectHandler}
+                SelectProps={{
+                  native: true,
+                }}
+                helperText="Выберите вашего питомца"
+                variant="outlined"
+              >
+                {dogs.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+          </Grid>
           <Grid>
             <Box m={3}>
               <AddressSuggestions token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} />
