@@ -7,7 +7,7 @@ import dogReducer from "./dogReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
-  orders: orderReducer,
+  allOrders: orderReducer,
   error: errorReducer,
   dog: dogReducer,
   dogs: DogsReducer,
