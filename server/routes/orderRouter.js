@@ -8,13 +8,52 @@ const { User } = require("../db/models/user.model");
 
 router.get("/orders", async (req, res) => {
   try {
-    const orders = await Order.find();
-
-    setTimeout(() => {
-      return res.json(orders);
-    }, 500);
+    const orders = await Order.find({ requested: false });
+    return res.json(orders);
   } catch (error) {
     console.log("Error to receive orders from mongo");
+    return res.sendStatus(500);
+  }
+});
+
+//Исполнитель откликнулся на ордер, меняем requested на true
+
+router.patch("/orders/requested/:id", async (req, res) => {
+  const currOrderId = req.params.id;
+  try {
+    const currOrder = await Order.findByIdAndUpdate(
+      currOrderId,
+      {
+        requested: true,
+      },
+      {
+        new: true,
+      }
+    );
+    return res.json(currOrder);
+  } catch (error) {
+    console.log("Error to update order|requested| to true");
+    return res.sendStatus(500);
+  }
+});
+
+//Заказчик  подтвердил заявку на ордер, меняем inWork на true
+
+router.post("/orders/inwork/:id", async (req, res) => {
+  const currOrderId = req.params.id;
+  try {
+    const currOrder = await Order.findByIdAndUpdate(
+      currOrderId,
+      {
+        inWork: true,
+      },
+      {
+        new: true,
+      }
+    );
+    return res.json(currOrder);
+  } catch (error) {
+    console.log("Error to update order|inWork| to true");
     return res.sendStatus(500);
   }
 });
