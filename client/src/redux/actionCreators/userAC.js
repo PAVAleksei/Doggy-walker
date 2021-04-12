@@ -1,4 +1,4 @@
-import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN, EDIT_USER } from "../types/usertypes";
+import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN, EDIT_USER, ADD_ORDER_CUSTOMER } from "../types/usertypes";
 
 export const sagaSignupAC = ({
   email,
@@ -24,7 +24,7 @@ export const sagaSignupAC = ({
 };
 
 export const signupAC = (resFromServer) => {
-  // console.log(resFromServer);
+  console.log(resFromServer);
   return {
     type: AUTH,
     payload: {
@@ -42,7 +42,7 @@ export const SagaSignInAC = (loginData = {}) => {
 };
 
 export const signinAC = (resFromServer) => {
-	// console.log(resFromServer)
+  // console.log(resFromServer)
   return {
     type: SIGN_IN,
     payload: {
@@ -58,23 +58,49 @@ export const signinAC = (resFromServer) => {
 //   dispatch(signupAC(dataFromServer));
 // };
 
-
 export const editUserFetch = (editUser) => async (dispatch) => {
   const response = await fetch(`http://localhost:3001/user/edit`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    credentials: 'include',
-    body: JSON.stringify(editUser)
-  })
-  const responseFromServ = await response.json()
-  dispatch(editUserAC(responseFromServ))
-}
+    credentials: "include",
+    body: JSON.stringify(editUser),
+  });
+  const responseFromServ = await response.json();
+  dispatch(editUserAC(responseFromServ));
+};
 
 export const editUserAC = (editUser) => {
   return {
     type: EDIT_USER,
     payload: editUser,
+  };
+};
+
+export const addOrderCustomer = (order) => async (dispatch, setState) => {
+  if (order) {
+
+    fetch('http://localhost:3001/api/customer/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(order),
+    })
+      .then(response => response.json())
+      .then((newOrder) => {
+        console.log(newOrder); 
+        dispatch(addOrderCustomerFromServer(newOrder))
+        // return history.push('/account');
+      })
   }
+};
+
+export const addOrderCustomerFromServer = (newOrder) => {
+  return {
+    type: ADD_ORDER_CUSTOMER,
+    payload: newOrder,
+  };
 };

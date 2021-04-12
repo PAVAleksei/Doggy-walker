@@ -31,10 +31,7 @@ export default function UserAccount() {
   const animalByUser = useSelector((state) => state.user.animal);
   console.log(animalByUser);
   const orders = useSelector((state) => state.user.orders);
-  const userEmail = useSelector((state) => state.user.email);
-  // console.log(dogs);
 
-  //
   useEffect(() => {
     fetch("http://localhost:3001/api/v1/dog")
       .then((response) => response.json())
@@ -49,7 +46,7 @@ export default function UserAccount() {
 
   return (
     <div className={classes.root}>
-      <h3>Личный кабинет</h3>
+      <h3>Личный кабинет Заказчика</h3>
       <Grid container spacing={3} direction="row">
         {/* <Grid item xs={1}/> */}
         <Grid item xs={3}>
