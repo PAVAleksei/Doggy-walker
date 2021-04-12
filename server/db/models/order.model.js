@@ -1,10 +1,10 @@
 const { model, Schema } = require('mongoose')
 
 const OrderSchema = new Schema({
-  service: String,
+	service: String,
 	description: {
 		type: String,
-		required: true
+		required: true,
 	},
 	clientId: {
 		type: Schema.Types.ObjectId,
@@ -14,25 +14,25 @@ const OrderSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 	},
-  dogId: {
-    type: Schema.Types.ObjectId,
+	dogId: {
+		type: Schema.Types.ObjectId,
 		ref: 'Dog',
-  },
+	},
 	price: {
 		type: Number,
 		default: 0,
 	},
 	date: {
 		type: Date,
-		default: () => Date.now(),
-		min: () => Date.now() + 1 * 2 * 60 * 60 * 1000,
-		max: () => Date.now() + 100 * 24 * 60 * 60 * 1000,
+		// default: () => Date.now(),
+		// min: () => Date.now() + 1 * 2 * 60 * 60 * 1000,
+		// max: () => Date.now() + 100 * 24 * 60 * 60 * 1000,
 	},
-  address: {
-    name: String,
-    coordinates: [],
-  },
-  completed: Boolean
+	address: {
+		name: String,
+		coordinates: [],
+	},
+	completed: Boolean,
 },
 	{ timestamps: true },
 );

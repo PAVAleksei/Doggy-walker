@@ -28,4 +28,10 @@ router.post('/:id', async (req, res) => {
   res.json(dogs);
 });
 
+router.delete('/:id', async (req, res) => {
+  console.log(req.params, 'hfhfhfh');
+  await Dog.findByIdAndDelete(req.params.id);
+  res.sendStatus(200);
+});
+
 module.exports = router;

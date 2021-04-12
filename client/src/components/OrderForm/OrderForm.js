@@ -21,6 +21,7 @@ import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css'
 import { useHistory } from "react-router";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -51,12 +52,15 @@ function OrderForm() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const error = useSelector((state) => state.error);
   const [address, setAddress] = useState();
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
   // const history = useHistory('/')
 
   // console.log(address.data);
 
   const handleDateChange = (date) => {
+    // console.log(date)
+    // const dateRu = date.toLocaleString('ru-RU');
+    // console.log(dateRu);
     setSelectedDate(date);
     // console.log(date);
   };

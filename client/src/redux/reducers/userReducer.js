@@ -1,5 +1,5 @@
 import initState from "../initState";
-import { AUTH, SIGN_IN, LOGOUT } from "../types/usertypes";
+import { AUTH, SIGN_IN, EDIT_USER, LOGOUT } from "../types/usertypes";
 import { VERIFICATION_USER } from "../types/verificationUserTypes";
 
 function userReducer(state = initState.user, action) {
@@ -17,6 +17,12 @@ function userReducer(state = initState.user, action) {
       return {
         ...state,
         verification: true,
+      };
+
+    case EDIT_USER:
+      return {
+        ...action.payload,
+        isAuth: true
       };
 
     default:
