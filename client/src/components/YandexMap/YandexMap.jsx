@@ -15,7 +15,7 @@ const mapData = {
 
 export default function YandexMap() {
 
-	const coordinates = useSelector((state) => state.user.orders)
+	const coordinates = useSelector((state) => state.allOrders)
 	console.log(coordinates);
 
 	return (
