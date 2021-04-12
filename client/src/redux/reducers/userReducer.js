@@ -1,8 +1,8 @@
 import initState from "../initState";
-import { AUTH, SIGN_IN, EDIT_USER, LOGOUT } from "../types/usertypes";
+import { AUTH, SIGN_IN, EDIT_USER, LOGOUT, ADD_ORDER_CUSTOMER } from "../types/usertypes";
 import { VERIFICATION_USER } from "../types/verificationUserTypes";
 
-function userReducer(state = initState.user, action) {
+function userReducer(state = {}, action) {
   switch (action.type) {
     case AUTH:
       // console.log(action.payload);
@@ -24,6 +24,12 @@ function userReducer(state = initState.user, action) {
         ...action.payload,
         isAuth: true
       };
+    
+    case ADD_ORDER_CUSTOMER:
+      return {
+        ...state, orders: [...state.orders, action.payload]
+      }
+
 
     default:
       return state;

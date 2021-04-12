@@ -26,6 +26,10 @@ const useStyles = makeStyles({
 function CardOrder({ description, date, price, address }) {
   const classes = useStyles();
 
+  const editHandler = () => {
+    
+  }
+
   return (
 		<Box className={classes.pos} m={4}>
       <Card className={classes.root}>
@@ -51,8 +55,8 @@ function CardOrder({ description, date, price, address }) {
           </CardContent>
         </CardActionArea>
         <CardActions display="flex" justifyContent="center" alignItems="center">
-          <Button variant="contained" size="small" color="primary">
-            Редактировать
+          <Button onClick={editHandler} variant="contained" size="small" color="primary">
+            Изменить заказ
           </Button>
           <Button variant="contained" size="small" color="secondary">
             Удалить
