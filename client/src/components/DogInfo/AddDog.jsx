@@ -19,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
 export default function MultilineTextFields() {
   const classes = useStyles();
   const formRef = useRef(null);
-  const dispatch = useDispatch();
+
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -36,6 +37,7 @@ export default function MultilineTextFields() {
       dispatch(addNewDogFetch(valuesOfFields));
 
       formRef.current.reset();
+     history.push('/account');
     }
     history.push("/account");
   };

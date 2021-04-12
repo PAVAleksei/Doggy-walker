@@ -21,6 +21,7 @@ import CustomerSelect from "./components/CustomerSellect/CustomerSelect";
 import CustomerLogin from "./components/CustomerLogin/CustomerLogin";
 import ExecutorLogin from "./components/ExecutorLogin/ExecutorLogin";
 import Dog from "./components/DogInfo/Dog";
+import { setOrders } from "./redux/actionCreators/orderAc";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,11 @@ function App() {
       .then((res) => res.json())
       .then((resFromServer) => dispatch(signupAC(resFromServer)));
   }, []);
+
+  useEffect(() => {
+    dispatch(setOrders());
+  }, [])
+
   return (
     <div className="App">
       <Router>

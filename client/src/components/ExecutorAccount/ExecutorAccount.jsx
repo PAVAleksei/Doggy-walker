@@ -1,5 +1,5 @@
 import YandexMap from "../YandexMap/YandexMap";
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -7,6 +7,7 @@ import Info from "../Info/Info";
 import DogInfo from "../DogInfo/DogInfo";
 import CardOrder from "../CardOrder/CardOrder";
 import { Box, Button, jssPreset } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +22,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ExecutorAccount() {
+
   const classes = useStyles();
+  const allOrders = useSelector(state => state.allOrders);
+  
 
   return (
     <div className={classes.root}>
