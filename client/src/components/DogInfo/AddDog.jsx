@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Box, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+
 import { addNewDogFetch } from '../../redux/actionCreators/userAC';
+
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
 export default function MultilineTextFields() {
   const classes = useStyles();
   const formRef = useRef(null);
+
+  const history = useHistory();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -36,6 +40,7 @@ export default function MultilineTextFields() {
       dispatch(addNewDogFetch(valuesOfFields));
 
       formRef.current.reset();
+     history.push('/account');
     }
     history.push("/account");
   };

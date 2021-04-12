@@ -52,15 +52,15 @@ router.get('/customer/orders', async (req, res) => {
 router.post('/customer/orders', async (req, res) => {
 
   if (req.user) {
-    const { selectedDate, description, addressToBack } = req.body;
+    const { selectedDate, description, addressToServer, curDog } = req.body;
     const userId = req.user._id;
     try {
   
       await Order.create({
         description: description,
         clientId: userId,
-        address: addressToBack,
-        // dogId,  
+        address: addressToServer,
+        dogId: curDog,  
         // price,
         date: selectedDate,
         // completed: false,
