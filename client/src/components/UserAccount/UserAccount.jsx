@@ -27,7 +27,6 @@ export default function UserAccount() {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-
   const animalByUser = useSelector((state) => state.user.animal);
   console.log(animalByUser);
   const orders = useSelector((state) => state.user.orders);
@@ -40,6 +39,7 @@ export default function UserAccount() {
   const history = useHistory();
 
   const addOrderFormHandler = () => {
+
     history.push("/order");
   };
 
