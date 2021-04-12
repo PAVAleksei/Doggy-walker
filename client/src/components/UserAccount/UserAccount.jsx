@@ -31,7 +31,6 @@ export default function UserAccount() {
   const animalByUser = useSelector((state) => state.user.animal);
   console.log(animalByUser);
   const orders = useSelector((state) => state.user.orders);
-
   useEffect(() => {
     fetch("http://localhost:3001/api/v1/dog")
       .then((response) => response.json())
@@ -75,26 +74,28 @@ export default function UserAccount() {
             <Box m={3}>
               <Grid item container spacing={2} direction="row">
                 {/* <Box m={4}> */}
-                {animalByUser?.length ?
-                  animalByUser.map((dog) =>
-                    <Grid item xs={12} sm={3}>
-                      <DogInfo
-                        key={dog._id}
-                        id={dog._id}
-                        nickname={dog.nickname}
-                        breed={dog.breed}
-                        gender={dog.gender}
-                        weight={dog.weight}
-                        pullsTheLeash={dog.pullsTheLeash}
-                        contactWithOther={dog.contactWithOther}
-                        phobia={dog.phobia}
-                        letGo={dog.letGo}
-                        avatar={dog.avatar}
-                      />
-                    </Grid>
-                  )
-                  : <p>Пока нет сохраненных питомцев</p>
+
+                {
+                  animalByUser?.length ?
+                    animalByUser.map((dog) => (
+                      <Grid item xs={12} sm={3}>
+                        <DogInfo
+                          key={dog._id}
+                          id={dog._id}
+                          nickname={dog.nickname}
+                          breed={dog.breed}
+                          gender={dog.gender}
+                          weight={dog.weight}
+                          pullsTheLeash={dog.pullsTheLeash}
+                          contactWithOther={dog.contactWithOther}
+                          phobia={dog.phobia}
+                          letGo={dog.letGo}
+                          avatar={dog.avatar}
+                        />
+                      </Grid>
+                    )) : <p>Пока нет сохраненных питомцев</p>
                 }
+                
                 {/* </Box> */}
               </Grid>
             </Box>
