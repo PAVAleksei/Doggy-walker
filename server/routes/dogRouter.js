@@ -31,7 +31,7 @@ router.post('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  console.log(req.params, 'hfhfhfh');
+  // console.log(req.params, 'hfhfhfh');
   await Dog.findByIdAndDelete(req.params.id);
   res.sendStatus(200);
 });

@@ -12,26 +12,31 @@ import { Box } from "@material-ui/core";
 const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
-		border: "1px solid #1C3E6A",
-
+    border: "1px solid #1C3E6A",
+    height: 470,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   media: {
     height: 140,
-	},
-	pos: {
-		margin: 0,
-	}
+  },
+  pos: {
+    margin: 0,
+  },
+  button: {
+    width: 300,
+    height: 60,
+  },
 });
 
 function CardOrder({ description, date, price, address }) {
   const classes = useStyles();
 
-  const editHandler = () => {
-    
-  }
+  const editHandler = () => {};
 
   return (
-		<Box className={classes.pos} m={4}>
+    <Box className={classes.pos} m={4}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
@@ -41,24 +46,36 @@ function CardOrder({ description, date, price, address }) {
           />
           <CardContent>
             <Typography gutterBottom component="h2">
-              Запланированная дата:{ date.toLocaleString('ru-RU') }
+              Запланированная дата:
+              {date.toLocaleString("ru-RU")}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Задание: { description }
+              Задание: {description}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Адрес: { address }
+              Адрес: {address}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              Стоимость: { price } рублей
+              Стоимость: {price} рублей
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions display="flex" justifyContent="center" alignItems="center">
-          <Button onClick={editHandler} variant="contained" size="small" color="primary">
+          <Button
+            onClick={editHandler}
+            variant="contained"
+            size="small"
+            color="primary"
+            className={classes.button}
+          >
             Изменить заказ
           </Button>
-          <Button variant="contained" size="small" color="secondary">
+          <Button
+            variant="contained"
+            size="small"
+            color="secondary"
+            className={classes.button}
+          >
             Удалить
           </Button>
         </CardActions>
