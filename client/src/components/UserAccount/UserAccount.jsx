@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
 export default function UserAccount() {
   const classes = useStyles();
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const animalByUser = useSelector((state) => state.user.animal);
-  console.log(animalByUser);
   const orders = useSelector((state) => state.user.orders);
   useEffect(() => {
     fetch("http://localhost:3001/api/v1/dog")
@@ -36,7 +36,6 @@ export default function UserAccount() {
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
 
-  const history = useHistory();
 
   const addOrderFormHandler = () => {
 

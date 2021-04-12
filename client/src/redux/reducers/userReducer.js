@@ -1,4 +1,5 @@
 import initState from "../initState";
+import { ADD_DOG } from "../types/dogTypes";
 import { AUTH, SIGN_IN, EDIT_USER, LOGOUT, ADD_ORDER_CUSTOMER } from "../types/usertypes";
 import { VERIFICATION_USER } from "../types/verificationUserTypes";
 
@@ -28,6 +29,11 @@ function userReducer(state = {}, action) {
     case ADD_ORDER_CUSTOMER:
       return {
         ...state, orders: [...state.orders, action.payload]
+      }
+
+      case ADD_DOG:
+      return {
+        ...state, animal: [...state.animal, action.payload]
       }
 
 

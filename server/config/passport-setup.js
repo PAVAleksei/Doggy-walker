@@ -107,6 +107,7 @@ passport.use(
             firstname,
             lastname,
             email: profile.emails[0].value,
+            photo: profile.photos[0].value,
           })
             .save()
             .then((newUser) => {
