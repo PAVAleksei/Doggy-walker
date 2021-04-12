@@ -1,4 +1,4 @@
-import { ADD_DOG } from "../types/dogTypes";
+import { ADD_DOG, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
 import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN, EDIT_USER, ADD_ORDER_CUSTOMER } from "../types/usertypes";
 
 export const sagaSignupAC = ({
@@ -123,5 +123,44 @@ export const addDogAC = (newDog) => {
   return {
     type: ADD_DOG,
     payload: newDog,
+  }
+};
+
+export const deleteFetchDogAC = (id) => async (dispatch) => {
+  console.log(id);
+  const response = await fetch(`http://localhost:3001/api/v1/dog/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+  if (response.status === 200) {
+    dispatch(deleteDogAC(id))
+  }
+}
+
+export const deleteDogAC = (id) => {
+  return {
+    type: DELETE_DOG,
+    payload: id,
+  }
+};
+
+export const editDogFetch = (editDog, id) => async (dispatch) => {
+  const response = await fetch(`http://localhost:3001/api/v1/dog/${id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: JSON.stringify(editDog, id)
+  })
+  const responseFromServ = await response.json()
+  console.log(responseFromServ, 'responseFromServ');
+  dispatch(editDogAC(responseFromServ))
+}
+
+export const editDogAC = (editDog) => {
+  return {
+    type: EDIT_DOG,
+    payload: editDog,
   }
 };
