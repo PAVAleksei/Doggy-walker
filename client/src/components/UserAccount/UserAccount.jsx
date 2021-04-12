@@ -95,7 +95,7 @@ export default function UserAccount() {
                       />
                     </Grid>
                   ))
-                ) : (
+               : (
                   <p>Пока нет сохраненных питомцев</p>
                 )}
                 {/* </Box> */}
