@@ -1,5 +1,6 @@
 import {
   ADD_ORDER,
+  CHANGE_ORDER_STATUS_REQUESTED,
   CHANGE_STATUS,
   DELETE_ORDER,
   EDIT_ORDER,
@@ -107,6 +108,37 @@ export const editOrder = (id, editValue) => (dispatch, setState) => {
 export const editOrderFromServer = (updatedOrder) => {
   return {
     type: EDIT_ORDER,
+    payload: updatedOrder,
+  };
+};
+
+
+export const changeOrderStatusRequested = (id) => (dispatch, setState) => {
+  
+
+  fetch(`http://localhost:3001/api/orders/requested/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: 'include',
+    body: JSON.stringify({ id }),
+  })
+    .then((res) => res.json())
+    .then((updatedOrder) => {
+      dispatch(changeOrderStatusRequestedFromServer(updatedOrder));
+    })
+    .catch((error) => {
+      dispatch(
+        setError({ status: true, text: "Не удалось изменить задание." })
+      );
+    });
+  // .then(() => dispatch(hideLoader(false)))
+};
+
+export const changeOrderStatusRequestedFromServer = (updatedOrder) => {
+  return {
+    type: CHANGE_ORDER_STATUS_REQUESTED,
     payload: updatedOrder,
   };
 };
