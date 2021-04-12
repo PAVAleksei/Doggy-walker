@@ -7,18 +7,18 @@ const UserSchema = new Schema(
     // Имя пользователя
     firstname: {
       type: String,
-      minlength: 2,
+      // minlength: 2,
       // match: /^[A-Z]\w+$/i,
     },
     lastname: {
       type: String,
-      minlength: 2,
+      // minlength: 2,
       // match: /^[A-Z]\w+$/i,
     },
     // Мы не храним пароль, а только его хэш
     password: {
       type: String,
-      minlength: 4,
+      // minlength: 4,
     },
     // Email
     email: {
@@ -65,12 +65,14 @@ const UserSchema = new Schema(
       type: Array,
       default: [],
     },
-    orders: [{
-      type: Schema.Types.ObjectId,
-      ref: 'orders'
-    }]
+    orders: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "orders",
+      },
+    ],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = {

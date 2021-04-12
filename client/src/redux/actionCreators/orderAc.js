@@ -16,17 +16,17 @@ export const setOrders = (orders) => {
 
 export const addOrder = (order) => async (dispatch, setState) => {
   if (order) {
-    // console.log('=====> fetch');
 
-    fetch("http://localhost:3001/api/customer/orders", {
-      method: "POST",
+    fetch('http://localhost:3001/api/customer/orders', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(order),
     })
       .then((response) => response.json())
-      .then((newOrder) => dispatch(addOrderFromServer(newOrder)));
+      
   }
 };
 
@@ -52,6 +52,7 @@ export const changeStatus = (id) => async (dispatch, setState) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: 'include',
     body: JSON.stringify({ id }),
   });
 
@@ -79,6 +80,7 @@ export const editOrder = (id, editValue) => (dispatch, setState) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: 'include',
     body: JSON.stringify({ id, editValue }),
   })
     .then((res) => res.json())
