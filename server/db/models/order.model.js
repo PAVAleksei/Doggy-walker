@@ -32,7 +32,22 @@ const OrderSchema = new Schema({
 		name: String,
 		coordinates: [],
 	},
-	completed: Boolean,
+  requested: {
+    type: Boolean,
+    default: false
+  },
+  inWork: {
+    type: Boolean,
+    default: false
+  },
+	completed: {
+    type: Boolean,
+    default: false
+  },
+  closed: {
+    type: Boolean,
+    default: false
+  }
 },
 	{ timestamps: true },
 );

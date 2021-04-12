@@ -15,11 +15,12 @@ import {
 } from "@material-ui/pickers";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrder } from "../../redux/actionCreators/orderAc";
+import { addOrder, addOrderFromServer } from "../../redux/actionCreators/orderAc";
 import { setError } from "../../redux/actionCreators/errorAC";
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css'
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
+import { addOrderCustomer, addOrderCustomerFromServer } from "../../redux/actionCreators/userAC";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,14 +47,13 @@ const useStyles = makeStyles((theme) => ({
 function OrderForm() {
   const classes = useStyles();
 
-  // const [selectedDate, setSelectedDate] = useState(new Date('2020-04-01T21:11:54'));
   const dispatch = useDispatch();
-  const userEmail = useSelector((state) => state.user.email);
+  // const userEmail = useSelector((state) => state.user.email);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const error = useSelector((state) => state.error);
   const [address, setAddress] = useState();
   const [description, setDescription] = useState('');
-  // const history = useHistory('/')
+  const history = useHistory();
 
   // console.log(address.data);
 
@@ -66,25 +66,33 @@ function OrderForm() {
   };
 
   const handleDescriptionChange = (e) => {
+  
     setDescription(e.target.value);
   };
 
   const addNewOrderHandler = () => {
-    console.log(selectedDate, description, userEmail);
+    
     setError({ status: false, text: "" });
 
-    const addressToBack = { 
+    const addressToServer = { 
       name: address.value,
       coordinates: [Number(address.data.geo_lat), Number(address.data.geo_lon)]
     }
 
-    if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description) {
+    if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description.trim() && addressToServer) {
       setError({ status: false, text: "" });
 
       try {
-        return dispatch(addOrder({ selectedDate, description, addressToBack, userEmail }));
-        // return history.push('/account');
-
+        dispatch(addOrderCustomer({ selectedDate, description, addressToServer }))
+          // .then((newOrder) => {
+          //   console.log(newOrder); 
+          //   dispatch(addOrderCustomerFromServer(newOrder))
+            return history.push('/account');
+          // })
+          // .catch(error => {
+          //   setError({status: true, text: 'Для введения заказа необходимо авторизоваться.'})
+          //   return history.push('/customer');
+          // })
       } catch (error) {
         return dispatch(
           setError({ status: true, text: "Не удалось добавить новое задание." })

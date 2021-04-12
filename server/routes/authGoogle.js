@@ -24,6 +24,7 @@ router.post("/register", (req, res, next) => {
         orders: user.orders,
         verification: user.verification,
         district: user.district,
+        orders: user.orders,
       });
     });
   })(req, res, next);
@@ -68,7 +69,7 @@ router.get("/logout", async (req, res) => {
 router.get(
   "/google",
   passport.authenticate("google", {
-    scope: ["profile"],
+    scope: ["profile", "email"],
   })
 );
 

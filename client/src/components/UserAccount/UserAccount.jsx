@@ -28,26 +28,13 @@ export default function UserAccount() {
 
   const dispatch = useDispatch();
 
-  const dogs = useSelector((state) => state.dogs);
+  const animalByUser = useSelector((state) => state.user.animal);
+  console.log(animalByUser);
   const orders = useSelector((state) => state.user.orders);
-  const userEmail = useSelector((state) => state.user.email);
-  // console.log(dogs);
-
-  //
   useEffect(() => {
     fetch("http://localhost:3001/api/v1/dog")
       .then((response) => response.json())
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
-
-    // fetch('http://localhost:3001/api/customer/orders', {
-    //   method: 'GET',
-    //   header: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(userEmail)
-    // })
-    //   .then(res => res.json())
-    //   .then(ordersFromServer => dispatch(setOrders(ordersFromServer)))
   }, []);
 
   const history = useHistory();
@@ -58,7 +45,7 @@ export default function UserAccount() {
 
   return (
     <div className={classes.root}>
-      <h3>Личный кабинет</h3>
+      <h3>Личный кабинет Заказчика</h3>
       <Grid container spacing={3} direction="row">
         {/* <Grid item xs={1}/> */}
         <Grid item xs={3}>
@@ -86,11 +73,13 @@ export default function UserAccount() {
             <Paper className={classes.paper}>Мои питомцы</Paper>
             <Box m={3}>
               <Grid item container spacing={2} direction="row">
-                  {/* <Box m={4}> */}
-                    {dogs.length ? 
-                      dogs.map((dog) => 
-                        <Grid item xs={12} sm={3}>
-                          <DogInfo
+                {/* <Box m={4}> */}
+
+                {
+                  animalByUser?.length ?
+                    animalByUser.map((dog) => (
+                      <Grid item xs={12} sm={3}>
+                        <DogInfo
                           key={dog._id}
                           id={dog._id}
                           nickname={dog.nickname}
@@ -103,11 +92,11 @@ export default function UserAccount() {
                           letGo={dog.letGo}
                           avatar={dog.avatar}
                         />
-                        </Grid>
-                      )
-                     : <p>Пока нет сохраненных питомцев</p>
-                    }
-                  {/* </Box> */}
+                      </Grid>
+                    )) : <p>Пока нет сохраненных питомцев</p>
+                }
+                
+                {/* </Box> */}
               </Grid>
             </Box>
           </Grid>
@@ -117,62 +106,27 @@ export default function UserAccount() {
               <Grid item container spacing={2} direction="row">
                 {/* <Box m={4}> */}
 
-                      {
-                        orders?.length ? 
-                          orders.map((order) => 
-                          <Grid item xs={12} sm={3}>
-                            <CardOrder 
-                              key={order._id} 
-                              description={order.description} 
-                              date={order.date.toLocaleString()} 
-                              price={order.price}
-                              address={order.address.name}
-                              />
-                              
-                          </Grid>
-                          ) : <p>Нет заказов</p>
-                      }
-                    {/* </Box> */}
+                {
+                  orders?.length ?
+                    orders.map((order) =>
+                      <Grid item xs={12} sm={3}>
+                        <CardOrder
+                          key={order._id}
+                          description={order.description}
+                          date={order.date}
+                          price={order.price}
+                          address={order.address.name}
+                        />
+
+                      </Grid>
+                    ) : <p>Нет заказов</p>
+                }
+                {/* </Box> */}
               </Grid>
             </Box>
           </Grid>
         </Grid>
       </Grid>
-
-      {/* <Grid item xs={9}>
-          <Paper className={classes.paper}>Мои питомцы</Paper>
-          <Grid container spacing={5}>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-
-              {
-                dogs ?
-                  dogs.map((dog) => (<DogInfo key={dog._id} id={dog._id} nickname={dog.nickname} breed={dog.breed} gender={dog.gender} weight={dog.weight} pullsTheLeash={dog.pullsTheLeash} contactWithOther={dog.contactWithOther} phobia={dog.phobia} letGo={dog.letGo} avatar={dog.avatar} />)) : <p>Добавьте вашу собаку</p>
-              }
-
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-          </Grid>
-          <Paper className={classes.paper}>Текущие заказы</Paper>
-          <Grid container spacing={5}>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-              <CardOrder />
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid> */}
     </div>
   );
 }

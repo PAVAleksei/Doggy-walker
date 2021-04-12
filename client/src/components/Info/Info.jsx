@@ -10,13 +10,14 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import { Button, Avatar, List, ListItem, ListItemText, Divider } from '@material-ui/core'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
-		// minWidth: 175,
-		// maxWidth: 175,
-		margin: 10,
-		paddingTop: 7,
+    // minWidth: 175,
+    // maxWidth: 175,
+    margin: 10,
+    paddingTop: 7,
   },
   bullet: {
     display: 'inline-block',
@@ -28,37 +29,42 @@ const useStyles = makeStyles({
   },
   pos: {
     marginBottom: 12,
-	},
-	big: {
-		height: 130,
-		width: 130,
-		display: 'inline-block'
-	},
-	posi: {
-		display: 'inline-block'
-	}
+  },
+  big: {
+    height: 130,
+    width: 130,
+    display: 'inline-block'
+  },
+  posi: {
+    display: 'inline-block'
+  }
 });
 
 export default function Info() {
+
+  const user = useSelector(state => state.user)
+  console.log(user, 'user');
   const classes = useStyles();
 
   return (
-	  <Card className={classes.root}>
-		  <Avatar className={classes.big} src='https://www.kinonews.ru/insimgs/poster/poster9623_1.jpg'/>
+    <Card className={classes.root}>
+      <Link
+        variant="contained"
+        component="label"
+      >
+        <input type="file" hidden />
+        <Avatar className={classes.big} />
+      </Link>
       <CardContent>
-        <Typography className={classes.pos} color="textSecondary" gutterBottom>
-          Иван Иванов
-        </Typography>
-        <Typography variant="h6" component="h4">
-				Рейтинг: 4.6
+        <Typography variant="h6" component="h4" gutterBottom>
+          {user.firstname} {user.lastname}
         </Typography>
         <Typography className={classes.title} color="textSecondary">
-          e-mail: v1@mail.ru
+          {user.email}
         </Typography>
       </CardContent>
-		  <CardActions>
-        <Button size="small">Редактировать</Button>
-			  <Link to="/"><EditIcon className={classes.posi}/></Link>
+      <CardActions>
+        <Link to={`/user/${user.firstname}${user.lastname}`}><EditIcon className={classes.posi} /></Link>
       </CardActions>
     </Card>
   );

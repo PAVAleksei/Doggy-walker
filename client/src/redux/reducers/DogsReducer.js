@@ -1,4 +1,4 @@
-import { ADD_DOG, EDIT_DOG, GET_DOGS } from "../types/dogTypes"
+import { ADD_DOG, DELETE_DOG, GET_DOGS } from "../types/dogTypes"
 
 const addDogsReducer = (state = [], action) => {
 
@@ -9,12 +9,15 @@ const addDogsReducer = (state = [], action) => {
         ...state,
         action.payload
       ]
-      
-      case GET_DOGS:
-      return action.payload
-  
 
-      
+    case GET_DOGS:
+      return action.payload
+
+    case DELETE_DOG:
+      console.log(state);
+      console.log(action.payload);
+      return state.filter(el => el._id !== action.payload)
+
     default:
       return state
   }

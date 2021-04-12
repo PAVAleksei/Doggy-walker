@@ -1,16 +1,13 @@
 const router = require("express").Router();
 const { User } = require("../db/models/user.model");
-const { Order } = require('../db/models/order.model')
+// const { Order } = require('../db/models/order.model');
+const { Dog } = require("../db/models/dog.model");
 
 router.get("/checkAuth", async (req, res) => {
   if (req.user) {
     const userId = req.session.passport.user;
-    const user = await User.findById(userId).populate('orders');
-    // console.log("==============>", user);
-    
-    // const orders = user.populate('orders');
-    console.log(user);
-
+    const user = await User.findById(userId).populate('orders').populate('animal');
+    const dog = await Dog.findById(userId).populate('owner');
     res.json({
       email: user.email,
       firstname: user.firstname,
@@ -19,8 +16,17 @@ router.get("/checkAuth", async (req, res) => {
       verification: user.verification,
       dogcoins: user.dogcoins,
       district: user.district,
-      orders: user.orders
+      orders: user.orders,
+      animal: user.animal,
     });
   }
 });
-module.exports = router;
+
+router.post('/edit', async (req, res) => {
+  if (req.user) {
+    const userId = req.user._id;
+    const user = await User.findByIdAndUpdate(userId, { ...req.body }, { new: true }).populate('orders').populate('animal');
+    res.json(user);
+  }
+});
+module.exports = router;[]
