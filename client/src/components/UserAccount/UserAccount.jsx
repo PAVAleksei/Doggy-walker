@@ -75,27 +75,28 @@ export default function UserAccount() {
               <Grid item container spacing={2} direction="row">
                 {/* <Box m={4}> */}
 
-                {
-                  animalByUser?.length ?
-                    animalByUser.map((dog) => (
-                      <Grid item xs={12} sm={3}>
-                        <DogInfo
-                          key={dog._id}
-                          id={dog._id}
-                          nickname={dog.nickname}
-                          breed={dog.breed}
-                          gender={dog.gender}
-                          weight={dog.weight}
-                          pullsTheLeash={dog.pullsTheLeash}
-                          contactWithOther={dog.contactWithOther}
-                          phobia={dog.phobia}
-                          letGo={dog.letGo}
-                          avatar={dog.avatar}
-                        />
-                      </Grid>
-                    )) : <p>Пока нет сохраненных питомцев</p>
-                }
-                
+                {animalByUser?.length ? (
+                  animalByUser.map((dog) => (
+                    <Grid item xs={12} sm={3}>
+                      <DogInfo
+                        key={dog._id}
+                        id={dog._id}
+                        nickname={dog.nickname}
+                        breed={dog.breed}
+                        gender={dog.gender}
+                        weight={dog.weight}
+                        pullsTheLeash={dog.pullsTheLeash}
+                        contactWithOther={dog.contactWithOther}
+                        phobia={dog.phobia}
+                        letGo={dog.letGo}
+                        avatar={dog.avatar}
+                      />
+                    </Grid>
+                  ))
+                ) : (
+                  <p>Пока нет сохраненных питомцев</p>
+                )}
+
                 {/* </Box> */}
               </Grid>
             </Box>
@@ -106,21 +107,21 @@ export default function UserAccount() {
               <Grid item container spacing={2} direction="row">
                 {/* <Box m={4}> */}
 
-                {
-                  orders?.length ?
-                    orders.map((order) =>
-                      <Grid item xs={12} sm={3}>
-                        <CardOrder
-                          key={order._id}
-                          description={order.description}
-                          date={order.date}
-                          price={order.price}
-                          address={order.address.name}
-                        />
-
-                      </Grid>
-                    ) : <p>Нет заказов</p>
-                }
+                {orders?.length ? (
+                  orders.map((order) => (
+                    <Grid item xs={12} sm={3}>
+                      <CardOrder
+                        key={order._id}
+                        description={order.description}
+                        date={order.date}
+                        price={order.price}
+                        address={order.address.name}
+                      />
+                    </Grid>
+                  ))
+                ) : (
+                  <p>Нет заказов</p>
+                )}
                 {/* </Box> */}
               </Grid>
             </Box>
