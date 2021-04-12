@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import { Box, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { addNewDogFetch } from '../../redux/actionCreators/dogAC';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
 export default function MultilineTextFields() {
   const classes = useStyles();
   const formRef = useRef(null);
+
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
@@ -34,6 +37,7 @@ export default function MultilineTextFields() {
       dispatch(addNewDogFetch(valuesOfFields));
 
       formRef.current.reset();
+     history.push('/account');
     }
   };
 
