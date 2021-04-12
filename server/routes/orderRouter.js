@@ -26,19 +26,24 @@ router.get('/orders', async (req, res) => {
 
 router.get('/customer/orders', async (req, res) => {
 
-	const { userEmail } = req.body;
-	try {
-		const userId = await User.findOne({ email: userEmail });
-		const orders = await Order.find({ clientId: userId });
-
-		setTimeout(() => {
-			return res.json(orders);
-		}, 500)
-	}
-	catch (error) {
-		console.log('Error to receive orders from mongo');
-		return res.sendStatus(500);
-	}
+  if (req.user) {
+    const { userEmail } = req.body;
+  
+    try {
+      const userId = await User.findOne({ email: userEmail });
+      const orders = await Order.find({ clientId: userId });
+  
+      setTimeout(() => {
+        return res.json(orders);
+      }, 500)
+    }
+    catch (error) {
+      console.log('Error to receive orders from mongo');
+      return res.sendStatus(500);
+    }
+  } else {
+    return res.sendStatus(401);
+  }
 })
 
 
@@ -46,58 +51,72 @@ router.get('/customer/orders', async (req, res) => {
 
 router.post('/customer/orders', async (req, res) => {
 
-	// console.log('======>');
-	// console.log(req.body);
-	const { selectedDate, description, addressToBack, userEmail } = req.body;
-	const user = await User.findOne({ email: userEmail })
-	const userId = user._id;
+  if (req.user) {
+    const { selectedDate, description, addressToBack } = req.body;
+    const userId = req.user._id;
+    try {
+  
+      await Order.create({
+        description: description,
+        clientId: userId,
+        address: addressToBack,
+        // dogId,  
+        // price,
+        date: selectedDate,
+        // completed: false,
+      });
+  
+      const order = await Order.findOne({ description: description });
+  
+      const ordersId = (await Order.find({ clientId: userId })).map(el => el._id);
+      // console.log(orders);
+      // console.log(order);
+      const user = await User.findByIdAndUpdate(userId, { orders: ordersId });
+      // setTimeout(() => {
+      // console.log(order);
+      return res.json(order);
+      // }, 500)
+  
+    } catch (error) {
+      console.log('error');
+      return res.sendStatus(500);
+    }
 
-
-	// console.log(userId);
-
-	// const { description,
-	//         dogName,
-	//         price,
-	//         date
-	//       } = req.body;
-
+  } else {
+    return res.sendStatus(401);
+  }
+  
 	// const dogId = (await Dog.findOne({ nickname: dogName }))._id;
-
-	try {
-
-		await Order.create({
-			description: description,
-			clientId: userId,
-			address: addressToBack,
-			// dogId,  
-			// price,
-			date: selectedDate,
-			completed: false,
-		});
-
-		const order = await Order.findOne({ description: description });
-
-		const ordersId = (await Order.find({ clientId: userId })).map(el => el._id);
-		// console.log(orders);
-		console.log(order);
-		const user = await User.findByIdAndUpdate(userId, { orders: ordersId });
-		// setTimeout(() => {
-		console.log(user);
-		return res.json(order);
-		// }, 500)
-
-	} catch (error) {
-		console.log('error');
-		return res.sendStatus(500);
-	}
-
+  
+  
 })
 
 // edit
-router.patch('/customer/orders', (req, res) => {
+router.put('/customer/orders', async(req, res) => {
 
+  try {
+    const {id, editValue} = req.body;
+    await Order.updateOne({ _id: id }, { $set : {task: editValue} });
+    const updatedOrder = await Order.findById(id);
 
+    // setTimeout(() => {
+      return res.json(updatedOrder);
+    // }, 500)
 
+  } catch (error) {
+    return res.sendStatus(501);
+  }
+
+})
+
+router.patch('/customer/orders', async(req, res) => {
+  try {
+    const order = await Order.findById(req.body.id);
+    await Order.findByIdAndUpdate(req.body.id, {completed: !order.completed});
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.sendStatus(501);
+  }
 })
 
 

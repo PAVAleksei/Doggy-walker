@@ -30,7 +30,7 @@ export default function UserAccount() {
 
   const dogs = useSelector((state) => state.dogs);
   const orders = useSelector((state) => state.user.orders);
-  const userEmail = useSelector((state) => state.user.email);
+  // const userEmail = useSelector((state) => state.user.email);
   // console.log(dogs);
 
   //
@@ -40,11 +40,7 @@ export default function UserAccount() {
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
 
     // fetch('http://localhost:3001/api/customer/orders', {
-    //   method: 'GET',
-    //   header: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(userEmail)
+    //   credentials: 'include',
     // })
     //   .then(res => res.json())
     //   .then(ordersFromServer => dispatch(setOrders(ordersFromServer)))
