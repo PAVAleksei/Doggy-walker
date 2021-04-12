@@ -58,7 +58,7 @@ export default function UserAccount() {
 
   return (
     <div className={classes.root}>
-      <h3>Личный кабинет</h3>
+      <h3>Личный кабинет Заказчика</h3>
       <Grid container spacing={3} direction="row">
         {/* <Grid item xs={1}/> */}
         <Grid item xs={3}>
@@ -87,8 +87,8 @@ export default function UserAccount() {
             <Box m={3}>
               <Grid item container spacing={2} direction="row">
                 {/* <Box m={4}> */}
-                {dogs.length ?
-                  dogs.map((dog) =>
+                {dogs.length ? (
+                  dogs.map((dog) => (
                     <Grid item xs={12} sm={3}>
                       <DogInfo
                         key={dog._id}
@@ -104,9 +104,10 @@ export default function UserAccount() {
                         avatar={dog.avatar}
                       />
                     </Grid>
-                  )
-                  : <p>Пока нет сохраненных питомцев</p>
-                }
+                  ))
+                ) : (
+                  <p>Пока нет сохраненных питомцев</p>
+                )}
                 {/* </Box> */}
               </Grid>
             </Box>
@@ -117,21 +118,21 @@ export default function UserAccount() {
               <Grid item container spacing={2} direction="row">
                 {/* <Box m={4}> */}
 
-                {
-                  orders?.length ?
-                    orders.map((order) =>
-                      <Grid item xs={12} sm={3}>
-                        <CardOrder
-                          key={order._id}
-                          description={order.description}
-                          date={order.date}
-                          price={order.price}
-                          address={order.address.name}
-                        />
-
-                      </Grid>
-                    ) : <p>Нет заказов</p>
-                }
+                {orders?.length ? (
+                  orders.map((order) => (
+                    <Grid item xs={12} sm={3}>
+                      <CardOrder
+                        key={order._id}
+                        description={order.description}
+                        date={order.date}
+                        price={order.price}
+                        address={order.address.name}
+                      />
+                    </Grid>
+                  ))
+                ) : (
+                  <p>Нет заказов</p>
+                )}
                 {/* </Box> */}
               </Grid>
             </Box>
