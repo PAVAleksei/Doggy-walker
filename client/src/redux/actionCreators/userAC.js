@@ -1,3 +1,4 @@
+import { ADD_DOG } from "../types/dogTypes";
 import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN, EDIT_USER, ADD_ORDER_CUSTOMER } from "../types/usertypes";
 
 export const sagaSignupAC = ({
@@ -103,4 +104,24 @@ export const addOrderCustomerFromServer = (newOrder) => {
     type: ADD_ORDER_CUSTOMER,
     payload: newOrder,
   };
+};
+
+export const addNewDogFetch = (newDog) => async (dispatch) => {
+  const response = await fetch('http://localhost:3001/api/v1/dog', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: JSON.stringify({ newDog })
+  })
+  const responseFromServ = await response.json()
+  dispatch(addDogAC(responseFromServ))
+}
+
+export const addDogAC = (newDog) => {
+  return {
+    type: ADD_DOG,
+    payload: newDog,
+  }
 };

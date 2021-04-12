@@ -38,7 +38,7 @@ app.use(
     saveUninitialized: false, // не сохранять пустую сессию
     store: MongoStore.create({
       // выбираем в качестве хранилища mongoDB
-      mongoUrl: process.env.DB_CONNECTION,
+      mongoUrl: process.env.DB_CONNECTION_CLOUD,
     }),
     cookie: {
       // настройки, необходимые для корректного работы cookie
@@ -82,7 +82,7 @@ app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}.`);
 
   connect(
-    process.env.DB_CONNECTION,
+    process.env.DB_CONNECTION_CLOUD,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

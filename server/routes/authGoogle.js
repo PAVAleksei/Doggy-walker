@@ -50,8 +50,10 @@ router.post("/login", (req, res, next) => {
         kind: user.kind,
         orders: user.orders,
         verification: user.verification,
-				district: user.district,
-				orders: user.orders,
+        district: user.district,
+        orders: user.orders,
+        animal: user.animal,
+        photo: user.photo,
       });
     });
   })(req, res, next);

@@ -4,11 +4,7 @@ const addDogsReducer = (state = [], action) => {
 
 
   switch (action.type) {
-    case ADD_DOG:
-      return [
-        ...state,
-        action.payload
-      ]
+    
 
     case GET_DOGS:
       return action.payload
