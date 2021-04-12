@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const { Dog } = require('../db/models/dog.model');
+const { User } = require('../db/models/user.model');
 
 router.post('/', async (req, res) => {
   if (req.user) {
     try {
       const owner = req.user._id;
       const newDog = await Dog.create({ ...req.body.newDog, owner });
+      const user = await User.findByIdAndUpdate(owner, { $push: { animal: newDog } });
       res.status(200).json(newDog);
     } catch (error) {
       console.log(error);
