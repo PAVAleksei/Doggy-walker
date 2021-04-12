@@ -10,7 +10,7 @@ const initState = {
 	},
 	dogs: [],
 	dog: {},
-	orders: []
+	allOrders: []
 };
 
 export default initState;

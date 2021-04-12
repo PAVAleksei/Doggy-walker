@@ -7,7 +7,16 @@ import {
 } from "../types/orderTypes";
 import { setError } from "./errorAC";
 
-export const setOrders = (orders) => {
+
+export const setOrders = () => (dispatch, getState) => {
+  
+  fetch('http://localhost:3001/api/orders')
+  .then(res => res.json())
+  .then(orders => dispatch(setOrdersFromServer(orders)))
+
+};
+
+export const setOrdersFromServer = (orders) => {
   return {
     type: SET_ORDERS,
     payload: orders,
