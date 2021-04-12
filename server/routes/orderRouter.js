@@ -50,7 +50,7 @@ router.post('/customer/orders', async (req, res) => {
 	// console.log(req.body);
 	const { selectedDate, description, addressToBack, userEmail } = req.body;
 	const user = await User.findOne({ email: userEmail })
-	const userId = user._id;
+	const userId = user?._id;
 
 
 	// console.log(userId);
