@@ -1,4 +1,4 @@
-import { ADD_ORDER, SET_ORDERS } from "../types/orderTypes";
+import { ADD_ORDER, CHANGE_ORDER_STATUS_REQUESTED, SET_ORDERS } from "../types/orderTypes";
 
 function orderReducer(state = [], action) {
   switch (action.type) {
@@ -10,6 +10,8 @@ function orderReducer(state = [], action) {
         ...state, action.payload
       ];
 
+    case CHANGE_ORDER_STATUS_REQUESTED:
+      return state.map(el => (el._id === action.payload._id) ? action.payload : el);
     
     default:
       return state;

@@ -8,6 +8,7 @@ import DogInfo from "../DogInfo/DogInfo";
 import CardOrder from "../CardOrder/CardOrder";
 import { Box, Button, jssPreset } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
+import CardList from "../CardList/CardList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,8 +25,6 @@ const useStyles = makeStyles((theme) => ({
 function ExecutorAccount() {
 
   const classes = useStyles();
-  const allOrders = useSelector(state => state.allOrders);
-  
 
   return (
     <div className={classes.root}>
@@ -44,11 +43,7 @@ function ExecutorAccount() {
         <Grid item xs={8} direction="column">
           <Grid item>
             <Paper className={classes.paper}>Ближайшие заказы</Paper>
-            <Box m={3}>
-              <Grid item container spacing={2} direction="row">
-                Тут должны быть ближайшие заказы
-              </Grid>
-            </Box>
+            <CardList/>
           </Grid>
 
           <Grid item>
