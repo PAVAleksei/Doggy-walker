@@ -65,12 +65,14 @@ const UserSchema = new Schema(
       type: Array,
       default: [],
     },
-    orders: [{
-      type: Schema.Types.ObjectId,
-      ref: 'orders'
-    }]
+    orders: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "orders",
+      },
+    ],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 module.exports = {
