@@ -28,22 +28,14 @@ export default function UserAccount() {
 
   const dispatch = useDispatch();
 
-  const dogs = useSelector((state) => state.dogs);
+  const animalByUser = useSelector((state) => state.user.animal);
+  console.log(animalByUser);
   const orders = useSelector((state) => state.user.orders);
-  // const userEmail = useSelector((state) => state.user.email);
-  // console.log(dogs);
-
-  //
+  
   useEffect(() => {
     fetch("http://localhost:3001/api/v1/dog")
       .then((response) => response.json())
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
-
-    // fetch('http://localhost:3001/api/customer/orders', {
-    //   credentials: 'include',
-    // })
-    //   .then(res => res.json())
-    //   .then(ordersFromServer => dispatch(setOrders(ordersFromServer)))
   }, []);
 
   const history = useHistory();
@@ -83,8 +75,10 @@ export default function UserAccount() {
             <Box m={3}>
               <Grid item container spacing={2} direction="row">
                 {/* <Box m={4}> */}
-                {dogs.length ? (
-                  dogs.map((dog) => (
+
+                {animalByUser?.length ?
+                  animalByUser.map((dog) => (
+
                     <Grid item xs={12} sm={3}>
                       <DogInfo
                         key={dog._id}
