@@ -20,8 +20,11 @@ import ExecutorSelect from "./components/ExecutorSelect/ExecutorSelect";
 import CustomerSelect from "./components/CustomerSellect/CustomerSelect";
 import CustomerLogin from "./components/CustomerLogin/CustomerLogin";
 import ExecutorLogin from "./components/ExecutorLogin/ExecutorLogin";
+import { setOrders, setOrdersCustomer } from "./redux/actionCreators/orderAc";
 import Dog from "./components/DogInfo/Dog";
-import { setOrders } from "./redux/actionCreators/orderAc";
+import DetailOrder from "./components/DeatailOreder/DetailOrder";
+import HistoryOrders from "./components/HistoryOrders/HistoryOrders";
+import DoneOrder from "./components/DoneOrders/DoneOrders";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +39,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    dispatch(setOrders());
+    dispatch(setOrders()); // все заказы в системе
+    // dispatch(setOrdersCustomer()); // заказы заказчика
   }, [])
 
   return (
@@ -44,6 +48,15 @@ function App() {
       <Router>
         <Header />
         <Switch>
+          <Route exact path="/order/:id">
+            <DetailOrder />
+          </Route>
+          <Route exact path="/historyOrders">
+            <HistoryOrders />
+          </Route>
+          <Route exact path="/doneOrders">
+            <DoneOrder />
+          </Route>
           <Route exact path="/">
             <MainPage />
           </Route>
@@ -76,7 +89,7 @@ function App() {
           <Route path="/verification">
             <Verification />
           </Route>
-          <Route path="/addAnimal">
+          <Route path="/addDog">
             <AddDog />
           </Route>
           <Route path="/edit/:id">

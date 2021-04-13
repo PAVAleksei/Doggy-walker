@@ -1,16 +1,22 @@
-
-import React from 'react';
-
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
 // import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import EditIcon from '@material-ui/icons/Edit';
-import { Button, Avatar, List, ListItem, ListItemText, Divider } from '@material-ui/core'
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import Typography from "@material-ui/core/Typography";
+import EditIcon from "@material-ui/icons/Edit";
+import {
+  Button,
+  Avatar,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { uploadAvatarFetch } from '../../redux/actionCreators/userAC';
 
 const useStyles = makeStyles({
   root: {
@@ -20,9 +26,9 @@ const useStyles = makeStyles({
     paddingTop: 7,
   },
   bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
   },
   title: {
     fontSize: 14,
@@ -33,17 +39,29 @@ const useStyles = makeStyles({
   big: {
     height: 130,
     width: 130,
-    display: 'inline-block'
+    display: "inline-block",
   },
   posi: {
-    display: 'inline-block'
-  }
+    display: "inline-block",
+  },
 });
 
 export default function Info() {
-
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user);
   const classes = useStyles();
+  const dispatch = useDispatch()
+
+  const uploadHandler = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    dispatch(uploadAvatarFetch(formData))
+  }
+
+  const inputAvatarHandler = (e) => {
+    const file = e.target.files[0];
+    uploadHandler(file);
+  }
+
 
   return (
     <Card className={classes.root}>
@@ -51,7 +69,7 @@ export default function Info() {
         variant="contained"
         component="label"
       >
-        <input type="file" hidden />
+        <input onChange={(e) => inputAvatarHandler(e)} accept="image/*" type="file" hidden name="photo" />
         <Avatar className={classes.big} src={user?.photo} />
       </Link>
       <CardContent>
@@ -61,9 +79,14 @@ export default function Info() {
         <Typography className={classes.title} color="textSecondary">
           {user.email}
         </Typography>
+        <Typography className={classes.title} color="textSecondary">
+          Тип: {user.kind}
+        </Typography>
       </CardContent>
       <CardActions>
-        <Link to={`/user/${user.firstname}${user.lastname}`}><EditIcon className={classes.posi} /></Link>
+        <Link to={`/user/${user.firstname}${user.lastname}`}>
+          <EditIcon className={classes.posi} />
+        </Link>
       </CardActions>
     </Card>
   );
