@@ -9,6 +9,7 @@ import {
   CHANGE_ORDER_STATUS_IN_WORK,
   CHANGE_ORDER_CUSTOMER_STATUS_REQUESTED,
   ADD_ORDER_EXECUTOR,
+  CLOSE_ORDER_CUSTOMER,
 } from "../types/usertypes";
 import { ADD_DOG, DOG_AVATAR, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
 import { VERIFICATION_USER } from "../types/verificationUserTypes";
@@ -86,6 +87,16 @@ function userReducer(state = {}, action) {
           ),
         ],
       };
+
+      case CLOSE_ORDER_CUSTOMER:
+        return {
+          ...state,
+          orders: [
+            ...state.orders.map((el) =>
+              el._id === action.payload._id ? action.payload : el
+            ),
+          ],
+        };
 
     case USER_AVATAR:
       return {

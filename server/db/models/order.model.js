@@ -49,6 +49,10 @@ const OrderSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    status: {
+      type: String,
+      default: 'Открыто'
+    }
   },
   { timestamps: true }
 );

@@ -70,7 +70,9 @@ function OrderForm() {
 
   const handleDateChange = (date) => {
     // const dateRu = date.toLocaleString('ru-RU');
-    setSelectedDate(date);
+    const newDate = (new Date(date));
+    console.log(newDate);
+    setSelectedDate(newDate);
   };
 
   const handleDescriptionChange = (e) => {
@@ -137,19 +139,19 @@ function OrderForm() {
           </Grid>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid>
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Дата"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Date picker inline"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
             </Grid>
             <Grid>
               <KeyboardTimePicker
@@ -212,12 +214,6 @@ function OrderForm() {
               defaultValue="300"
             />
           </Grid>
-          {/* <Grid>
-            <TextField required id="standard-required" placeholder="Укажите породу" />
-            </Grid>
-            <Grid>
-            <TextField required id="standard-required" placeholder="Укажите вес" />
-          </Grid> */}
         </Box>
         <Box m={2}>
           <Button variant="contained" onClick={addNewOrderHandler}>

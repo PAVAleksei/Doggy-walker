@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { changeOrderStatusCompleted } from "../../redux/actionCreators/orderAc";
+import { closeOrderCustomer } from "../../redux/actionCreators/userAC";
 
 const useStyles = makeStyles({
   root: {
@@ -48,6 +49,8 @@ const HistoryOrderItem = ({
   const handlerDoneOrder = () => {
     console.log(id);
     dispatch(changeOrderStatusCompleted(id));
+    // таймер на закрытие задачи у заказчика
+    dispatch(closeOrderCustomer(id));
   };
 
   return (

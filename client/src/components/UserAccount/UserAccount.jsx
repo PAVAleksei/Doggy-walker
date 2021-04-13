@@ -51,9 +51,13 @@ export default function UserAccount() {
     <div className={classes.root}>
       <h3>Личный кабинет Заказчика</h3>
       <Grid container spacing={3} direction="row">
+        <Grid item xs={1}></Grid>
         <Grid item xs={3}>
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
+          <Box m={1}>
+            <Button variant="outlined" color="primary">Пополнить счет</Button>
+          </Box>
           <Box m={1}>
             <Button variant="outlined">Мои заказы</Button>
           </Box>
@@ -71,7 +75,7 @@ export default function UserAccount() {
           </Box>
         </Grid>
 
-        <Grid item xs={8} direction="column">
+        <Grid item xs={7} direction="column">
           <Grid item>
             <Paper className={classes.paper}>Мои питомцы</Paper>
             <Box m={3}>
@@ -117,11 +121,16 @@ export default function UserAccount() {
                         key={order._id}
                         id={order._id}
                         description={order.description}
-                        date={order.date}
+                        date={new Date(order.date)}
                         price={order.price}
                         address={order.address.name}
                         requested={order.requested}
                         inWork={order.inWork}
+                        completed={order.completed}
+                        closed={order.closed}
+                        status={order.status}
+                        dogId={order.dogId}
+                        executorId={order.executorId}
                       />
                     </Grid>
                   ))
@@ -133,6 +142,7 @@ export default function UserAccount() {
             </Box>
           </Grid>
         </Grid>
+        <Grid item xs={1}></Grid>
       </Grid>
     </div>
   );
