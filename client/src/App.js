@@ -89,7 +89,7 @@ function App() {
           <Route path="/verification">
             <Verification />
           </Route>
-          <Route path="/addAnimal">
+          <Route path="/addDog">
             <AddDog />
           </Route>
           <Route path="/edit/:id">

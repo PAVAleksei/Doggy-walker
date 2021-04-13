@@ -40,12 +40,11 @@ export default function UserAccount() {
 
 
   const addOrderFormHandler = () => {
-
     history.push("/order");
   };
 
-  const addPetHandler = () => {
-    history.push("/addAnimal");
+  const addDogFormHandler = () => {
+    history.push("/addDog");
   }
 
   return (
@@ -62,8 +61,8 @@ export default function UserAccount() {
             <Button variant="outlined">Мои отзывы</Button>
           </Box>
           <Box m={1}>
-            {/* <Link to="/addAnimal">Добавить питомца</Link> */}
-            <Button onClick={addPetHandler} variant="outlined">Добавить питомца</Button>
+            {/* <Link to="/addAnimal" >Добавить питомца</Link> */}
+            <Button variant="outlined" onClick={addDogFormHandler}>Добавить питомца</Button>
           </Box>
           <Box m={1}>
             <Button variant="outlined" onClick={addOrderFormHandler}>
