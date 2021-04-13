@@ -4,19 +4,12 @@ const addDogsReducer = (state = [], action) => {
 
 
   switch (action.type) {
-    case ADD_DOG:
-      return [
-        ...state,
-        action.payload
-      ]
+    
 
     case GET_DOGS:
       return action.payload
 
-    case DELETE_DOG:
-      console.log(state);
-      console.log(action.payload);
-      return state.filter(el => el._id !== action.payload)
+    
 
     default:
       return state

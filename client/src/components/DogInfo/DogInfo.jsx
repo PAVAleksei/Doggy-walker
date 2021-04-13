@@ -12,7 +12,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Button, Avatar, List, ListItem, ListItemText, Divider, Grid } from '@material-ui/core'
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
-import { deleteFetchDogAC } from '../../redux/actionCreators/dogAC';
+import { deleteFetchDogAC } from '../../redux/actionCreators/userAC';
 
 const useStyles = makeStyles({
   root: {
@@ -45,9 +45,9 @@ export default function DogInfo({ id, nickname, breed, gender }) {
   const bull = <span className={classes.bullet}>•</span>;
 
 
-  const onClickHandler = () => {
-    dispatch(deleteFetchDogAC(id))
-  }
+  // const onClickHandler = () => {
+  //   dispatch(deleteFetchDogAC(id))
+  // }
 
   return (
     <Card className={classes.root}>
@@ -62,9 +62,9 @@ export default function DogInfo({ id, nickname, breed, gender }) {
       </CardContent>
       <CardActions>
 
-        <Link to={`/dog/${id}`}><EditIcon className={classes.posi} /></Link>
-        <Link to={`/more/${id}`} ><Button className={classes.posi} size="small">Подробнее</Button></Link>
-        <Button onClick={onClickHandler} className={classes.posi} size="small" >Удалить</Button>
+        <Link to={`/edit/${id}`}><EditIcon className={classes.posi} /></Link>
+        <Link to={`/dog/${id}`} ><Button className={classes.posi} size="small">Подробнее...</Button></Link>
+        
 
       </CardActions>
     </Card>
