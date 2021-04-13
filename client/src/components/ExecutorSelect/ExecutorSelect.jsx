@@ -45,16 +45,17 @@ const ExecutorSelect = () => {
 	const handleChange = (event) => {
 		setKind(event.target.value);
 	};
-	
+
 	const formRef = useRef(null);
 	const dispatch = useDispatch();
 
 	const submitHandler = (e) => {
-		
+
 		e.preventDefault();
 		const valuesOfFields = Object.fromEntries(
 			new FormData(formRef.current).entries()
 		);
+		console.log(valuesOfFields);
 		if (
 			Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
 		) {
@@ -155,7 +156,8 @@ const ExecutorSelect = () => {
 							<TextField
 								name="district"
 								// required
-								value={district.value}
+								// value={district.value}
+								value={[district?.data?.geo_lat, district?.data?.geo_lon]}
 								label="Адрес"
 								variant="outlined"
 								InputProps={{
@@ -166,7 +168,7 @@ const ExecutorSelect = () => {
 										</>
 									),
 								}}
-								/>
+							/>
 						</Grid>
 
 						<Grid>

@@ -3,14 +3,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { YMaps, Map, Placemark, GeolocationControl, ZoomControl, RouteButton } from 'react-yandex-maps';
 
-const location = YMaps.geolocation
-console.log(location, ' <------- location')
+// const mapData = {
+// 	center: [55.751574, 37.573856],
+// 	zoom: 10,
 
-const mapData = {
-	center: [55.751574, 37.573856],
-	zoom: 10,
-
-};
+// };
 
 // const mycoordinates = [
 // 	[55.684758, 37.738521],
@@ -20,11 +17,17 @@ const mapData = {
 export default function YandexMap() {
 	const dispatch = useDispatch()
 	const coordinates = useSelector((state) => state.allOrders)
-	console.log(coordinates);
+	const addressFromForm = useSelector((state) => state.user.district)
+	const myAddress = addressFromForm[0].split(',').map(el => Number(el))
+	// console.log('coordinates --->  ', coordinates);
+	// console.log('myAddress ---> ', myAddress);
 
 	return (
 		<YMaps >
-			<Map width='100%' height='300px' defaultState={mapData}>
+			<Map width='100%' height='300px' defaultState={{
+				center: myAddress,
+				zoom: 13,
+			}} >
 
 				<RouteButton instanceRef={ref => {
 					if (ref) {
@@ -33,16 +36,16 @@ export default function YandexMap() {
 							to: [59.9386300, 30.3141300],
 							type: "auto"
 						});
-						// const obj = ref.routePanel.getRouteAsync()
-						// obj.then(function (multiRoute) {
-						// 	multiRoute.model.events.add('requestsuccess', function () {
-						// 		const activeRoute = multiRoute.getActiveRoute()
-						// 		if (activeRoute) {
-						// 			let distance = activeRoute.properties.get('distance')
-						// 			// dispatch(addDistance(trip.id, distance))
-						// 		}
-						// 	})
-						// })
+						const obj = ref.routePanel.getRouteAsync()
+						obj.then(function (multiRoute) {
+							multiRoute.model.events.add('requestsuccess', function () {
+								const activeRoute = multiRoute.getActiveRoute()
+								if (activeRoute) {
+									let distance = activeRoute.properties.get('distance')
+									// dispatch(addDistance(trip.id, distance))
+								}
+							})
+						})
 					}
 				}} options={{ float: 'right' }} />
 
@@ -50,7 +53,7 @@ export default function YandexMap() {
 					geometry={coordinate.address.coordinates}
 					properties={{
 						hintContent: coordinate.address.name,
-						balloonContent: coordinate.description,
+						balloonContent: [coordinate.address.name, coordinate.description]
 					}}
 					modules={['geoObject.addon.balloon', 'geoObject.addon.hint', 'geocode']}
 
