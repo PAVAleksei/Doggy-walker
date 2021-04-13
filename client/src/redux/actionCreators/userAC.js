@@ -285,10 +285,7 @@ export const uploadAvatarAC = (avatar) => {
 };
 
 
-export const closeOrderCustomer = (id) => (
-  dispatch,
-  setState
-) => {
+export const closeOrderCustomer = (id) => (dispatch, setState) => {
   fetch(`http://localhost:3001/api/orders/closed/${id}`, {
     method: "PATCH",
     headers: {
