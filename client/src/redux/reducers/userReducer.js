@@ -64,7 +64,7 @@ function userReducer(state = {}, action) {
     case EDIT_DOG:
       return {
         ...state,
-        animal: [action.payload],
+        animal: [...state.animal.map(el => el._id === action.payload._id ? action.payload : el)],
       };
 
     case CHANGE_ORDER_STATUS_IN_WORK:

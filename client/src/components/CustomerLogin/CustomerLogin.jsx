@@ -37,7 +37,7 @@ const CustomerLogin = () => {
     ) {
       dispatch(SagaSignInAC(valuesOfFields));
       formRef.current.reset();
-      history.push("/account");
+      history.push("/");
     }
   };
 
