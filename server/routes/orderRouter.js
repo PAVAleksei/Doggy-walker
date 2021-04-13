@@ -40,36 +40,34 @@ router.patch("/orders/requested/:id", async (req, res) => {
   const userId = req.user._id;
   const currOrderId = req.params.id;
 
+  const currOrder = await Order.findById(currOrderId);
+  // const currUser = User.findById(userId);
   try {
-    const currOrder = await Order.findById(currOrderId);
-    const currUser = User.findById(userId);
-
     if (!currOrder.requested) {
       const newOrder = await Order.findByIdAndUpdate(
         currOrderId,
         {
           requested: !currOrder.requested,
-          executorId: currUser._id,
+          executorId: userId,
         },
         {
           new: true,
         }
       );
-    } else {
-      const newOrder = await Order.findByIdAndUpdate(
-        currOrderId,
-        {
-          $push: { requested: !currOrder.requested },
-        },
-        {
-          $pull: { executorId: currUser._id },
-        },
-        {
-          new: true,
-        }
-      );
+      return res.json(newOrder);
     }
-
+    const newOrder = await Order.findByIdAndUpdate(
+      currOrderId,
+      {
+        $push: { requested: !currOrder.requested },
+      },
+      {
+        $pull: { executorId: userId },
+      },
+      {
+        new: true,
+      }
+    );
     return res.json(newOrder);
   } catch (error) {
     console.log("Error to update order|requested| to true");
