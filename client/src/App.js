@@ -21,6 +21,9 @@ import CustomerSelect from "./components/CustomerSellect/CustomerSelect";
 import CustomerLogin from "./components/CustomerLogin/CustomerLogin";
 import ExecutorLogin from "./components/ExecutorLogin/ExecutorLogin";
 import { setOrders } from "./redux/actionCreators/orderAc";
+import DetailOrder from "./components/DeatailOreder/DetailOrder";
+import HistoryOrders from "./components/HistoryOrders/HistoryOrders";
+import DoneOrder from "./components/DoneOrders/DoneOrders";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,13 +39,22 @@ function App() {
 
   useEffect(() => {
     dispatch(setOrders());
-  }, [])
+  }, []);
 
   return (
     <div className="App">
       <Router>
         <Header />
         <Switch>
+          <Route exact path="/order/:id">
+            <DetailOrder />
+          </Route>
+          <Route exact path="/historyOrders">
+            <HistoryOrders />
+          </Route>
+          <Route exact path="/doneOrders">
+            <DoneOrder />
+          </Route>
           <Route exact path="/">
             <MainPage />
           </Route>

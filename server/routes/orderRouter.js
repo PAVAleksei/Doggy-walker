@@ -19,17 +19,47 @@ router.get("/orders", async (req, res) => {
 //Исполнитель откликнулся на ордер, меняем requested на true
 
 router.patch("/orders/requested/:id", async (req, res) => {
+  const userId = req.user._id;
   const currOrderId = req.params.id;
+
   try {
+    const currUser = User.findById(userId);
     const currOrder = await Order.findByIdAndUpdate(
       currOrderId,
       {
         requested: true,
+        executorId: currUser._id,
       },
       {
         new: true,
       }
     );
+
+    return res.json(currOrder);
+  } catch (error) {
+    console.log("Error to update order|requested| to true");
+    return res.sendStatus(500);
+  }
+});
+
+//Исполнитель нажал кнопку выполнено на ордер, меняем completed на true
+
+router.patch("/orders/completed/:id", async (req, res) => {
+  // const userId = req.user._id;
+  const currOrderId = req.params.id;
+
+  try {
+    // const currUser = User.findById(userId);
+    const currOrder = await Order.findByIdAndUpdate(
+      currOrderId,
+      {
+        completed: true,
+      },
+      {
+        new: true,
+      }
+    );
+
     return res.json(currOrder);
   } catch (error) {
     console.log("Error to update order|requested| to true");
@@ -143,6 +173,25 @@ router.patch("/customer/orders", async (req, res) => {
     return res.sendStatus(200);
   } catch (error) {
     return res.sendStatus(501);
+  }
+});
+
+router.post("/executor/order", async (req, res) => {
+  if (req.user) {
+    const { id } = req.body;
+    const userId = req.user._id;
+    try {
+      const currOrder = await Order.findById(id);
+      const currUser = await User.findByIdAndUpdate(userId, {
+        $push: { orders: currOrder },
+      });
+      return res.json(currOrder);
+    } catch (error) {
+      console.log("error");
+      return res.sendStatus(500);
+    }
+  } else {
+    return res.sendStatus(401);
   }
 });
 

@@ -43,7 +43,7 @@ const useStyles = makeStyles({
 export default function Info() {
 
   const user = useSelector(state => state.user)
-  console.log(user, 'user');
+  // console.log(user, 'user');
   const classes = useStyles();
 
   return (
@@ -61,6 +61,9 @@ export default function Info() {
         </Typography>
         <Typography className={classes.title} color="textSecondary">
           {user.email}
+        </Typography>
+        <Typography className={classes.title} color="textSecondary">
+          Тип: {user.kind}
         </Typography>
       </CardContent>
       <CardActions>

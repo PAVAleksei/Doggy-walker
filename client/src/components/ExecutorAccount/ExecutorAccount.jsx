@@ -9,6 +9,8 @@ import CardOrder from "../CardOrder/CardOrder";
 import { Box, Button, jssPreset } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import CardList from "../CardList/CardList";
+import { useHistory } from "react-router";
+import { setOrders } from "../../redux/actionCreators/orderAc";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +25,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ExecutorAccount() {
+  //обновялет все ордера в редакс
+  // const allOrders = useSelector((state) => state.allOrders);
+  // useEffect(() => dispatch(setOrders()), [allOrders]);
 
+  const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handlerHistoryOrders = () => {
+    history.push("/historyOrders");
+  };
+  const handlerDoneOrders = () => {
+    history.push("/doneOrders");
+  };
 
   return (
     <div className={classes.root}>
@@ -34,7 +48,14 @@ function ExecutorAccount() {
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
           <Box m={1}>
-            <Button variant="outlined">Мои заказы</Button>
+            <Button variant="outlined" onClick={handlerHistoryOrders}>
+              Текущие заказы
+            </Button>
+          </Box>
+          <Box m={1}>
+            <Button variant="outlined" onClick={handlerDoneOrders}>
+              Выполненные заказы
+            </Button>
           </Box>
           <Box m={1}>
             <Button variant="outlined">Мои отзывы</Button>
@@ -42,12 +63,12 @@ function ExecutorAccount() {
         </Grid>
         <Grid item xs={8} direction="column">
           <Grid item>
-            <Paper className={classes.paper}>Ближайшие заказы</Paper>
-            <CardList/>
+            <Paper className={classes.paper}>Все заказы</Paper>
+            <CardList />
           </Grid>
 
           <Grid item>
-            <Paper className={classes.paper}>Текущие заказы</Paper>
+            <Paper className={classes.paper}>Все заказы на карте</Paper>
             <Box m={3}>
               <Grid item container spacing={2} direction="row">
                 <YandexMap />
@@ -56,32 +77,6 @@ function ExecutorAccount() {
           </Grid>
         </Grid>
       </Grid>
-
-      {/* <Grid container spacing={3}>
-        <Grid item xs={3}>
-					<Paper className={classes.paper}>Мои данные</Paper>
-					<Info />
-					<button>Мои заказы</button>
-					<button>Мои отзывы</button>
-				</Grid>
-        <Grid item xs={9}>
-          <Paper className={classes.paper}>Ближайшие заказы</Paper>
-          <Grid container spacing={5}>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-              <DogInfo />
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>xs=4</Paper>
-            </Grid>
-          </Grid>
-          <Paper className={classes.paper}>Текущие заказы</Paper>
-          <YandexMap />
-        </Grid>
-      </Grid> */}
     </div>
   );
 }

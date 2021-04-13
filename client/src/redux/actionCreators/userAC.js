@@ -1,4 +1,12 @@
-import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN, EDIT_USER, ADD_ORDER_CUSTOMER } from "../types/usertypes";
+import {
+  AUTH,
+  SAGA_SIGNUP,
+  SAGA_SIGN_IN,
+  SIGN_IN,
+  EDIT_USER,
+  ADD_ORDER_CUSTOMER,
+  ADD_ORDER_EXECUTOR,
+} from "../types/usertypes";
 
 export const sagaSignupAC = ({
   email,
@@ -80,27 +88,51 @@ export const editUserAC = (editUser) => {
 
 export const addOrderCustomer = (order) => async (dispatch, setState) => {
   if (order) {
-
-    fetch('http://localhost:3001/api/customer/orders', {
-      method: 'POST',
+    fetch("http://localhost:3001/api/customer/orders", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify(order),
     })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((newOrder) => {
-        console.log(newOrder); 
-        dispatch(addOrderCustomerFromServer(newOrder))
+        console.log(newOrder);
+        dispatch(addOrderCustomerFromServer(newOrder));
         // return history.push('/account');
-      })
+      });
   }
 };
 
 export const addOrderCustomerFromServer = (newOrder) => {
   return {
     type: ADD_ORDER_CUSTOMER,
+    payload: newOrder,
+  };
+};
+
+export const addOrderFromExecutorThunk = (id) => async (dispatch, setState) => {
+  if (id) {
+    fetch("http://localhost:3001/api/executor/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ id }),
+    })
+      .then((response) => response.json())
+      .then((newOrder) => {
+        console.log(newOrder);
+        dispatch(addOrderFromExecutor(newOrder));
+      });
+  }
+};
+
+export const addOrderFromExecutor = (newOrder) => {
+  return {
+    type: ADD_ORDER_EXECUTOR,
     payload: newOrder,
   };
 };
