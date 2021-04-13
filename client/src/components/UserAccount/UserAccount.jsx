@@ -26,15 +26,9 @@ const useStyles = makeStyles((theme) => ({
 export default function UserAccount() {
   const classes = useStyles();
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const animalByUser = useSelector((state) => state.user.animal);
-  console.log(animalByUser);
-
-  // useEffect(() => {
-  //   // dispatch(setOrders()); // все заказы в системе
-  //   dispatch(setOrdersCustomer()); // заказы заказчика
-  // }, [])
-
   const orders = useSelector((state) => state.user.orders);
   // const orders = useSelector(state => state.allOrders);
   
@@ -44,7 +38,6 @@ export default function UserAccount() {
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
 
-  const history = useHistory();
 
   const addOrderFormHandler = () => {
 

@@ -43,7 +43,6 @@ const useStyles = makeStyles({
 export default function Info() {
 
   const user = useSelector(state => state.user)
-  console.log(user, 'user');
   const classes = useStyles();
 
   return (
@@ -53,7 +52,7 @@ export default function Info() {
         component="label"
       >
         <input type="file" hidden />
-        <Avatar className={classes.big} />
+        <Avatar className={classes.big} src={user?.photo} />
       </Link>
       <CardContent>
         <Typography variant="h6" component="h4" gutterBottom>

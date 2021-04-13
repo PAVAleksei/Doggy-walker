@@ -178,7 +178,7 @@ function OrderForm() {
                 helperText="Выберите вашего питомца"
                 variant="outlined"
               >
-                {dogs.map((option) => (
+                {dogs?.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>

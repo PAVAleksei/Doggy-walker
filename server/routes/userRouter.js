@@ -18,6 +18,7 @@ router.get("/checkAuth", async (req, res) => {
       district: user.district,
       orders: user.orders,
       animal: user.animal,
+      photo: user.photo,
     });
   }
 });

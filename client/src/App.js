@@ -21,6 +21,7 @@ import CustomerSelect from "./components/CustomerSellect/CustomerSelect";
 import CustomerLogin from "./components/CustomerLogin/CustomerLogin";
 import ExecutorLogin from "./components/ExecutorLogin/ExecutorLogin";
 import { setOrders, setOrdersCustomer } from "./redux/actionCreators/orderAc";
+import Dog from "./components/DogInfo/Dog";
 
 function App() {
   const dispatch = useDispatch();
@@ -79,8 +80,11 @@ function App() {
           <Route path="/addAnimal">
             <AddDog />
           </Route>
-          <Route path="/dog/:id">
+          <Route path="/edit/:id">
             <EditDog />
+          </Route>
+          <Route path="/dog/:id">
+            <Dog />
           </Route>
           <Route path="/user/:id">
             <EditUser />
