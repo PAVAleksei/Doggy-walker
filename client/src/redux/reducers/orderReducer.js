@@ -1,13 +1,18 @@
 import {
   ADD_ORDER,
-  CHANGE_ORDER_STATUS_COMPLETED,
+  CHANGE_ORDER_STATUS_IN_WORK,
   CHANGE_ORDER_STATUS_REQUESTED,
   SET_ORDERS,
+  CHANGE_ORDER_STATUS_COMPLETED,
+  SET_ORDERS_CUSTOMER,
 } from "../types/orderTypes";
 
 function orderReducer(state = [], action) {
   switch (action.type) {
     case SET_ORDERS:
+      return action.payload;
+
+    case SET_ORDERS_CUSTOMER:
       return action.payload;
 
     case ADD_ORDER:

@@ -3,9 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Box, Button, FormControl } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { editDogFetch, getDogAC } from '../../redux/actionCreators/dogAC';
+import { getDogAC } from '../../redux/actionCreators/dogAC';
 import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
+import { editDogFetch } from '../../redux/actionCreators/userAC';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -153,7 +154,7 @@ export default function EditDog() {
             size="large"
             color="primary"
           >
-            Добавить
+            Редактировать
           </Button>
         </Box>
       </form>

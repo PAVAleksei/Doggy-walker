@@ -20,7 +20,8 @@ import ExecutorSelect from "./components/ExecutorSelect/ExecutorSelect";
 import CustomerSelect from "./components/CustomerSellect/CustomerSelect";
 import CustomerLogin from "./components/CustomerLogin/CustomerLogin";
 import ExecutorLogin from "./components/ExecutorLogin/ExecutorLogin";
-import { setOrders } from "./redux/actionCreators/orderAc";
+import { setOrders, setOrdersCustomer } from "./redux/actionCreators/orderAc";
+import Dog from "./components/DogInfo/Dog";
 import DetailOrder from "./components/DeatailOreder/DetailOrder";
 import HistoryOrders from "./components/HistoryOrders/HistoryOrders";
 import DoneOrder from "./components/DoneOrders/DoneOrders";
@@ -38,8 +39,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    dispatch(setOrders());
-  }, []);
+    dispatch(setOrders()); // все заказы в системе
+    // dispatch(setOrdersCustomer()); // заказы заказчика
+  }, [])
 
   return (
     <div className="App">
@@ -90,8 +92,11 @@ function App() {
           <Route path="/addAnimal">
             <AddDog />
           </Route>
-          <Route path="/dog/:id">
+          <Route path="/edit/:id">
             <EditDog />
+          </Route>
+          <Route path="/dog/:id">
+            <Dog />
           </Route>
           <Route path="/user/:id">
             <EditUser />

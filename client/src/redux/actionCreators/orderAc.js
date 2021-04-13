@@ -6,6 +6,7 @@ import {
   DELETE_ORDER,
   EDIT_ORDER,
   SET_ORDERS,
+  SET_ORDERS_CUSTOMER,
 } from "../types/orderTypes";
 import { setError } from "./errorAC";
 
@@ -18,6 +19,21 @@ export const setOrders = () => (dispatch, getState) => {
 export const setOrdersFromServer = (orders) => {
   return {
     type: SET_ORDERS,
+    payload: orders,
+  };
+};
+
+export const setOrdersCustomer = () => (dispatch, getState) => {
+  fetch("http://localhost:3001/api/customer/orders", {
+    credentials: "include",
+  })
+    .then((res) => res.json())
+    .then((orders) => dispatch(setOrdersCustomerFromServer(orders)));
+};
+
+export const setOrdersCustomerFromServer = (orders) => {
+  return {
+    type: SET_ORDERS_CUSTOMER,
     payload: orders,
   };
 };

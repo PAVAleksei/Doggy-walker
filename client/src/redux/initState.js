@@ -7,6 +7,8 @@ const initState = {
 		isAuth: false,
 		verification: false,
 		orders: [],
+		animal: [],
+		district: []
 	},
 	dogs: [],
 	dog: {},
