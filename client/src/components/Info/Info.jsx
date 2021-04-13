@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -10,7 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import { Button, Avatar, List, ListItem, ListItemText, Divider } from '@material-ui/core'
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { uploadAvatarFetch } from '../../redux/actionCreators/userAC';
 
 const useStyles = makeStyles({
   root: {
@@ -44,6 +45,19 @@ export default function Info() {
 
   const user = useSelector(state => state.user)
   const classes = useStyles();
+  const dispatch = useDispatch()
+
+  const uploadHandler = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    dispatch(uploadAvatarFetch(formData))
+  }
+
+  const inputAvatarHandler = (e) => {
+    const file = e.target.files[0];
+    uploadHandler(file);
+  }
+
 
   return (
     <Card className={classes.root}>
@@ -51,7 +65,7 @@ export default function Info() {
         variant="contained"
         component="label"
       >
-        <input type="file" hidden />
+        <input onChange={(e) => inputAvatarHandler(e)} accept="image/*" type="file" hidden name="photo" />
         <Avatar className={classes.big} src={user?.photo} />
       </Link>
       <CardContent>

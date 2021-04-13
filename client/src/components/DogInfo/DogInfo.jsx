@@ -11,8 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import { Button, Avatar, List, ListItem, ListItemText, Divider, Grid } from '@material-ui/core'
 import { Link, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteFetchDogAC } from '../../redux/actionCreators/userAC';
+import { uploadDogAvatarFetch } from '../../redux/actionCreators/dogAC';
 
 const useStyles = makeStyles({
   root: {
@@ -38,11 +39,24 @@ const useStyles = makeStyles({
   }
 });
 
-export default function DogInfo({ id, nickname, breed, gender }) {
+export default function DogInfo({ id, nickname, breed, gender, avatar }) {
 
   const classes = useStyles();
   const dispatch = useDispatch()
   const bull = <span className={classes.bullet}>•</span>;
+  const dog = useSelector(state => state.user.animal)
+  console.log(dog, 'dog');
+
+  const uploadHandler = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    dispatch(uploadDogAvatarFetch(formData, id))
+  }
+
+  const inputAvatarHandler = (e) => {
+    const file = e.target.files[0];
+    uploadHandler(file);
+  }
 
 
   // const onClickHandler = () => {
@@ -51,7 +65,13 @@ export default function DogInfo({ id, nickname, breed, gender }) {
 
   return (
     <Card className={classes.root}>
-      <Avatar className={classes.big} src='https://lapkins.ru/upload/iblock/bd2/bd20f15bbc1ed4fba71b161ccd44d08d.jpg' />
+      <Link
+        variant="contained"
+        component="label"
+      >
+        <input onChange={(e) => inputAvatarHandler(e)} accept="image/*" type="file" hidden name="photo" />
+        <Avatar className={classes.big} src={avatar} />
+      </Link>
       <CardContent>
         <Typography variant="h6" component="h4">
           Имя: {nickname}

@@ -1,6 +1,8 @@
 const router = require('express').Router();
+const multer = require('multer');
 const { Dog } = require('../db/models/dog.model');
 const { User } = require('../db/models/user.model');
+const uploadMulter = require('../config/multer');
 
 router.post('/', async (req, res) => {
   if (req.user) {
@@ -34,6 +36,24 @@ router.delete('/:id', async (req, res) => {
   // console.log(req.params, 'hfhfhfh');
   await Dog.findByIdAndDelete(req.params.id);
   res.sendStatus(200);
+});
+
+router.post('/avatar/:id', uploadMulter.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      res.send('File was not found');
+      return;
+    }
+    const { filename } = req.file;
+    const dog = await Dog.findById(req.params.id);
+    const imgPuth = 'http://localhost:3001/img/';
+    dog.avatar = imgPuth + filename;
+    await dog.save();
+    return res.json({avatar: dog.avatar, id: dog._id});
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ message: 'Upload avatar error' });
+  }
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import initState from "../initState";
-import { ADD_DOG, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
-import { AUTH, SIGN_IN, EDIT_USER, LOGOUT, ADD_ORDER_CUSTOMER } from "../types/usertypes";
+import { ADD_DOG, DELETE_DOG, DOG_AVATAR, EDIT_DOG } from "../types/dogTypes";
+import { AUTH, SIGN_IN, EDIT_USER, LOGOUT, ADD_ORDER_CUSTOMER, USER_AVATAR } from "../types/usertypes";
 import { VERIFICATION_USER } from "../types/verificationUserTypes";
 
 function userReducer(state = {}, action) {
@@ -46,6 +46,23 @@ function userReducer(state = {}, action) {
     case EDIT_DOG:
       return {
         ...state, animal: [action.payload]
+      }
+
+    case USER_AVATAR:
+      return {
+        ...state, photo: [action.payload]
+      }
+
+    case DOG_AVATAR:
+
+      const avatar = state.animal.find(
+        el => el._id === action.payload.id
+      )
+      avatar.avatar = action.payload.avatar
+
+      return {
+        ...state,
+        animal: state.animal.map(el => el._id === avatar._id ? avatar : el)
       }
 
     default:

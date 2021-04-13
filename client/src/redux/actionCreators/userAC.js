@@ -1,5 +1,5 @@
 import { ADD_DOG, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
-import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN, EDIT_USER, ADD_ORDER_CUSTOMER } from "../types/usertypes";
+import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN, EDIT_USER, ADD_ORDER_CUSTOMER, USER_AVATAR } from "../types/usertypes";
 
 export const sagaSignupAC = ({
   email,
@@ -162,5 +162,33 @@ export const editDogAC = (editDog) => {
   return {
     type: EDIT_DOG,
     payload: editDog,
+  }
+};
+
+
+
+////////
+
+
+
+export const uploadAvatarFetch = (formData) => async (dispatch) => {
+  try {
+    // console.log(formData.get('file'), 'formData');
+   const response =  await fetch(`http://localhost:3001/user/avatar`, {
+      method: "POST",
+      credentials: "include",
+      body: formData
+    })
+    const responseFromServ = await response.json()
+    dispatch(uploadAvatarAC(responseFromServ))
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export const uploadAvatarAC = (avatar) => {
+  return {
+    type: USER_AVATAR,
+    payload: avatar,
   }
 };
