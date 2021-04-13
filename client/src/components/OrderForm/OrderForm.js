@@ -15,12 +15,11 @@ import {
 } from "@material-ui/pickers";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrder, addOrderFromServer } from "../../redux/actionCreators/orderAc";
 import { setError } from "../../redux/actionCreators/errorAC";
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css'
 import { useHistory } from "react-router-dom";
-import { addOrderCustomer, addOrderCustomerFromServer } from "../../redux/actionCreators/userAC";
+import { addOrderCustomer } from "../../redux/actionCreators/userAC";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
   area: {
     width: "32ch",
   },
+  address: {
+    width: "50ch",
+
+  }
 }));
 
 function OrderForm() {
@@ -52,33 +55,32 @@ function OrderForm() {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  // const userEmail = useSelector((state) => state.user.email);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const error = useSelector((state) => state.error);
   const [address, setAddress] = useState();
   const [description, setDescription] = useState('');
-
+  const [price, setPrice] = useState(300);
 
   const [curDog, setCurDog] = useState(dogs?.length ? dogs[0]?.value : '');
   const history = useHistory();
 
   const dogSelectHandler = (event) => {
     setCurDog(event.target.value);
-    console.log('===curDog', curDog);
   };
 
   const handleDateChange = (date) => {
-    // console.log(date)
     // const dateRu = date.toLocaleString('ru-RU');
-    // console.log(dateRu);
     setSelectedDate(date);
-    // console.log(date);
   };
 
   const handleDescriptionChange = (e) => {
   
     setDescription(e.target.value);
   };
+
+  const handlePriceChange = (e) => {
+    setPrice(e.target.value);
+  }
 
   const addNewOrderHandler = () => {
     
@@ -91,11 +93,11 @@ function OrderForm() {
 
      console.log(addressToServer);
 
-    if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description.trim() && addressToServer && curDog) {
+    if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description.trim() && addressToServer && curDog && price) {
       setError({ status: false, text: "" });
 
       try {
-        dispatch(addOrderCustomer({ selectedDate, description, addressToServer, curDog }))
+        dispatch(addOrderCustomer({ selectedDate, description, addressToServer, curDog, price }))
           // .then((newOrder) => {
           //   console.log(newOrder); 
           //   dispatch(addOrderCustomerFromServer(newOrder))
@@ -200,7 +202,15 @@ function OrderForm() {
               />
             </Box>
           </Grid>
-          
+          <Grid>
+            <TextField
+              id="standard-required"
+              onChange={handlePriceChange}
+              value={price}
+              label="Укажите желаемую стоимость"
+              defaultValue="300"
+            />
+          </Grid>
           {/* <Grid>
             <TextField required id="standard-required" placeholder="Укажите породу" />
             </Grid>

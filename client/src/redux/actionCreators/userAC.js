@@ -1,4 +1,5 @@
-import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN, EDIT_USER, ADD_ORDER_CUSTOMER } from "../types/usertypes";
+import { AUTH, SAGA_SIGNUP, SAGA_SIGN_IN, SIGN_IN, EDIT_USER, ADD_ORDER_CUSTOMER, CHANGE_ORDER_STATUS_IN_WORK } from "../types/usertypes";
+import { setError } from "./errorAC";
 
 export const sagaSignupAC = ({
   email,
@@ -42,7 +43,6 @@ export const SagaSignInAC = (loginData = {}) => {
 };
 
 export const signinAC = (resFromServer) => {
-  // console.log(resFromServer)
   return {
     type: SIGN_IN,
     payload: {
@@ -102,5 +102,63 @@ export const addOrderCustomerFromServer = (newOrder) => {
   return {
     type: ADD_ORDER_CUSTOMER,
     payload: newOrder,
+  };
+};
+
+export const changeOrderStatusInWork = (id) => (dispatch, setState) => {
+  
+
+  fetch(`http://localhost:3001/api/orders/inwork/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: 'include',
+    body: JSON.stringify({ id }),
+  })
+    .then((res) => res.json())
+    .then((updatedOrder) => {
+      dispatch(changeOrderStatusInWorkFromServer(updatedOrder));
+    })
+    .catch((error) => {
+      dispatch(
+        setError({ status: true, text: "Не удалось изменить задание." })
+      );
+    });
+};
+
+export const changeOrderStatusInWorkFromServer = (updatedOrder) => {
+  return {
+    type: CHANGE_ORDER_STATUS_IN_WORK,
+    payload: updatedOrder,
+  };
+};
+
+export const changeOrderCustomerStatusRequested = (id) => (dispatch, setState) => {
+  
+
+  fetch(`http://localhost:3001/api/orders/requested/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: 'include',
+    body: JSON.stringify({ id }),
+  })
+    .then((res) => res.json())
+    .then((updatedOrder) => {
+      dispatch(changeOrderStatusInWorkFromServer(updatedOrder));
+    })
+    .catch((error) => {
+      dispatch(
+        setError({ status: true, text: "Не удалось изменить задание." })
+      );
+    });
+};
+
+export const changeOrderCustomerStatusRequestedFromServer = (updatedOrder) => {
+  return {
+    type: CHANGE_ORDER_STATUS_IN_WORK,
+    payload: updatedOrder,
   };
 };

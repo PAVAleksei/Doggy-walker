@@ -9,7 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDogsAC } from "../../redux/actionCreators/dogAC";
 import { Box, Button, jssPreset } from "@material-ui/core";
-import { setOrders } from "../../redux/actionCreators/orderAc";
+import { setOrders, setOrdersCustomer } from "../../redux/actionCreators/orderAc";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +29,15 @@ export default function UserAccount() {
   const dispatch = useDispatch();
   const animalByUser = useSelector((state) => state.user.animal);
   console.log(animalByUser);
+
+  // useEffect(() => {
+  //   // dispatch(setOrders()); // все заказы в системе
+  //   dispatch(setOrdersCustomer()); // заказы заказчика
+  // }, [])
+
   const orders = useSelector((state) => state.user.orders);
+  // const orders = useSelector(state => state.allOrders);
+  
   useEffect(() => {
     fetch("http://localhost:3001/api/v1/dog")
       .then((response) => response.json())
@@ -43,11 +51,14 @@ export default function UserAccount() {
     history.push("/order");
   };
 
+  const addPetHandler = () => {
+    history.push("/addAnimal");
+  }
+
   return (
     <div className={classes.root}>
       <h3>Личный кабинет Заказчика</h3>
       <Grid container spacing={3} direction="row">
-        {/* <Grid item xs={1}/> */}
         <Grid item xs={3}>
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
@@ -58,8 +69,8 @@ export default function UserAccount() {
             <Button variant="outlined">Мои отзывы</Button>
           </Box>
           <Box m={1}>
-            <Link to="/addAnimal">Добавить питомца</Link>
-            {/* <Button variant="outlined">Добавить питомца</Button> */}
+            {/* <Link to="/addAnimal">Добавить питомца</Link> */}
+            <Button onClick={addPetHandler} variant="outlined">Добавить питомца</Button>
           </Box>
           <Box m={1}>
             <Button variant="outlined" onClick={addOrderFormHandler}>
@@ -76,7 +87,7 @@ export default function UserAccount() {
                 {/* <Box m={4}> */}
 
                 {animalByUser?.length ? (
-                  animalByUser.map((dog) => (
+                  animalByUser?.map((dog) => (
                     <Grid item xs={12} sm={3}>
                       <DogInfo
                         key={dog._id}
@@ -108,14 +119,17 @@ export default function UserAccount() {
                 {/* <Box m={4}> */}
 
                 {orders?.length ? (
-                  orders.map((order) => (
+                  orders?.map((order) => (
                     <Grid item xs={12} sm={3}>
                       <CardOrder
                         key={order._id}
+                        id={order._id}
                         description={order.description}
                         date={order.date}
                         price={order.price}
                         address={order.address.name}
+                        requested={order.requested}
+                        inWork={order.inWork}
                       />
                     </Grid>
                   ))

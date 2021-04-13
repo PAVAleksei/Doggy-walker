@@ -20,7 +20,7 @@ import ExecutorSelect from "./components/ExecutorSelect/ExecutorSelect";
 import CustomerSelect from "./components/CustomerSellect/CustomerSelect";
 import CustomerLogin from "./components/CustomerLogin/CustomerLogin";
 import ExecutorLogin from "./components/ExecutorLogin/ExecutorLogin";
-import { setOrders } from "./redux/actionCreators/orderAc";
+import { setOrders, setOrdersCustomer } from "./redux/actionCreators/orderAc";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +35,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    dispatch(setOrders());
+    dispatch(setOrders()); // все заказы в системе
+    // dispatch(setOrdersCustomer()); // заказы заказчика
   }, [])
 
   return (
