@@ -5,11 +5,12 @@ import {
   EDIT_USER,
   LOGOUT,
   ADD_ORDER_CUSTOMER,
+  USER_AVATAR,
   CHANGE_ORDER_STATUS_IN_WORK,
   CHANGE_ORDER_CUSTOMER_STATUS_REQUESTED,
   ADD_ORDER_EXECUTOR,
 } from "../types/usertypes";
-import { ADD_DOG, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
+import { ADD_DOG, DOG_AVATAR, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
 import { VERIFICATION_USER } from "../types/verificationUserTypes";
 
 function userReducer(state = {}, action) {
@@ -85,6 +86,23 @@ function userReducer(state = {}, action) {
           ),
         ],
       };
+
+    case USER_AVATAR:
+      return {
+        ...state, photo: [action.payload]
+      }
+
+    case DOG_AVATAR:
+
+      const avatar = state.animal.find(
+        el => el._id === action.payload.id
+      )
+      avatar.avatar = action.payload.avatar
+
+      return {
+        ...state,
+        animal: state.animal.map(el => el._id === avatar._id ? avatar : el)
+      }
 
     default:
       return state;
