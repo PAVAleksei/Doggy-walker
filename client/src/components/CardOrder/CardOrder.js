@@ -7,7 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Box, Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { changeOrderCustomerStatusRequested, changeOrderStatusInWork, closeOrderCustomer } from "../../redux/actionCreators/userAC"
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
     border: "1px solid #1C3E6A",
-    height: 440,
+    height: 460,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -32,12 +32,12 @@ const useStyles = makeStyles({
   },
 });
 
-function CardOrder({ id, description, date, price, address, requested, inWork, completed, closed, status, dogId }) {
+function CardOrder({ id, description, executorId, date, price, address, requested, inWork, completed, closed, status, dogId }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const dogs = useSelector(state => state.user.animal)
-  const dogPhoto = dogs.find(el => el._id === dogId ).avatar;
+  const dogPhoto = dogs.find(el => el._id === dogId )?.avatar;
   // const status = useSelector(state => state.user.orders.filter(el => el._id === id))
   const editHandler = () => {};
 
@@ -45,17 +45,14 @@ function CardOrder({ id, description, date, price, address, requested, inWork, c
 
   const approveExecutorHandler = (id) => {
     dispatch(changeOrderStatusInWork(id));
-    // setStatus('На исполнении');
   }
   
   const denyExecutorHandler = (id) => {
 
     dispatch(changeOrderCustomerStatusRequested(id));
-    // setStatus('Открыто')
   }
 
   const closeOrderHandler = () => {
-    // setStatus('Закрыто');
     dispatch(closeOrderCustomer(id));
   }
 
@@ -70,8 +67,7 @@ function CardOrder({ id, description, date, price, address, requested, inWork, c
           />
           <CardContent>
             <Typography gutterBottom component="h2">
-              Запланированная дата:
-              {date.toLocaleString("ru-RU")}
+              Запланированная дата: {date.toLocaleString('ru-RU')}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Задание: {description}
@@ -85,6 +81,13 @@ function CardOrder({ id, description, date, price, address, requested, inWork, c
             <Typography variant="body3" color="textSecondary" component="h3">
               Статус задания: {status}
             </Typography>
+            <Typography variant="body3" color="textSecondary" component="h3"> 
+              {/* <Button color="inherit">
+                  <Link to="/executorToCustomer">
+                    Исполнитель
+                  </Link>
+                </Button> */}
+            </Typography>
           </CardContent>
         </CardActionArea>
 
@@ -93,23 +96,23 @@ function CardOrder({ id, description, date, price, address, requested, inWork, c
         <CardActions display="flex" justifyContent="center" alignItems="center">
               <Button
               onClick={editHandler}
-              variant="contained"
+              variant="outlined"
               size="small"
               color="primary"
               className={classes.button}
             >
-              Изменить заказ
+              Подробнее
             </Button>
-            <Button
+            {/* <Button
               variant="contained"
               size="small"
               color="secondary"
               className={classes.button}
             >
               Удалить
-            </Button>
+            </Button> */}
         </CardActions>
-            : ''
+             : ''
           }
 
         {
@@ -119,7 +122,7 @@ function CardOrder({ id, description, date, price, address, requested, inWork, c
                 onClick={ () => approveExecutorHandler(id) }
                 variant="contained"
                 size="small"
-                color="secondary"
+                color="primary"
                 className={classes.button}
               >Одобрить исполнителя</Button>
               <Button 
