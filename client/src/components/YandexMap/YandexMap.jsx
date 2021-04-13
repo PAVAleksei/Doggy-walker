@@ -1,26 +1,73 @@
 
 import React from 'react';
-import { YMaps, Map, Placemark } from 'react-yandex-maps';
+import { useDispatch, useSelector } from 'react-redux';
+import { YMaps, Map, Placemark, GeolocationControl, ZoomControl, RouteButton } from 'react-yandex-maps';
 
-const mapData = {
-	center: [55.751574, 37.573856],
-	zoom: 10,
-};
+// const mapData = {
+// 	center: [55.751574, 37.573856],
+// 	zoom: 10,
 
-const coordinates = [
-	[55.684758, 37.738521],
-	[57.684758, 39.738521]
-];
+// };
+
+// const mycoordinates = [
+// 	[55.684758, 37.738521],
+// 	[57.684758, 39.738521]
+// ];
 
 export default function YandexMap() {
+	const dispatch = useDispatch()
+	const coordinates = useSelector((state) => state.allOrders)
+	const addressFromForm = useSelector((state) => state.user.district)
+	const myAddress = addressFromForm[0].split(',').map(el => Number(el))
+	// console.log('coordinates --->  ', coordinates);
+	// console.log('myAddress ---> ', myAddress);
+
 	return (
-		<YMaps>
-			<Map width='100%' height='300px' defaultState={mapData}>
-				{coordinates.map(coordinate => <Placemark geometry={coordinate} />)}
+		<YMaps >
+			<Map width='100%' height='300px' defaultState={{
+				center: myAddress,
+				zoom: 13,
+			}} >
+
+				<RouteButton instanceRef={ref => {
+					if (ref) {
+						ref.routePanel.state.set({
+							from: [55.751574, 37.573856],
+							to: [59.9386300, 30.3141300],
+							type: "auto"
+						});
+						const obj = ref.routePanel.getRouteAsync()
+						obj.then(function (multiRoute) {
+							multiRoute.model.events.add('requestsuccess', function () {
+								const activeRoute = multiRoute.getActiveRoute()
+								if (activeRoute) {
+									let distance = activeRoute.properties.get('distance')
+									// dispatch(addDistance(trip.id, distance))
+								}
+							})
+						})
+					}
+				}} options={{ float: 'right' }} />
+
+				{coordinates.map(coordinate => <Placemark
+					geometry={coordinate.address.coordinates}
+					properties={{
+						hintContent: coordinate.address.name,
+						balloonContent: [coordinate.address.name, coordinate.description]
+					}}
+					modules={['geoObject.addon.balloon', 'geoObject.addon.hint', 'geocode']}
+
+				/>)}
+				<GeolocationControl options={{ float: 'left' }} />
+				<ZoomControl options={{ float: 'right' }} />
 			</Map>
 		</YMaps>
 	)
 };
+
+
+
+// <Placemark geometry={coordinates} />
 
 
 

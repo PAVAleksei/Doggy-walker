@@ -59,7 +59,6 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/tes");
 
 // // auth logout
 router.get("/logout", async (req, res) => {
