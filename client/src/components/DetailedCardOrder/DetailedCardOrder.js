@@ -7,15 +7,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Box, Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { changeOrderCustomerStatusRequested, changeOrderStatusInWork } from "../../redux/actionCreators/userAC"
+import { changeOrderStatusInWork } from "../../redux/actionCreators/userAC"
 
 const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
     border: "1px solid #1C3E6A",
-    height: 500,
+    height: 470,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -32,19 +32,15 @@ const useStyles = makeStyles({
   },
 });
 
-function CardOrder({ id, description, date, price, address, requested, inWork }) {
+function DetailedCardOrder({ id, description, date, price, address, requested, inWork }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const editHandler = () => {};
 
   const approveExecutorHandler = (id) => {
+    console.log('===approve')
     dispatch(changeOrderStatusInWork(id));
-  }
-  
-  const denyExecutorHandler = (id) => {
-
-    dispatch(changeOrderCustomerStatusRequested(id))
   }
 
   return (
@@ -83,6 +79,17 @@ function CardOrder({ id, description, date, price, address, requested, inWork })
           >
             Изменить заказ
           </Button>
+          {
+            requested ? 
+            <Button disabled={inWork}
+              onClick={ () => approveExecutorHandler(id) }
+              variant="contained"
+              size="small"
+              color="secondary"
+              className={classes.button}
+            >Одобрить исполнителя</Button> 
+          : ''
+          }
           <Button
             variant="contained"
             size="small"
@@ -91,39 +98,14 @@ function CardOrder({ id, description, date, price, address, requested, inWork })
           >
             Удалить
           </Button>
-          {/* </Grid> */}
-          {/* <Grid item> */}
-          
-          {/* </Grid> */}
-        {/* </Grid> */}
-          
-        </CardActions>
-        <CardActions display="flex" justifyContent="center" alignItems="center">
-        {
-            (requested&&!inWork) ? 
-            <>
-              <Button disabled={inWork}
-                onClick={ () => approveExecutorHandler(id) }
-                variant="contained"
-                size="small"
-                color="secondary"
-                className={classes.button}
-              >Одобрить исполнителя</Button>
-              <Button 
-                disabled={inWork}
-                onClick={ () => denyExecutorHandler(id) }
-                variant="contained"
-                size="small"
-                color="secondary"
-                className={classes.button}>
-                Отказать
-              </Button>
-            </>
-          : ''
-          }
         </CardActions>
       </Card>
     </Box>
   );
 }
+
+
 export default CardOrder;
+
+
+export default DetailedCardOrder
