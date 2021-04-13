@@ -22,6 +22,9 @@ import CustomerLogin from "./components/CustomerLogin/CustomerLogin";
 import ExecutorLogin from "./components/ExecutorLogin/ExecutorLogin";
 import { setOrders, setOrdersCustomer } from "./redux/actionCreators/orderAc";
 import Dog from "./components/DogInfo/Dog";
+import DetailOrder from "./components/DeatailOreder/DetailOrder";
+import HistoryOrders from "./components/HistoryOrders/HistoryOrders";
+import DoneOrder from "./components/DoneOrders/DoneOrders";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +48,15 @@ function App() {
       <Router>
         <Header />
         <Switch>
+          <Route exact path="/order/:id">
+            <DetailOrder />
+          </Route>
+          <Route exact path="/historyOrders">
+            <HistoryOrders />
+          </Route>
+          <Route exact path="/doneOrders">
+            <DoneOrder />
+          </Route>
           <Route exact path="/">
             <MainPage />
           </Route>

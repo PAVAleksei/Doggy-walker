@@ -1,5 +1,6 @@
 import {
   ADD_ORDER,
+  CHANGE_ORDER_STATUS_COMPLETED,
   CHANGE_ORDER_STATUS_REQUESTED,
   CHANGE_STATUS,
   DELETE_ORDER,
@@ -9,15 +10,11 @@ import {
 } from "../types/orderTypes";
 import { setError } from "./errorAC";
 
-
 export const setOrders = () => (dispatch, getState) => {
-  
-  fetch('http://localhost:3001/api/orders')
-  .then(res => res.json())
-  .then(orders => dispatch(setOrdersFromServer(orders)))
-
+  fetch("http://localhost:3001/api/orders")
+    .then((res) => res.json())
+    .then((orders) => dispatch(setOrdersFromServer(orders)));
 };
-
 
 export const setOrdersFromServer = (orders) => {
   return {
@@ -27,13 +24,11 @@ export const setOrdersFromServer = (orders) => {
 };
 
 export const setOrdersCustomer = () => (dispatch, getState) => {
-  
-  fetch('http://localhost:3001/api/customer/orders', {
-    credentials: 'include'
+  fetch("http://localhost:3001/api/customer/orders", {
+    credentials: "include",
   })
-  .then(res => res.json())
-  .then(orders => dispatch(setOrdersCustomerFromServer(orders)))
-
+    .then((res) => res.json())
+    .then((orders) => dispatch(setOrdersCustomerFromServer(orders)));
 };
 
 export const setOrdersCustomerFromServer = (orders) => {
@@ -45,17 +40,14 @@ export const setOrdersCustomerFromServer = (orders) => {
 
 export const addOrder = (order) => async (dispatch, setState) => {
   if (order) {
-
-    fetch('http://localhost:3001/api/customer/orders', {
-      method: 'POST',
+    fetch("http://localhost:3001/api/customer/orders", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify(order),
-    })
-      .then((response) => response.json())
-      
+    }).then((response) => response.json());
   }
 };
 
@@ -81,7 +73,7 @@ export const changeStatus = (id) => async (dispatch, setState) => {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: 'include',
+    credentials: "include",
     body: JSON.stringify({ id }),
   });
 
@@ -109,7 +101,7 @@ export const editOrder = (id, editValue) => (dispatch, setState) => {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: 'include',
+    credentials: "include",
     body: JSON.stringify({ id, editValue }),
   })
     .then((res) => res.json())
@@ -131,16 +123,13 @@ export const editOrderFromServer = (updatedOrder) => {
   };
 };
 
-
 export const changeOrderStatusRequested = (id) => (dispatch, setState) => {
-  
-
   fetch(`http://localhost:3001/api/orders/requested/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: 'include',
+    credentials: "include",
     body: JSON.stringify({ id }),
   })
     .then((res) => res.json())
@@ -152,7 +141,6 @@ export const changeOrderStatusRequested = (id) => (dispatch, setState) => {
         setError({ status: true, text: "Не удалось изменить задание." })
       );
     });
-  // .then(() => dispatch(hideLoader(false)))
 };
 
 export const changeOrderStatusRequestedFromServer = (updatedOrder) => {
@@ -162,5 +150,29 @@ export const changeOrderStatusRequestedFromServer = (updatedOrder) => {
   };
 };
 
+export const changeOrderStatusCompleted = (id) => (dispatch, setState) => {
+  fetch(`http://localhost:3001/api/orders/completed/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ id }),
+  })
+    .then((res) => res.json())
+    .then((updatedOrder) => {
+      dispatch(changeOrderStatusCompletedFromServer(updatedOrder));
+    })
+    .catch((error) => {
+      dispatch(
+        setError({ status: true, text: "Не удалось изменить задание." })
+      );
+    });
+};
 
-
+export const changeOrderStatusCompletedFromServer = (updatedOrder) => {
+  return {
+    type: CHANGE_ORDER_STATUS_COMPLETED,
+    payload: updatedOrder,
+  };
+};
