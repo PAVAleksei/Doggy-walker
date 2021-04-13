@@ -38,7 +38,7 @@ function ExecutorCardOrder({
 }) {
   const classes = useStyles();
   let history = useHistory();
-
+console.log(date);
 
   const handlerDetailInfo = (id) => {
     history.push(`/order/${id}`);
@@ -56,7 +56,7 @@ function ExecutorCardOrder({
           />
           <CardContent>
             <Typography gutterBottom component="h2">
-              Запланированная дата:{date.toLocaleString("ru-RU")}
+              Запланированная дата:&nbsp;{date.replace('T', ' ').replace('.000Z', '')}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Задание: {description}

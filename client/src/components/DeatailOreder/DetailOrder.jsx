@@ -103,8 +103,8 @@ const DetailOrder = () => {
                   />
                   <CardContent>
                     <Typography gutterBottom component="h2">
-                      Запланированная дата:
-                      {curOrder.date.toLocaleString("ru-RU")}
+                      Запланированная дата:&nbsp;
+                      {curOrder.date.replace('T', ' ').replace('.000Z', '')}
                     </Typography>
                     <Typography
                       variant="body2"
