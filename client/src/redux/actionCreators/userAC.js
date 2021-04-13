@@ -8,6 +8,7 @@ import {
   CHANGE_ORDER_STATUS_IN_WORK,
   ADD_ORDER_EXECUTOR,
   USER_AVATAR,
+  CLOSE_ORDER_CUSTOMER,
 } from "../types/usertypes";
 import { setError } from "./errorAC";
 import { ADD_DOG, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
@@ -282,3 +283,36 @@ export const uploadAvatarAC = (avatar) => {
     payload: avatar,
   }
 };
+
+
+export const closeOrderCustomer = (id) => (
+  dispatch,
+  setState
+) => {
+  fetch(`http://localhost:3001/api/orders/closed/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ id }),
+  })
+    .then((res) => res.json())
+    .then((closedOrder) => {
+      dispatch(changeOrderStatusInWorkFromServer(closedOrder));
+    })
+    .catch((error) => {
+      dispatch(
+        setError({ status: true, text: "Не удалось изменить задание." })
+      );
+    });
+};
+
+export const closeOrderCustomerFromServer = (updatedOrder) => {
+  return {
+    type: CLOSE_ORDER_CUSTOMER,
+    payload: updatedOrder,
+  };
+};
+
+

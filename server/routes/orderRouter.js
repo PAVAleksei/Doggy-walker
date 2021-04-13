@@ -49,6 +49,7 @@ router.patch("/orders/requested/:id", async (req, res) => {
         {
           requested: !currOrder.requested,
           executorId: userId,
+          status: 'Найден исполнитель'
         },
         {
           new: true,
@@ -59,7 +60,7 @@ router.patch("/orders/requested/:id", async (req, res) => {
     const newOrder = await Order.findByIdAndUpdate(
       currOrderId,
       {
-        $push: { requested: !currOrder.requested },
+        $push: { requested: !currOrder.requested, status: 'Открыто' },
       },
       {
         $pull: { executorId: userId },
@@ -87,6 +88,7 @@ router.patch("/orders/completed/:id", async (req, res) => {
       currOrderId,
       {
         completed: true,
+        status: 'Выполнено'
       },
       {
         new: true,
@@ -100,7 +102,7 @@ router.patch("/orders/completed/:id", async (req, res) => {
   }
 });
 
-//Заказчик  подтвердил заявку на ордер, меняем inWork на true
+//Заказчик подтвердил заявку на ордер, меняем inWork на true
 
 router.patch("/orders/inwork/:id", async (req, res) => {
   const currOrderId = req.params.id;
@@ -111,6 +113,7 @@ router.patch("/orders/inwork/:id", async (req, res) => {
       currOrderId,
       {
         inWork: !currOrder.inWork,
+        status: 'На выполнении'
       },
       {
         new: true,
@@ -123,28 +126,6 @@ router.patch("/orders/inwork/:id", async (req, res) => {
   }
 });
 
-// Исполнитель выполнил работу, completed на true
-
-router.patch("/orders/completed/:id", async (req, res) => {
-  if (req.user) {
-    const currOrderId = req.params.id;
-    try {
-      const currOrder = await Order.findByIdAndUpdate(
-        currOrderId,
-        {
-          completed: true,
-        },
-        {
-          new: true,
-        }
-      );
-      return res.json(currOrder);
-    } catch (error) {
-      console.log("Error to update order|completed| to true");
-      return res.sendStatus(500);
-    }
-  }
-});
 
 router.patch("/orders/closed/:id", async (req, res) => {
   if (req.user) {
@@ -154,6 +135,7 @@ router.patch("/orders/closed/:id", async (req, res) => {
         currOrderId,
         {
           closed: true,
+          status: 'Закрыто'
         },
         {
           new: true,

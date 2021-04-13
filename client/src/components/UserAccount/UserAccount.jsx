@@ -55,6 +55,9 @@ export default function UserAccount() {
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
           <Box m={1}>
+            <Button variant="outlined" color="primary">Пополнить счет</Button>
+          </Box>
+          <Box m={1}>
             <Button variant="outlined">Мои заказы</Button>
           </Box>
           <Box m={1}>
@@ -122,6 +125,10 @@ export default function UserAccount() {
                         address={order.address.name}
                         requested={order.requested}
                         inWork={order.inWork}
+                        completed={order.completed}
+                        closed={order.closed}
+                        status={order.status}
+                        dogId={order.dogId}
                       />
                     </Grid>
                   ))
