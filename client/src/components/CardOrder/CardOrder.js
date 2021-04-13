@@ -55,7 +55,7 @@ function CardOrder({ id, description, executorId, date, price, address, requeste
   const closeOrderHandler = () => {
     dispatch(closeOrderCustomer(id));
   }
-
+console.log(date);
   return (
     <Box className={classes.pos} m={4}>
       <Card className={classes.root}>
@@ -68,6 +68,8 @@ function CardOrder({ id, description, executorId, date, price, address, requeste
           <CardContent>
             <Typography gutterBottom component="h2">
               Запланированная дата: {date.toLocaleString('ru-RU')}
+							{/* Запланированная дата:&nbsp;
+              {date.replace('T', ' ').replace('.000Z', '')} */}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Задание: {description}
