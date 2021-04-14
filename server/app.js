@@ -20,11 +20,12 @@ const { getMainMenu } = require('./keyboards');
 const currentScene = new SceneGenerator();
 const numberScene = currentScene.genNumberScene();
 const nameScene = currentScene.genNameScene();
+const { getOrCreateUser } = require('./helpers/helpers');
 
 const app = express();
 const bot = new Telegraf(process.env.TOKEN);
 
-bot.use(Telegraf.log());
+// bot.use(Telegraf.log());
 
 const stage = new Stage([numberScene, nameScene]);
 
@@ -35,15 +36,39 @@ const randomNumberForAuth = () => {
 bot.use(session());
 bot.use(stage.middleware());
 
-bot.start((ctx) => {
-	ctx.replyWithHTML(
-		`Приветсвую тебя, ${ctx.message.from.first_name} в <b>Doggy-walker</b>\n\n` +
-		`Для начала, пройди авторизацию`,
-		getMainMenu());
-	console.log(ctx.message.from.id);
-	console.log(ctx.message.from.username);
-	
+bot.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (error) {
+    console.log(error);
+    await ctx.reply('Что-то пошло не так 😢, уже чиним🥷');
+  }
 });
+
+bot.start(async (ctx) => {
+	// console.log('ctx----> ', ctx);
+	console.log('ctx.update ----> ', ctx.update.message.from);
+	const { from: { id: telegramId, username } } = ctx.update.message;
+	console.log({telegramId});
+	console.log({username});
+  const user = await getOrCreateUser(telegramId, username);
+  try {
+    await user.save();
+  } catch (error) {
+    console.log(error);
+  }
+  ctx.reply('Привет, любитель собакенов!');
+});
+
+// bot.start((ctx) => {
+// 	ctx.replyWithHTML(
+// 		`Приветсвую тебя, ${ctx.message.from.first_name} в <b>Doggy-walker</b>\n\n` +
+// 		`Для начала, пройди авторизацию`,
+// 		getMainMenu());
+// 	console.log(ctx.message.from.id);
+// 	console.log(ctx.message.from.username);
+	
+// });
 
 bot.hears('Авторизоваться', (ctx) => {
 
@@ -61,6 +86,7 @@ bot.hears("id", (ctx) => {
 
 bot.on('text', (ctx) => {
 	ctx.telegram.sendMessage(ctx.message.chat.id, `Hello ${ctx.state.role}`);
+
 	console.log('role --> ', ctx.message);
 });
 
@@ -74,12 +100,13 @@ bot.command('scenes', async (ctx) => {
 // ===================================================================
 
 
-// bot.on('text', (ctx) => {
+// bot.hears('test', (ctx) => {
 // 	// Explicit usage
+// 	console.log(ctx.state);
 // 	ctx.telegram.sendMessage(ctx.message.chat.id, `Hello ${ctx.state.role}`);
 
-// 	// Using context shortcut
-// 	// ctx.reply(`Hello ${ctx.state.role}`)
+	// Using context shortcut
+	// ctx.reply(`Hello ${ctx.state.role}`)
 // });
 
 
@@ -151,11 +178,10 @@ bot.command('scenes', async (ctx) => {
 
 	const PORT = process.env.PORT ?? 3000;
 
-	bot.launch();
-
+	
 	app.listen(PORT, () => {
 		console.log(`Server started on port ${PORT}.`);
-
+		
 		connect(
 			process.env.DB_CONNECTION_CLOUD,
 			{
@@ -167,7 +193,9 @@ bot.command('scenes', async (ctx) => {
 			() => {
 				console.log('Connection to database is successful.');
 			},
-		);
-	});
-
-module.exports = app;
+			);
+			bot.launch();
+		});
+		
+		module.exports = app;
+		
