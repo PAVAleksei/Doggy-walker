@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { changeOrderStatusCompleted } from "../../redux/actionCreators/orderAc";
 import { closeOrderCustomer } from "../../redux/actionCreators/userAC";
+import { useEffect, useState } from "react";
+import { getDogsAC } from "../../redux/actionCreators/dogAC";
 
 const useStyles = makeStyles({
   root: {
@@ -23,10 +25,17 @@ const useStyles = makeStyles({
     marginBottom: 40,
   },
   media: {
-    height: 140,
+    height: 190,
   },
   pos: {
     margin: 0,
+  },
+  profile: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
   },
 });
 
@@ -41,10 +50,16 @@ const DoneOrderItem = ({
   closed,
   order,
   id,
+  dogId,
 }) => {
   const classes = useStyles();
   let history = useHistory();
   let dispatch = useDispatch();
+  const [curDog, setCurDog] = useState(null);
+  const [imgDog, setImgDog] = useState("");
+
+  const allDogs = useSelector((state) => state.dogs);
+  // const currDog = allDogs.find((el) => el._id == dogId);
 
   return (
     <Box className={classes.pos} m={4}>
@@ -52,41 +67,39 @@ const DoneOrderItem = ({
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="https://ampravda.ru/files/articles-2/90408/cvyc25f7qt98-1-640.jpg"
+            // image={currDog.avatar}
             title="Contemplative Reptile"
           />
-          <CardContent>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-around",
-                alignItems: "center",
-              }}
+          <CardContent className={classes.profile}>
+            <Typography gutterBottom component="h2">
+              Дата выгула:{new Date(date).toLocaleString("ru-RU")}
+            </Typography>
+            {/* <Typography variant="body2" color="textSecondary" component="p">
+                Описание: {description}
+              </Typography> */}
+            <Typography variant="body2" color="textSecondary" component="p">
+              Адрес: {address}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Стоимость: {price} рублей
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <Box fontWeight="fontWeightBold" m={1}>
+                Статус заказа: Заказ завершен
+              </Box>
+            </Typography>
+            <Box
+              textAlign="center"
+              fontWeight="fontWeightBold"
+              m={6}
+              fontFamily="Monospace"
             >
-              <Typography gutterBottom component="h2">
-                Дата выгула:{date.toLocaleString("ru-RU")}
+              <Typography fontWeight="fontWeightBold" alignItems="center">
+                Вы выполнили заказ
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Задание: {description}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Адрес: {address}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Стоимость: {price} рублей
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                <Box fontWeight="fontWeightBold" m={1}>
-                  Статус заказа: Заказ завершен
-                </Box>
-              </Typography>
-            </div>
+            </Box>
           </CardContent>
         </CardActionArea>
-        <CardActions display="flex" justifyContent="center" alignItems="center">
-          Вы полнили заказ
-        </CardActions>
       </Card>
     </Box>
   );

@@ -85,6 +85,7 @@ function DoneOrders() {
                       completed={order.completed}
                       closed={order.closed}
                       id={order._id}
+                      dogId={order.dogId}
                     />
                   ))
                 ) : (
