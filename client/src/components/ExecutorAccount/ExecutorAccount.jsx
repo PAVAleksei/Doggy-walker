@@ -63,7 +63,7 @@ function ExecutorAccount() {
         </Grid>
         <Grid item xs={8} direction="column">
           <Grid item>
-            <Paper className={classes.paper}>Все заказы</Paper>
+            <Paper className={classes.paper}>Все открытые заказы</Paper>
             <CardList />
           </Grid>
 

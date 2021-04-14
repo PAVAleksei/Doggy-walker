@@ -9,7 +9,7 @@ import {
   CardActionArea,
   Card,
 } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -25,8 +25,6 @@ const useStyles = makeStyles({
   },
 });
 
-
-
 function ExecutorCardOrder({
   id,
   description,
@@ -35,28 +33,32 @@ function ExecutorCardOrder({
   address,
   sendRequestHandler,
   requested,
+  dogId,
 }) {
   const classes = useStyles();
   let history = useHistory();
-console.log(date);
+
+  const dogImg = useSelector(
+    (state) => state.dogs.find((el) => el._id == dogId)?.avatar
+  );
 
   const handlerDetailInfo = (id) => {
     history.push(`/order/${id}`);
   };
 
-  
   return (
     <Box className={classes.pos} m={4}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="https://ampravda.ru/files/articles-2/90408/cvyc25f7qt98-1-640.jpg"
+            image={dogImg}
             title="Contemplative Reptile"
           />
           <CardContent>
             <Typography gutterBottom component="h2">
-              Запланированная дата:&nbsp;{date.replace('T', ' ').replace('.000Z', '')}
+              Запланированная дата:&nbsp;
+              {date.replace("T", " ").replace(".000Z", "")}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Задание: {description}
@@ -79,7 +81,6 @@ console.log(date);
           >
             Подробнее
           </Button>
-
         </CardActions>
       </Card>
     </Box>
