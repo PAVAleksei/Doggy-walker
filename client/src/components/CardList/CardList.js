@@ -9,8 +9,6 @@ import {
 import ExecutorCardOrder from "../ExecutorCardOrder/ExecutorCardOrder";
 
 function CardList() {
-  
-
   const allOrders = useSelector((state) => state.allOrders);
   const dispatch = useDispatch();
 
@@ -28,6 +26,7 @@ function CardList() {
                 price={order.price}
                 address={order.address.name}
                 requested={order.requested}
+                dogId={order.dogId}
               />
             </Grid>
           ))
