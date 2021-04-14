@@ -4,6 +4,7 @@ const passport = require('passport');
 const express = require('express');
 const sessions = require('express-session');
 const MongoStore = require('connect-mongo');
+const http = require('http');
 const path = require('path');
 const { connect } = require('mongoose');
 const cors = require('cors');
@@ -14,6 +15,9 @@ const authRouter = require('./routes/authGoogle');
 const orderRouter = require('./routes/orderRouter');
 const dogRouter = require('./routes/dogRouter');
 const verificationRouter = require('./routes/verificationRouter');
+
+
+const PORT = process.env.PORT ?? 3000;
 
 const app = express();
 
@@ -31,23 +35,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(
-  sessions({
-    name: app.get('cookieName'),
-    secret: process.env.SECRET_KEY,
-    resave: false, // Не сохранять сессию, если мы ее не изменим
-    saveUninitialized: false, // не сохранять пустую сессию
-    store: MongoStore.create({
-      // выбираем в качестве хранилища mongoDB
-      mongoUrl: process.env.DB_CONNECTION_CLOUD,
-    }),
-    cookie: {
-      // настройки, необходимые для корректного работы cookie
-      httpOnly: true, // не разрещаем модифицировать данную cookie через javascript
-      maxAge: 86400 * 1e3, // устанавливаем время жизни cookie
-    },
+const sessionParser = session({
+  name: app.get('cookieName'),
+  secret: process.env.SECRET_KEY,
+  resave: false, // Не сохранять сессию, если мы ее не изменим
+  saveUninitialized: false, // не сохранять пустую сессию
+  store: MongoStore.create({
+    // выбираем в качестве хранилища mongoDB
+    mongoUrl: process.env.DB_CONNECTION_CLOUD,
   }),
-);
+  cookie: {
+    // настройки, необходимые для корректного работы cookie
+    httpOnly: true, // не разрещаем модифицировать данную cookie через javascript
+    maxAge: 86400 * 1e3, // устанавливаем время жизни cookie
+  },
+});
+
+app.use(sessionParser);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -76,7 +80,12 @@ app.use('/verification', verificationRouter);
 
 // app.use('/api/orders', orderRouter);
 
-const PORT = process.env.PORT ?? 3000;
+
+const server = http.createServer(app);
+
+// server.listen(8080, function () {
+//   console.log('Listening on http://localhost:8080');
+// });
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}.`);
