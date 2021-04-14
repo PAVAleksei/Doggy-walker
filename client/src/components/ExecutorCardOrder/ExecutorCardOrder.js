@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     flexWrap: "wrap",
   },
   media: {
-    height: 140,
+    height: 200,
   },
   pos: {
     margin: 0,

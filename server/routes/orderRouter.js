@@ -163,13 +163,10 @@ router.patch("/orders/closed/:id", (req, res) => {
     );
     return closedOrder;
   };
-
   if (req.user) {
     if (req.user.kind === "Заказчик") {
       try {
-        const order = closeFunc()
-        .then((order) => res.json(order))
-
+        const order = closeFunc().then((order) => res.json(order));
       } catch (error) {
         console.log("Error to update order|closed| to true");
         return res.sendStatus(500);

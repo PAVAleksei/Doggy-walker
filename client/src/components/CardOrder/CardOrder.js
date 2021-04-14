@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -24,7 +24,6 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center"
   },
   media: {
     height: 140,
@@ -33,12 +32,10 @@ const useStyles = makeStyles({
     margin: 0,
   },
   button: {
-    // width: 350,
+    width: 340,
     height: 60,
   },
 });
-
-let socket = new WebSocket('ws://localhost:3001');
 
 function CardOrder({
   id,
@@ -54,19 +51,6 @@ function CardOrder({
   status,
   dogId,
 }) {
-
-
-  useEffect(() => {
-    
-    socket.onopen = () => {
-     
-      console.log('Websocket client connected');
-    };
-
-
-  
-  }, [])
-
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -75,18 +59,7 @@ function CardOrder({
   // const status = useSelector(state => state.user.orders.filter(el => el._id === id))
   const editHandler = () => {};
 
-  // утверждение исполнителя на заказ
   const approveExecutorHandler = (id) => {
-
-    const messageToServer = {
-          type: 'message',
-          // payload: {
-          message: id,
-          // },
-        }
-    
-    socket.send(JSON.stringify(messageToServer));
-
     dispatch(changeOrderStatusInWork(id));
   };
 
@@ -97,7 +70,7 @@ function CardOrder({
   const closeOrderHandler = () => {
     dispatch(closeOrderCustomer(id));
   };
-  console.log(date);
+
   return (
     <Box className={classes.pos} m={4}>
       <Card className={classes.root}>
@@ -110,6 +83,8 @@ function CardOrder({
           <CardContent>
             <Typography gutterBottom component="h2">
               Запланированная дата: {date.toLocaleString("ru-RU")}
+              {/* Запланированная дата:&nbsp;
+              {date.replace('T', ' ').replace('.000Z', '')} */}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Задание: {description}
@@ -134,7 +109,7 @@ function CardOrder({
         </CardActionArea>
 
         {!requested ? (
-          <CardActions align="center"
+          <CardActions
             display="flex"
             justifyContent="center"
             alignItems="center"
@@ -168,7 +143,6 @@ function CardOrder({
             alignItems="center"
           >
             <Button
-              data-btn-approve="data-btn-approve"
               disabled={inWork}
               onClick={() => approveExecutorHandler(id)}
               variant="contained"
@@ -176,7 +150,7 @@ function CardOrder({
               color="primary"
               className={classes.button}
             >
-              Одобрить исполнителя
+              Одобрить
             </Button>
             <Button
               disabled={inWork}
