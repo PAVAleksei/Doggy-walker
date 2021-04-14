@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   item: {
     display: "flex",
     justifyContent: "space-between;",
-    alignItems: "stretch",
+    alignItems: "center",
   },
 }));
 
@@ -36,6 +36,7 @@ function HistoryOrders() {
   const orders = useSelector((state) => state.user.orders).filter(
     (el) => !el.closed
   );
+  const allDogs = useSelector((state) => state.dogs);
 
   const handlerToAccount = () => {
     history.push("/account");
@@ -48,16 +49,18 @@ function HistoryOrders() {
         <Grid item xs={3}>
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
-          <Grid>
-            <Button
-              onClick={() => handlerToAccount()}
-              variant="contained"
-              size="small"
-              color="primary"
-            >
-              Личный кабинет
-            </Button>
-          </Grid>
+          <Box m={5}>
+            <Grid>
+              <Button
+                onClick={() => handlerToAccount()}
+                variant="contained"
+                size="large"
+                color="primary"
+              >
+                Личный кабинет
+              </Button>
+            </Grid>
+          </Box>
         </Grid>
 
         <Grid item xs={8} direction="column">
@@ -85,6 +88,7 @@ function HistoryOrders() {
                       completed={order.completed}
                       closed={order.closed}
                       id={order._id}
+                      dogId={order.dogId}
                     />
                   ))
                 ) : (

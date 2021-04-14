@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     // maxWidth: 345,
     border: "1px solid #1C3E6A",
     height: 500,
-    width: 300,
+    // width: 300,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     margin: 0,
   },
   button: {
-    width: 300,
+    width: 340,
     height: 60,
   },
 });
@@ -70,7 +70,7 @@ function CardOrder({
   const closeOrderHandler = () => {
     dispatch(closeOrderCustomer(id));
   };
-  console.log(date);
+
   return (
     <Box className={classes.pos} m={4}>
       <Card className={classes.root}>
@@ -150,7 +150,7 @@ function CardOrder({
               color="primary"
               className={classes.button}
             >
-              Одобрить исполнителя
+              Одобрить
             </Button>
             <Button
               disabled={inWork}

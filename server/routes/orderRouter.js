@@ -150,8 +150,8 @@ router.patch("/orders/completed/:id", async (req, res) => {
 router.patch("/orders/closed/:id", (req, res) => {
   const currOrderId = req.params.id;
 
-  const closeFunc = async () => {
-    const closedOrder = await Order.findByIdAndUpdate(
+  const closeFunc = () => {
+    const closedOrder = Order.findByIdAndUpdate(
       currOrderId,
       {
         closed: true,
@@ -163,12 +163,10 @@ router.patch("/orders/closed/:id", (req, res) => {
     );
     return closedOrder;
   };
-
   if (req.user) {
     if (req.user.kind === "Заказчик") {
       try {
-        const order = closeFunc();
-        return res.json(order);
+        const order = closeFunc().then((order) => res.json(order));
       } catch (error) {
         console.log("Error to update order|closed| to true");
         return res.sendStatus(500);

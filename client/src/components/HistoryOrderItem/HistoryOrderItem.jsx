@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { changeOrderStatusCompleted } from "../../redux/actionCreators/orderAc";
 import { closeOrderCustomer } from "../../redux/actionCreators/userAC";
+import { getDogsAC } from "../../redux/actionCreators/dogAC";
+import { useEffect, useState } from "react";
 
 const useStyles = makeStyles({
   root: {
@@ -21,9 +23,14 @@ const useStyles = makeStyles({
     width: 450,
     height: 470,
     marginBottom: 40,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
   },
   media: {
-    height: 140,
+    height: 180,
   },
   pos: {
     margin: 0,
@@ -41,13 +48,33 @@ const HistoryOrderItem = ({
   closed,
   order,
   id,
+  dogId,
 }) => {
   const classes = useStyles();
   let history = useHistory();
   let dispatch = useDispatch();
+  const [curDog, setCurDog] = useState(null);
+  const [imgDog, setImgDog] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
+  const allDogs = useSelector((state) => state.dogs);
+
+  useEffect(() => {
+    const currDog = allDogs.find((el) => el._id == dogId);
+    if (currDog) {
+      setImgDog(currDog.avatar);
+    }
+  });
+
+
+  // const imgDog = allDogs.find((el) => el._id == dogId);
+  // console.log(imgDog.avatar);
 
   const handlerDoneOrder = () => {
-    console.log(id);
     dispatch(changeOrderStatusCompleted(id));
     // таймер на закрытие задачи у заказчика
     dispatch(closeOrderCustomer(id));
@@ -59,7 +86,7 @@ const HistoryOrderItem = ({
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="https://ampravda.ru/files/articles-2/90408/cvyc25f7qt98-1-640.jpg"
+            image={imgDog}
             title="Contemplative Reptile"
           />
           <CardContent>
@@ -72,25 +99,25 @@ const HistoryOrderItem = ({
               }}
             >
               <Typography gutterBottom component="h2">
-                Запланированная дата:{date.toLocaleString("ru-RU")}
+                Запланированная дата:{new Date(date).toLocaleString("ru-RU")}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Задание: {description}
+              <Typography variant="body2" color="text.primary" component="p">
+                Описание: {description}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
                 Адрес: {address}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="text.primary" component="p">
                 Стоимость: {price} рублей
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                <Box fontWeight="fontWeightBold" m={1}>
-                  Статус заказа:
+                <Box m={1} color="text.primary">
+                  Статус:
                   {order.inWork && !order.completed && (
-                    <span>В процессе выполнения</span>
+                    <span> В процессе выполнения</span>
                   )}
                   {!order.inWork && (
-                    <span>Ожидает подтверждения от заказчика</span>
+                    <span> Ожидает подтверждения от заказчика</span>
                   )}
                   {order.completed && (
                     <span>Ожидает закрытие от заказчика</span>
