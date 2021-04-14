@@ -11,7 +11,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDogAC } from '../../redux/actionCreators/dogAC';
-import { Box, Link } from '@material-ui/core';
+import { Box, Grid, Link } from '@material-ui/core';
 import { deleteFetchDogAC } from '../../redux/actionCreators/userAC';
 
 const useStyles = makeStyles({
@@ -23,6 +23,9 @@ const useStyles = makeStyles({
   media: {
     height: 140,
   },
+  infiDog: {
+    alignItems: 'left',
+  }
 });
 
 export default function Dog() {
@@ -30,6 +33,8 @@ export default function Dog() {
   const dispatch = useDispatch();
   const { id } = useParams()
   const dog = useSelector(state => state.dog);
+  console.log(dog, 'dog');
+
   const history = useHistory();
 
   useEffect(() => {
@@ -44,39 +49,43 @@ export default function Dog() {
   }
 
   return (
-    <Box m={10} >
+    <Box marginTop={13} >
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image="https://lh3.googleusercontent.com/proxy/XLKWI-YG_Cxu1aB5-159l6uW2KDq84bir7B5I11VfQtXTJ1OcABOt_tiboZd1r-rblgbZ0Duw4eLc9rizg0iIqC1KFwjuDu8jiaIrR3kQJn-ZaO_j51rdjQaemLu5Aj8P8TaSWevl6oXxlGyI4vPKBpVpoiKEnvIK-s3PJsdBrusxgtt6GTDqtXdbz4kOdbyYrYL9RF1-3OV8In0uigIX9tW1igRmV0GJQ"
+            image={dog.avatar}
             title="Contemplative Reptile"
           />
-          <CardContent>
+
+
+          <CardContent className={classes.infiDog}>
             <Typography gutterBottom variant="h5" component="h2">
               {dog.nickname}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+          <Box ml={19}>
+            <Typography align="left" variant="body2" color="textSecondary" component="p">
               Порода: {dog.breed}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography align="left" variant="body2" color="textSecondary" component="p">
               Пол: {dog.gender}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography align="left" variant="body2" color="textSecondary" component="p">
               Вес: {dog.weight}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography  align="left"variant="body2" color="textSecondary" component="p">
               Чего боится: {dog.phobia}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography align="left" variant="body2" color="textSecondary" component="p">
               Тянет за поводок: {dog.pullsTheLeash}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography align="left" variant="body2" color="textSecondary" component="p">
               Отпускать с поводка: {dog.letGo}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography align="left" variant="body2" color="textSecondary" component="p">
               Контакт с другими животными: {dog.contactWithOther}
             </Typography>
+          </Box>
           </CardContent>
         </CardActionArea>
         <CardActions>
