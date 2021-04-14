@@ -1,10 +1,10 @@
-const passport = require("passport");
-const express = require("express");
+const passport = require('passport');
+const express = require('express');
 
 const router = express.Router();
 
-router.post("/register", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
+router.post('/register', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) {
       return next(info.message);
     }
@@ -30,8 +30,8 @@ router.post("/register", (req, res, next) => {
   })(req, res, next);
 });
 
-router.post("/login", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) {
       return res.send(info.message);
     }
@@ -55,42 +55,26 @@ router.post("/login", (req, res, next) => {
         animal: user.animal,
         photo: user.photo,
       });
+      res.redirect('http://localhost:3000');
     });
   })(req, res, next);
 });
 
-
-// // auth logout
-router.get("/logout", async (req, res) => {
+router.get('/logout', async (req, res) => {
   await req.logout();
-  res.clearCookie(req.app.get("cookieName"));
-  res.redirect("http://localhost:3000/register");
+  res.clearCookie(req.app.get('cookieName'));
+  res.redirect('http://localhost:3000');
 });
 
-// auth with google+
 router.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-  })
+  '/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  }),
 );
 
-// callback route for google to redirect to
-// hand control to passport to use code to grab profile info
-router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
-  res.redirect("http://localhost:3000");
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+  res.redirect('http://localhost:3000');
 });
-
-// router.get("/google/redirect", (req, res) => {
-//   passport.authenticate("google", (user) => {
-//     res.json({
-//       email: user.email,
-//       firstname: user.firstname,
-//       lastname: user.lastname,
-//       kind: user.kind,
-//       verification: user.verification,
-//     });
-//   });
-// });
 
 module.exports = router;

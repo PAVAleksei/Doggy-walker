@@ -60,7 +60,7 @@ const ExecutorSelect = () => {
 			Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
 		) {
 			dispatch(sagaSignupAC(valuesOfFields));
-			history.push("/account");
+			history.push("/");
 
 			formRef.current.reset();
 		}

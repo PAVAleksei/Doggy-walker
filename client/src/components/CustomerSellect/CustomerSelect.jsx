@@ -35,7 +35,6 @@ const CustomerSelect = () => {
   const classes = useStyles();
   const [kind, setKind] = React.useState("");
   let history = useHistory();
-  let location = useLocation();
 
   const handleChange = (event) => {
     setKind(event.target.value);
@@ -53,7 +52,7 @@ const CustomerSelect = () => {
       Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
     ) {
       dispatch(sagaSignupAC(valuesOfFields));
-      history.push("/account");
+      history.push("/");
 
       formRef.current.reset();
     }
@@ -161,8 +160,19 @@ const CustomerSelect = () => {
                 }}
               />
             </Grid>
-
-            <Grid>
+            <Grid container spacing={3} justify="center">
+              <Box m={3}>
+                <Grid item>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    color="primary"
+                    onClick={handlerClickLoginCustomer}
+                  >
+                    Войти
+                  </Button>
+                </Grid>
+              </Box>
               <Box m={3}>
                 <Button
                   type="submit"
@@ -174,30 +184,25 @@ const CustomerSelect = () => {
                 </Button>
               </Box>
             </Grid>
+
+
+              
+            
             <Grid>
               <Box m={3}>
-                <Button variant="contained" size="large" color="secondary">
+                <Button variant="outlined" color="primary" size="large">
                   <a href="http://localhost:3001/auth/google">Google</a>
                 </Button>
               </Box>
             </Grid>
           </form>
         </Box>
-        <Grid>
-          <Box m={3}>
-            <Button
-              variant="contained"
-              size="large"
-              color="primary"
-              onClick={handlerClickLoginCustomer}
-            >
-              У меня уже сть аккаунт, Войти
-            </Button>
-          </Box>
-        </Grid>
+
         <Grid></Grid>
       </Container>
-    </Box>
+      
+  </Box>
+  
   );
 };
 

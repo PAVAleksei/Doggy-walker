@@ -38,8 +38,7 @@ const currencies = [
 function Register() {
   const classes = useStyles();
   const [kind, setKind] = React.useState("");
-  let history = useHistory();
-  let location = useLocation();
+  const history = useHistory();
 
   const handleChange = (event) => {
     setKind(event.target.value);
@@ -57,7 +56,7 @@ function Register() {
       Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
     ) {
       dispatch(sagaSignupAC(valuesOfFields));
-      history.push("/account");
+      history.push("/");
 
       formRef.current.reset();
     }
