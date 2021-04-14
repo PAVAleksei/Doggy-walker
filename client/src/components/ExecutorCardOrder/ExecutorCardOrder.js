@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { getDogsAC } from "../../redux/actionCreators/dogAC";
+import { useEffect } from "react";
 
 const useStyles = makeStyles({
   root: {
@@ -37,10 +39,19 @@ function ExecutorCardOrder({
 }) {
   const classes = useStyles();
   let history = useHistory();
+  const dispatch = useDispatch();
+
+  //Подтягиваем всех dogs c бека и записываем state dogs
+  useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
 
   const dogImg = useSelector(
     (state) => state.dogs.find((el) => el._id == dogId)?.avatar
   );
+  console.log(dogId);
 
   const handlerDetailInfo = (id) => {
     history.push(`/order/${id}`);

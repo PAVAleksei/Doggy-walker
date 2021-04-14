@@ -40,6 +40,10 @@ function ExecutorAccount() {
     history.push("/doneOrders");
   };
 
+  useEffect(() => {
+    dispatch(setOrders()); // все заказы в системе
+  }, []);
+
   return (
     <div className={classes.root}>
       <h3>Личный кабинет Исполнителя</h3>
