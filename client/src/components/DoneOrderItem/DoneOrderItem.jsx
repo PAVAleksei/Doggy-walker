@@ -55,11 +55,8 @@ const DoneOrderItem = ({
   const classes = useStyles();
   let history = useHistory();
   let dispatch = useDispatch();
-  const [curDog, setCurDog] = useState(null);
-  const [imgDog, setImgDog] = useState("");
 
   const allDogs = useSelector((state) => state.dogs);
-  // const currDog = allDogs.find((el) => el._id == dogId);
 
   return (
     <Box className={classes.pos} m={4}>

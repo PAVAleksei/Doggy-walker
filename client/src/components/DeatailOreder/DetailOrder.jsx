@@ -49,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   detail: {
-    display: "row",
+    display: "flex",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -118,20 +119,20 @@ const DetailOrder = () => {
           <Grid item xs={3}>
             <Paper className={classes.paper}>Мои данные</Paper>
             <Info />
-            <Box m={1}>
+            <Box m={3}>
               <Button variant="outlined" onClick={handlerHistoryOrders}>
                 Мои текущие заказы
               </Button>
             </Box>
-            <Box m={1}>
+            <Box m={3}>
               <Button variant="outlined">Мои отзывы</Button>
             </Box>
-            <Box m={1}>
+            <Box m={5}>
               <Grid>
                 <Button
                   onClick={() => handlerToAccount()}
                   variant="contained"
-                  size="small"
+                  size="large"
                   color="primary"
                 >
                   Личный кабинет
@@ -180,11 +181,7 @@ const DetailOrder = () => {
                       </Typography>
                     </CardContent>
                   </CardActionArea>
-                  <CardActions
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
+                  <CardActions classes={classes.btn}>
                     <Button
                       variant="contained"
                       disabled={curOrder.requested}

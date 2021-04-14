@@ -48,16 +48,18 @@ function DoneOrders() {
         <Grid item xs={3}>
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
-          <Grid>
-            <Button
-              onClick={() => handlerToAccount()}
-              variant="contained"
-              size="small"
-              color="primary"
-            >
-              Личный кабинет
-            </Button>
-          </Grid>
+          <Box m={5}>
+            <Grid>
+              <Button
+                onClick={() => handlerToAccount()}
+                variant="contained"
+                size="large"
+                color="primary"
+              >
+                Личный кабинет
+              </Button>
+            </Grid>
+          </Box>
         </Grid>
 
         <Grid item xs={8} direction="column">

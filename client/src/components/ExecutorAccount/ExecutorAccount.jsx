@@ -51,17 +51,17 @@ function ExecutorAccount() {
         <Grid item xs={3}>
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
-          <Box m={1}>
+          <Box m={3}>
             <Button variant="outlined" onClick={handlerHistoryOrders}>
               Текущие заказы
             </Button>
           </Box>
-          <Box m={1}>
+          <Box m={3}>
             <Button variant="outlined" onClick={handlerDoneOrders}>
               Выполненные заказы
             </Button>
           </Box>
-          <Box m={1}>
+          <Box m={3}>
             <Button variant="outlined">Мои отзывы</Button>
           </Box>
         </Grid>

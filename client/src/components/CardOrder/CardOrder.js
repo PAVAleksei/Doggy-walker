@@ -70,7 +70,7 @@ function CardOrder({
   const closeOrderHandler = () => {
     dispatch(closeOrderCustomer(id));
   };
-  console.log(date);
+  
   return (
     <Box className={classes.pos} m={4}>
       <Card className={classes.root}>
