@@ -25,6 +25,8 @@ import Dog from "./components/DogInfo/Dog";
 import DetailOrder from "./components/DeatailOreder/DetailOrder";
 import HistoryOrders from "./components/HistoryOrders/HistoryOrders";
 import DoneOrdersList from "./components/DoneOrdersList/DoneOrdersList";
+import { Container } from "@material-ui/core";
+import { Footer } from "./components/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +49,7 @@ function App() {
     <div className="App">
       <Router>
         <Header />
+
         <Switch>
           <Route exact path="/order/:id">
             <DetailOrder />
@@ -102,6 +105,7 @@ function App() {
             <EditUser />
           </Route>
         </Switch>
+        <Footer />
       </Router>
     </div>
   );

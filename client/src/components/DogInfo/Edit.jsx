@@ -137,14 +137,7 @@ export default function EditDog() {
               defaultValue={dog.letGo}
               variant="outlined"
             />
-            <TextField
-              id="outlined-textarea"
-              label="Фото"
-              name="avatar"
-              multiline
-              variant="outlined"
-              defaultValue={dog.avatar}
-            />
+            
           </div>
         </Box>
         <Box m={3}>

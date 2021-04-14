@@ -86,7 +86,7 @@ const DetailOrder = () => {
             <Info />
             <Box m={1}>
               <Button variant="outlined" onClick={handlerHistoryOrders}>
-                Мои заказы
+                Мои текщие заказы
               </Button>
             </Box>
             <Box m={1}>

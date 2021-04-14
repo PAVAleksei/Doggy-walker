@@ -49,7 +49,7 @@ router.post('/avatar/:id', uploadMulter.single('file'), async (req, res) => {
     const imgPuth = 'http://localhost:3001/img/';
     dog.avatar = imgPuth + filename;
     await dog.save();
-    return res.json({avatar: dog.avatar, id: dog._id});
+    return res.json({ avatar: dog.avatar, id: dog._id });
   } catch (e) {
     console.log(e);
     return res.status(400).json({ message: 'Upload avatar error' });
