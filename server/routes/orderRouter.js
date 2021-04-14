@@ -40,36 +40,35 @@ router.patch("/orders/requested/:id", async (req, res) => {
   const userId = req.user._id;
   const currOrderId = req.params.id;
 
+  const currOrder = await Order.findById(currOrderId);
+  // const currUser = User.findById(userId);
   try {
-    const currOrder = await Order.findById(currOrderId);
-    const currUser = User.findById(userId);
-
     if (!currOrder.requested) {
       const newOrder = await Order.findByIdAndUpdate(
         currOrderId,
         {
           requested: !currOrder.requested,
-          executorId: currUser._id,
+          executorId: userId,
+          status: 'Найден исполнитель'
         },
         {
           new: true,
         }
       );
-    } else {
-      const newOrder = await Order.findByIdAndUpdate(
-        currOrderId,
-        {
-          $push: { requested: !currOrder.requested },
-        },
-        {
-          $pull: { executorId: currUser._id },
-        },
-        {
-          new: true,
-        }
-      );
+      return res.json(newOrder);
     }
-
+    const newOrder = await Order.findByIdAndUpdate(
+      currOrderId,
+      {
+        $push: { requested: !currOrder.requested, status: 'Открыто' },
+      },
+      {
+        $pull: { executorId: userId },
+      },
+      {
+        new: true,
+      }
+    );
     return res.json(newOrder);
   } catch (error) {
     console.log("Error to update order|requested| to true");
@@ -77,32 +76,8 @@ router.patch("/orders/requested/:id", async (req, res) => {
   }
 });
 
-//Исполнитель нажал кнопку выполнено на ордер, меняем completed на true
 
-router.patch("/orders/completed/:id", async (req, res) => {
-  // const userId = req.user._id;
-  const currOrderId = req.params.id;
-
-  try {
-    // const currUser = User.findById(userId);
-    const currOrder = await Order.findByIdAndUpdate(
-      currOrderId,
-      {
-        completed: true,
-      },
-      {
-        new: true,
-      }
-    );
-
-    return res.json(currOrder);
-  } catch (error) {
-    console.log("Error to update order|requested| to true");
-    return res.sendStatus(500);
-  }
-});
-
-//Заказчик  подтвердил заявку на ордер, меняем inWork на true
+//Заказчик подтвердил заявку на ордер, меняем inWork на true
 
 router.patch("/orders/inwork/:id", async (req, res) => {
   const currOrderId = req.params.id;
@@ -113,6 +88,7 @@ router.patch("/orders/inwork/:id", async (req, res) => {
       currOrderId,
       {
         inWork: !currOrder.inWork,
+        status: 'На выполнении'
       },
       {
         new: true,
@@ -125,48 +101,77 @@ router.patch("/orders/inwork/:id", async (req, res) => {
   }
 });
 
-// Исполнитель выполнил работу, completed на true
+//Исполнитель нажал кнопку выполнено на ордер, меняем completed на true
 
 router.patch("/orders/completed/:id", async (req, res) => {
-  if (req.user) {
-    const currOrderId = req.params.id;
-    try {
-      const currOrder = await Order.findByIdAndUpdate(
-        currOrderId,
-        {
-          completed: true,
-        },
-        {
-          new: true,
-        }
-      );
-      return res.json(currOrder);
-    } catch (error) {
-      console.log("Error to update order|completed| to true");
-      return res.sendStatus(500);
-    }
+  const currOrderId = req.params.id;
+
+  try {
+    const currOrder = await Order.findByIdAndUpdate(
+      currOrderId,
+      {
+        completed: true,
+        status: 'Выполнено'
+      },
+      {
+        new: true,
+      }
+    );
+
+    setTimeout(() => {
+
+    }, 60*1000)
+
+    return res.json(currOrder);
+  } catch (error) {
+    console.log("Error to update order|requested| to true");
+    return res.sendStatus(500);
   }
 });
 
-router.patch("/orders/closed/:id", async (req, res) => {
-  if (req.user) {
-    const currOrderId = req.params.id;
-    try {
-      const currOrder = await Order.findByIdAndUpdate(
-        currOrderId,
-        {
-          closed: true,
-        },
-        {
-          new: true,
-        }
-      );
-      return res.json(currOrder);
-    } catch (error) {
-      console.log("Error to update order|closed| to true");
-      return res.sendStatus(500);
-    }
+
+router.patch("/orders/closed/:id", (req, res) => {
+  
+  const currOrderId = req.params.id;
+
+  const closeFunc = async () => {
+    const closedOrder = await Order.findByIdAndUpdate(
+      currOrderId,
+      {
+        closed: true,
+        status: 'Закрыто'
+      },
+      {
+        new: true,
+      }
+    );
+    return closedOrder;
   }
+
+  if (req.user) {
+    if (req.user.kind === 'Заказчик') {
+      try {
+        const order = closeFunc();
+        return res.json(order);
+      } catch (error) {
+        console.log("Error to update order|closed| to true");
+        return res.sendStatus(500);
+      }
+    }
+
+    setTimeout(() => {
+      try {
+        const order = closeFunc();
+        return res.json(order);
+      } catch (error) {
+        console.log("Error to update order|closed| to true by SetTimeout");
+        return res.sendStatus(500);
+      }
+    // }, 4*60*60*1000);
+    }, 60*1000);
+
+  }
+
 });
 
 // add

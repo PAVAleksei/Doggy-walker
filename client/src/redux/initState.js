@@ -8,7 +8,7 @@ const initState = {
 		verification: false,
 		orders: [],
 		animal: [],
-		district: []
+		district: [],
 	},
 	dogs: [],
 	dog: {},

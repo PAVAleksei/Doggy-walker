@@ -1,20 +1,14 @@
 
+
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { YMaps, Map, Placemark, GeolocationControl, ZoomControl, RouteButton } from 'react-yandex-maps';
+import Test from '../Test/Test';
 
-// const mapData = {
-// 	center: [55.751574, 37.573856],
-// 	zoom: 10,
 
-// };
-
-// const mycoordinates = [
-// 	[55.684758, 37.738521],
-// 	[57.684758, 39.738521]
-// ];
-
-export default function YandexMap() {
+function YandexMap() {
+	const key = '72b60f11-6765-48bf-b7c7-25faaf7b1414'
 	const dispatch = useDispatch()
 	const coordinates = useSelector((state) => state.allOrders)
 	const addressFromForm = useSelector((state) => state.user.district)
@@ -22,61 +16,48 @@ export default function YandexMap() {
 	// console.log('coordinates --->  ', coordinates);
 	// console.log('myAddress ---> ', myAddress);
 
+
+	// function routeToHint() {
+	// 		return route => {
+	// 			route.routePanel.state.set({
+	// 				fromEnabled: true,
+	// 				from: myAddress,
+	// 				to: [55.710897, 37.602985],
+	// 				type: "auto"
+	// 			});
+	// 		}
+	// 	}
+
 	return (
-		<YMaps >
+		<YMaps query={{ lang: 'ru_RU', ns: "use-load-option", apikey: key }}>
 			<Map width='100%' height='300px' defaultState={{
 				center: myAddress,
 				zoom: 13,
 			}} >
-
-				<RouteButton instanceRef={ref => {
-					if (ref) {
-						ref.routePanel.state.set({
-							from: [55.751574, 37.573856],
-							to: [59.9386300, 30.3141300],
-							type: "auto"
-						});
-						const obj = ref.routePanel.getRouteAsync()
-						obj.then(function (multiRoute) {
-							multiRoute.model.events.add('requestsuccess', function () {
-								const activeRoute = multiRoute.getActiveRoute()
-								if (activeRoute) {
-									let distance = activeRoute.properties.get('distance')
-									// dispatch(addDistance(trip.id, distance))
-								}
-							})
-						})
-					}
-				}} options={{ float: 'right' }} />
-
-				{coordinates.map(coordinate => <Placemark
+				{coordinates.map((coordinate, indx) => <Placemark key={indx}
 					geometry={coordinate.address.coordinates}
 					properties={{
 						hintContent: coordinate.address.name,
-						balloonContent: [coordinate.address.name, coordinate.description]
+						balloonContentHeader: coordinate.description,
+						balloonContent: coordinate.address.name,
 					}}
-					modules={['geoObject.addon.balloon', 'geoObject.addon.hint', 'geocode']}
+					modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
 
 				/>)}
 				<GeolocationControl options={{ float: 'left' }} />
+				<RouteButton instanceRef={ref => {
+					ref?.routePanel?.state.set({
+						from: "5-й Донской проезд, 4",
+						to: myAddress,
+						type: "auto"
+					})
+				}}
+					options = {{ float: 'right' }}
+				/>
 				<ZoomControl options={{ float: 'right' }} />
 			</Map>
 		</YMaps>
 	)
 };
 
-
-
-// <Placemark geometry={coordinates} />
-
-
-
-// export default function YandexMap(coordinate) {
-//   return (
-//     <YMaps>
-//       <Map state={{ center: coordinate.coordinate, zoom: 10 }}>
-//         <Placemark geometry={coordinate.coordinate} />
-//       </Map>
-//     </YMaps>
-//   );
-// }
+export default YandexMap
