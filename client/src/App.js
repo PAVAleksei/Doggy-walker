@@ -27,6 +27,7 @@ import HistoryOrders from "./components/HistoryOrders/HistoryOrders";
 import DoneOrdersList from "./components/DoneOrdersList/DoneOrdersList";
 import { Container } from "@material-ui/core";
 import { Footer } from "./components/Footer/Footer";
+import { getDogsAC } from "./redux/actionCreators/dogAC";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,12 @@ function App() {
   useEffect(() => {
     dispatch(setOrders()); // все заказы в системе
     // dispatch(setOrdersCustomer()); // заказы заказчика
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
 
   return (

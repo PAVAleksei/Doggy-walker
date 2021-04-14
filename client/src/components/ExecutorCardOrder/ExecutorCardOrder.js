@@ -18,6 +18,13 @@ const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
     border: "1px solid #1C3E6A",
+    // width: 340,
+    height: 440,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
   },
   media: {
     height: 140,
@@ -42,11 +49,11 @@ function ExecutorCardOrder({
   const dispatch = useDispatch();
 
   //Подтягиваем всех dogs c бека и записываем state dogs
-  useEffect(() => {
-    fetch("http://localhost:3001/api/v1/dog")
-      .then((response) => response.json())
-      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:3001/api/v1/dog")
+  //     .then((response) => response.json())
+  //     .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  // }, []);
 
   const dogImg = useSelector(
     (state) => state.dogs.find((el) => el._id == dogId)?.avatar
@@ -58,7 +65,7 @@ function ExecutorCardOrder({
   };
 
   return (
-    <Box className={classes.pos} m={4}>
+    <Box className={classes.pos} m={5}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
@@ -68,18 +75,18 @@ function ExecutorCardOrder({
           />
           <CardContent>
             <Typography gutterBottom component="h2">
-              Запланированная дата:&nbsp;
-              {date.replace("T", " ").replace(".000Z", "")}
+              {/* {date.replace("T", " ").replace(".000Z", "")} */}
+              Дата: {new Date(date).toLocaleString("ru-RU")}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            {/* <Typography variant="body2" color="textSecondary" component="p">
               Задание: {description}
-            </Typography>
+            </Typography> */}
             <Typography variant="body2" color="textSecondary" component="p">
               Адрес: {address}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            {/* <Typography variant="body2" color="textSecondary" component="p">
               Стоимость: {price} рублей
-            </Typography>
+            </Typography> */}
           </CardContent>
         </CardActionArea>
         <CardActions display="flex" justifyContent="center" alignItems="center">
@@ -87,7 +94,7 @@ function ExecutorCardOrder({
             disabled={requested}
             onClick={() => handlerDetailInfo(id)}
             variant="contained"
-            size="small"
+            size="large"
             color="primary"
           >
             Подробнее

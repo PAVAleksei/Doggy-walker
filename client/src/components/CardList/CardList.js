@@ -7,19 +7,29 @@ import {
   setOrders,
 } from "../../redux/actionCreators/orderAc";
 import ExecutorCardOrder from "../ExecutorCardOrder/ExecutorCardOrder";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  all: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // alignItems: "center",
+    flexWrap: "wrap",
+  },
+});
 
 function CardList() {
   const allOrders = useSelector((state) => state.allOrders);
   const dispatch = useDispatch();
-
-  
+  const classes = useStyles();
 
   return (
     <Box m={3}>
       <Grid item container spacing={2} direction="row">
         {allOrders?.length ? (
           allOrders.map((order) => (
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={14} sm={3} className={classes.all}>
               <ExecutorCardOrder
                 key={order._id}
                 id={order._id}

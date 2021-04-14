@@ -1,5 +1,5 @@
 import YandexMap from "../YandexMap/YandexMap";
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -26,6 +26,7 @@ import {
   addOrderCustomer,
   addOrderFromExecutorThunk,
 } from "../../redux/actionCreators/userAC";
+import { getDogsAC } from "../../redux/actionCreators/dogAC";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,21 @@ const useStyles = makeStyles((theme) => ({
   },
   rootDetail: {
     border: "1px solid #1C3E6A",
+    width: 480,
+    height: 600,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  detail: {
+    display: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  media: {
+    height: 360,
   },
 }));
 
@@ -71,6 +87,12 @@ const DetailOrder = () => {
   };
 
   useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
+
+  useEffect(() => {
     const currentOrder =
       allOrders.find((el) => el._id === id) ||
       userOrders.find((el) => el._id === id);
@@ -82,14 +104,15 @@ const DetailOrder = () => {
       );
       setCurDog(currentDog);
 
-      // setCurDogAvatat(currentDog.avatar);
+      console.log(currentDog.avatar);
+      setCurDogAvatat(currentDog.avatar);
     }
   }, [allOrders, userOrders]);
 
   return (
     <div className={classes.root}>
       <h3>Подробная информация о заказе</h3>
-      {/* <img src={curDog.avatar} alt="" /> */}
+
       {curOrder && (
         <Grid container spacing={3} direction="row">
           <Grid item xs={3}>
@@ -97,7 +120,7 @@ const DetailOrder = () => {
             <Info />
             <Box m={1}>
               <Button variant="outlined" onClick={handlerHistoryOrders}>
-                Мои текщие заказы
+                Мои текущие заказы
               </Button>
             </Box>
             <Box m={1}>
@@ -121,24 +144,25 @@ const DetailOrder = () => {
               <Paper className={classes.paper}>Заказ</Paper>
               <p>Информация о заказе</p>
               <Box className={classes.pos} m={4}>
-                <Card className={classes.rootDetail}>
+                <Card className={(classes.rootDetail, classes.detail)}>
                   <CardActionArea>
                     <CardMedia
-                      className={curDogAvatat}
-                      // image={curDog.avatar}
+                      className={classes.media}
+                      image={curDogAvatat}
                       title="Contemplative Reptile"
                     />
                     <CardContent>
                       <Typography gutterBottom component="h2">
                         Запланированная дата:&nbsp;
-                        {curOrder.date.replace("T", " ").replace(".000Z", "")}
+                        {new Date(curOrder.date).toLocaleString("ru-RU")}
                       </Typography>
                       <Typography
                         variant="body2"
                         color="textSecondary"
                         component="p"
+                        variant="h6"
                       >
-                        Задание: {curOrder.description}
+                        Комментарии от заказчика: {curOrder.description}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -164,7 +188,7 @@ const DetailOrder = () => {
                     <Button
                       variant="contained"
                       disabled={curOrder.requested}
-                      size="small"
+                      size="large"
                       color="primary"
                       onClick={() => sendRequestHandler(id)}
                     >
