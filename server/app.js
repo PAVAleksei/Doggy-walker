@@ -14,7 +14,13 @@ const authRouter = require('./routes/authGoogle');
 const orderRouter = require('./routes/orderRouter');
 const dogRouter = require('./routes/dogRouter');
 const verificationRouter = require('./routes/verificationRouter');
+const { User } = require('./db/models/user.model');
 
+
+
+const PORT = process.env.PORT ?? 3000;
+
+const map = new Map();
 const app = express();
 
 app.set('cookieName', 'sid');
@@ -31,23 +37,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(
-  sessions({
-    name: app.get('cookieName'),
-    secret: process.env.SECRET_KEY,
-    resave: false, // Не сохранять сессию, если мы ее не изменим
-    saveUninitialized: false, // не сохранять пустую сессию
-    store: MongoStore.create({
-      // выбираем в качестве хранилища mongoDB
-      mongoUrl: process.env.DB_CONNECTION_CLOUD,
-    }),
-    cookie: {
-      // настройки, необходимые для корректного работы cookie
-      httpOnly: true, // не разрещаем модифицировать данную cookie через javascript
-      maxAge: 86400 * 1e3, // устанавливаем время жизни cookie
-    },
+const sessionParser = sessions({
+  name: app.get('cookieName'),
+  secret: process.env.SECRET_KEY,
+  resave: false, // Не сохранять сессию, если мы ее не изменим
+  saveUninitialized: false, // не сохранять пустую сессию
+  store: MongoStore.create({
+    // выбираем в качестве хранилища mongoDB
+    mongoUrl: process.env.DB_CONNECTION_CLOUD,
   }),
-);
+  cookie: {
+    // настройки, необходимые для корректного работы cookie
+    httpOnly: true, // не разрещаем модифицировать данную cookie через javascript
+    maxAge: 86400 * 1e3, // устанавливаем время жизни cookie
+  },
+});
+
+app.use(sessionParser);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -76,7 +82,8 @@ app.use('/verification', verificationRouter);
 
 // app.use('/api/orders', orderRouter);
 
-const PORT = process.env.PORT ?? 3000;
+
+
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}.`);
@@ -93,6 +100,6 @@ app.listen(PORT, () => {
       console.log('Connection to database is successful.');
     },
   );
-});
+})
 
 module.exports = app;

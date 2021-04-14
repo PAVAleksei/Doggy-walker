@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -20,10 +20,11 @@ const useStyles = makeStyles({
     // maxWidth: 345,
     border: "1px solid #1C3E6A",
     height: 500,
-    width: 300,
+    // width: 300,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    alignItems: "center"
   },
   media: {
     height: 140,
@@ -32,10 +33,12 @@ const useStyles = makeStyles({
     margin: 0,
   },
   button: {
-    width: 300,
+    // width: 350,
     height: 60,
   },
 });
+
+let socket = new WebSocket('ws://localhost:3001');
 
 function CardOrder({
   id,
@@ -51,6 +54,19 @@ function CardOrder({
   status,
   dogId,
 }) {
+
+
+  useEffect(() => {
+    
+    socket.onopen = () => {
+     
+      console.log('Websocket client connected');
+    };
+
+
+  
+  }, [])
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -59,7 +75,18 @@ function CardOrder({
   // const status = useSelector(state => state.user.orders.filter(el => el._id === id))
   const editHandler = () => {};
 
+  // утверждение исполнителя на заказ
   const approveExecutorHandler = (id) => {
+
+    const messageToServer = {
+          type: 'message',
+          // payload: {
+          message: id,
+          // },
+        }
+    
+    socket.send(JSON.stringify(messageToServer));
+
     dispatch(changeOrderStatusInWork(id));
   };
 
@@ -83,8 +110,6 @@ function CardOrder({
           <CardContent>
             <Typography gutterBottom component="h2">
               Запланированная дата: {date.toLocaleString("ru-RU")}
-              {/* Запланированная дата:&nbsp;
-              {date.replace('T', ' ').replace('.000Z', '')} */}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Задание: {description}
@@ -109,7 +134,7 @@ function CardOrder({
         </CardActionArea>
 
         {!requested ? (
-          <CardActions
+          <CardActions align="center"
             display="flex"
             justifyContent="center"
             alignItems="center"
@@ -143,6 +168,7 @@ function CardOrder({
             alignItems="center"
           >
             <Button
+              data-btn-approve="data-btn-approve"
               disabled={inWork}
               onClick={() => approveExecutorHandler(id)}
               variant="contained"
