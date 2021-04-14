@@ -21,6 +21,10 @@ export const sagaSignupAC = ({
   password,
   district,
   passport,
+  passportSeries,
+  passportNumber,
+  telegram,
+
 }) => {
   return {
     type: SAGA_SIGNUP,
@@ -32,6 +36,9 @@ export const sagaSignupAC = ({
       password,
       district,
       passport,
+      passportSeries,
+      passportNumber,
+      telegram,
     },
   };
 };

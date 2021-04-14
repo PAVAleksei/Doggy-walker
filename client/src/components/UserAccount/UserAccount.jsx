@@ -77,12 +77,12 @@ export default function UserAccount() {
             <Button variant="outlined">Мои отзывы</Button>
           </Box>
           <Box m={1}>
-            <Button variant="outlined" onClick={addDogFormHandler}>Добавить питомца</Button>
-          </Box>
-          <Box m={1}>
             <Button variant="outlined" onClick={addOrderFormHandler}>
               Добавить заказ
             </Button>
+          </Box>
+          <Box m={1}>
+            <Button variant="outlined" onClick={addDogFormHandler}>Добавить питомца</Button>
           </Box>
         </Grid>
 

@@ -35,7 +35,7 @@ const authUser = async (req, email, password, done) => {
         try {
           const hashPass = await bcrypt.hash(password, 10);
 
-          if (req.body.passport && req.body.district) {
+          if (req.body.passportSeries && req.body.district && req.body.passportNumber) {
             const newUser = new User({
               firstname: req.body.firstname.trim(),
               lastname: req.body.lastname.trim(),
@@ -43,8 +43,10 @@ const authUser = async (req, email, password, done) => {
               kind: req.body.kind,
               password: hashPass,
               verification: true,
-              passport: req.body.passport,
+              passportSeries: req.body.passportSeries,
+              passportNumber: req.body.passportNumber,
               district: req.body.district.trim(),
+              telegram: req.body.telegram,
             });
             await newUser.save();
             return done(null, newUser);

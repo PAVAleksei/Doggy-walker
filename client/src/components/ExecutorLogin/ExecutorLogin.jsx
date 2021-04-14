@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@material-ui/core";
+import { Box, Container, Link, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -41,8 +41,12 @@ const ExecutorLogin = () => {
     }
   };
 
+  const HandleClick = () => {
+    history.push('/executor')
+  }
+
   return (
-    <Box m={3}>
+    <Box m={5}>
       <Container>
         <Typography variant="h4">Вход</Typography>
         <Box m={3}>
@@ -88,15 +92,28 @@ const ExecutorLogin = () => {
             </Grid>
 
             <Grid>
-              <Box m={3}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  type="submit"
-                >
-                  Вход
-                </Button>
+              <Box m={5}>
+                <Grid container spacing={5} justify="center">
+                  <Grid item>
+                  <Button
+                      variant="outlined"
+                      color="primary"
+                      size="large"
+                      onClick={HandleClick}
+                    >Регистрация
+                      </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      type="submit"
+                    >
+                      Войти
+                      </Button>
+                  </Grid>
+                </Grid>
               </Box>
             </Grid>
           </form>
