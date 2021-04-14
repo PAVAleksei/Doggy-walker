@@ -1,9 +1,9 @@
-const bcrypt = require("bcrypt");
-require("dotenv").config();
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const { User } = require("../db/models/user.model");
+const bcrypt = require('bcrypt');
+require('dotenv').config();
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const { User } = require('../db/models/user.model');
 
 passport.serializeUser((user, done) => {
   // console.log(user);
@@ -21,11 +21,9 @@ const authUser = async (req, email, password, done) => {
     if (/login/.test(req.path)) {
       const user = await User.findOne({ email }).populate('orders').lean().exec();
 
-      if (!user)
-        return done(null, false, { message: "Неверный логин или пароль" });
-      if (await bcrypt.compare(password, user.password))
-        return done(null, user);
-      return done(null, false, { message: "Неверный логин или пароль" });
+      if (!user) { return done(null, false, { message: 'Неверный логин или пароль' }); }
+      if (await bcrypt.compare(password, user.password)) { return done(null, user); }
+      return done(null, false, { message: 'Неверный логин или пароль' });
     }
     if (
       (email && password && req.body.firstname,
@@ -61,13 +59,13 @@ const authUser = async (req, email, password, done) => {
           await newUser.save();
           return done(null, newUser);
         } catch (error) {
-          return done(null, false, { message: "Error" });
+          return done(null, false, { message: 'Error' });
         }
       } else {
-        return done(null, false, { message: "Mail is already used" });
+        return done(null, false, { message: 'Mail is already used' });
       }
     }
-    return done(null, false, { message: "Error" });
+    return done(null, false, { message: 'Error' });
   } catch (error) {
     done(error);
   }
@@ -76,11 +74,11 @@ const authUser = async (req, email, password, done) => {
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "email",
+      usernameField: 'email',
       passReqToCallback: true,
     },
-    authUser
-  )
+    authUser,
+  ),
 );
 
 passport.use(
@@ -89,7 +87,7 @@ passport.use(
       // options for google strategy
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/redirect",
+      callbackURL: '/auth/google/redirect',
     },
     (accessToken, refreshToken, profile, done) => {
       // check if user already exists in our own db
@@ -116,6 +114,6 @@ passport.use(
             });
         }
       });
-    }
-  )
+    },
+  ),
 );

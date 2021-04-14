@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2 ),
   },
   title: {
     flexGrow: 1,
@@ -32,16 +32,18 @@ function Header() {
   const classes = useStyles();
 
   return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-          {/* <Box display="flex" justifyContent="flex-end" flexGrow={1}> */}
-              <Typography align="left" variant="h6" className={classes.title}>
-                DOG WALKER
-              </Typography>
-
-
-            {checkAuth ? (
+    <div className={classes.root}>
+      <AppBar position="fixed">
+        <Toolbar>
+          <IconButton edge="start"
+            color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography align="left" variant="h6" className={classes.title}>
+            DOG WALKER
+            </Typography>
+          <Box mr={1}>
+          {checkAuth ? (
               <>
                 <Button color="inherit">
                   <Link className={styles.navlinks} to="/">
@@ -83,7 +85,7 @@ function Header() {
                   </Button> */}
 
                 <Button color="inherit">
-                  <Link className={styles.navlinks} to="/executor">
+                  <Link className={styles.navlinks} to="/executorLogin">
                     Исполнитель
                   </Link>
                 </Button>
@@ -91,17 +93,21 @@ function Header() {
                 {/* <Button color="inherit"><Link className={styles.navlinks} to="/register">Регистрация</Link>
                   </Button> */}
                 <Button color="inherit">
-                  <Link className={styles.navlinks} to="/customer">
+                  <Link className={styles.navlinks} to="/customerLogin">
                     Заказчик
                   </Link>
                 </Button>
               </>
             )}
-          {/* </Box> */}
-          </Toolbar>
-        </AppBar>
-      </div>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </div>
+
+    
   );
 }
 
 export default Header;
+
+

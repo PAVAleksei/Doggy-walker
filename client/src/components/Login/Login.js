@@ -24,7 +24,7 @@ function Login() {
   const classes = useStyles();
   const formRef = useRef(null);
   const dispatch = useDispatch();
-  let history = useHistory();
+  const history = useHistory();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ function Login() {
     ) {
       dispatch(SagaSignInAC(valuesOfFields));
       formRef.current.reset();
-      history.push("/account");
+      history.push("/");
     }
   };
 
