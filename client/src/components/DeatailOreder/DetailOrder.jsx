@@ -46,8 +46,11 @@ const DetailOrder = () => {
   const classes = useStyles();
   let history = useHistory();
   const dispatch = useDispatch();
-  const [curOrder, setCurOrder] = useState(null)
+  const [curOrder, setCurOrder] = useState(null);
+  const [imgDog, setimgdog] = useState("");
   let { id } = useParams();
+
+  const alldog = useSelector((state) => state.dogs);
 
   const allOrders = useSelector((state) => state.allOrders);
   const userOrders = useSelector((state) => state.user.orders);
@@ -62,93 +65,107 @@ const DetailOrder = () => {
   const handlerHistoryOrders = () => {
     history.push("/historyOrders");
   };
-
+  const handlerToAccount = () => {
+    history.push("/account");
+  };
 
   useEffect(() => {
     const currentOrder =
-    allOrders.find((el) => el._id === id) ||
-    userOrders.find((el) => el._id === id);
-    if (currentOrder) setCurOrder(currentOrder)
-  }, [allOrders, userOrders])
-
-
+      allOrders.find((el) => el._id === id) ||
+      userOrders.find((el) => el._id === id);
+    if (currentOrder) setCurOrder(currentOrder);
+  }, [allOrders, userOrders]);
 
   return (
     <div className={classes.root}>
       <h3>Подробная информация о заказе</h3>
-      {curOrder && <Grid container spacing={3} direction="row">
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>Мои данные</Paper>
-          <Info />
-          <Box m={1}>
-            <Button variant="outlined" onClick={handlerHistoryOrders}>
-              Мои заказы
-            </Button>
-          </Box>
-          <Box m={1}>
-            <Button variant="outlined">Мои отзывы</Button>
-          </Box>
-        </Grid>
-        <Grid item xs={8} direction="column">
-          <Grid item>
-            <Paper className={classes.paper}>Заказ</Paper>
-            <p>Информация о заказе</p>
-            <Box className={classes.pos} m={4}>
-              <Card className={classes.rootDetail}>
-                <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    image="https://ampravda.ru/files/articles-2/90408/cvyc25f7qt98-1-640.jpg"
-                    title="Contemplative Reptile"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom component="h2">
-                      Запланированная дата:&nbsp;
-                      {curOrder.date.replace('T', ' ').replace('.000Z', '')}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Задание: {curOrder.description}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Адрес: {curOrder.address.name}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Стоимость: {curOrder.price} рублей
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
+      {curOrder && (
+        <Grid container spacing={3} direction="row">
+          <Grid item xs={3}>
+            <Paper className={classes.paper}>Мои данные</Paper>
+            <Info />
+            <Box m={1}>
+              <Button variant="outlined" onClick={handlerHistoryOrders}>
+                Мои заказы
+              </Button>
+            </Box>
+            <Box m={1}>
+              <Button variant="outlined">Мои отзывы</Button>
+            </Box>
+            <Box m={1}>
+              <Grid>
+                <Button
+                  onClick={() => handlerToAccount()}
+                  variant="contained"
+                  size="small"
+                  color="primary"
                 >
-                  <Button
-                    variant="contained"
-                    disabled={curOrder.requested}
-                    size="small"
-                    color="primary"
-                    onClick={() => sendRequestHandler(id)}
-                  >
-                    Подать заявку
-                  </Button>
-                </CardActions>
-              </Card>
+                  Личный кабинет
+                </Button>
+              </Grid>
             </Box>
           </Grid>
+          <Grid item xs={8} direction="column">
+            <Grid item>
+              <Paper className={classes.paper}>Заказ</Paper>
+              <p>Информация о заказе</p>
+              <Box className={classes.pos} m={4}>
+                <Card className={classes.rootDetail}>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.media}
+                      image={imgDog}
+                      title="Contemplative Reptile"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom component="h2">
+                        Запланированная дата:&nbsp;
+                        {curOrder.date.replace("T", " ").replace(".000Z", "")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        Задание: {curOrder.description}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        Адрес: {curOrder.address.name}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        Стоимость: {curOrder.price} рублей
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Button
+                      variant="contained"
+                      disabled={curOrder.requested}
+                      size="small"
+                      color="primary"
+                      onClick={() => sendRequestHandler(id)}
+                    >
+                      Подать заявку
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>}
+      )}
     </div>
   );
 };

@@ -24,7 +24,7 @@ import { setOrders, setOrdersCustomer } from "./redux/actionCreators/orderAc";
 import Dog from "./components/DogInfo/Dog";
 import DetailOrder from "./components/DeatailOreder/DetailOrder";
 import HistoryOrders from "./components/HistoryOrders/HistoryOrders";
-import DoneOrder from "./components/DoneOrders/DoneOrders";
+import DoneOrdersList from "./components/DoneOrdersList/DoneOrdersList";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     dispatch(setOrders()); // все заказы в системе
     // dispatch(setOrdersCustomer()); // заказы заказчика
-  }, [])
+  }, []);
 
   return (
     <div className="App">
@@ -55,7 +55,7 @@ function App() {
             <HistoryOrders />
           </Route>
           <Route exact path="/doneOrders">
-            <DoneOrder />
+            <DoneOrdersList />
           </Route>
           <Route exact path="/">
             <MainPage />

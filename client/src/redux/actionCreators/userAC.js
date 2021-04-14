@@ -171,7 +171,7 @@ export const changeOrderCustomerStatusRequested = (id) => (
   dispatch,
   setState
 ) => {
-  fetch(`http://localhost:3001/api/orders/requested/${id}`, {
+  fetch(`http://localhost:3001/api/orders/requestedChange/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -256,34 +256,29 @@ export const editDogAC = (editDog) => {
   };
 };
 
-
-
 ////////
-
-
 
 export const uploadAvatarFetch = (formData) => async (dispatch) => {
   try {
     // console.log(formData.get('file'), 'formData');
-   const response =  await fetch(`http://localhost:3001/user/avatar`, {
+    const response = await fetch(`http://localhost:3001/user/avatar`, {
       method: "POST",
       credentials: "include",
-      body: formData
-    })
-    const responseFromServ = await response.json()
-    dispatch(uploadAvatarAC(responseFromServ))
+      body: formData,
+    });
+    const responseFromServ = await response.json();
+    dispatch(uploadAvatarAC(responseFromServ));
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 export const uploadAvatarAC = (avatar) => {
   return {
     type: USER_AVATAR,
     payload: avatar,
-  }
+  };
 };
-
 
 export const closeOrderCustomer = (id) => (dispatch, setState) => {
   fetch(`http://localhost:3001/api/orders/closed/${id}`, {
@@ -311,5 +306,3 @@ export const closeOrderCustomerFromServer = (updatedOrder) => {
     payload: updatedOrder,
   };
 };
-
-
