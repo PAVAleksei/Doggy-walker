@@ -47,13 +47,14 @@ const DetailOrder = () => {
   let history = useHistory();
   const dispatch = useDispatch();
   const [curOrder, setCurOrder] = useState(null);
-  const [imgDog, setimgdog] = useState("");
+  const [dogId, setDogId] = useState("");
+  const [curDog, setCurDog] = useState(null);
+  const [curDogAvatat, setCurDogAvatat] = useState(null);
   let { id } = useParams();
-
-  const alldog = useSelector((state) => state.dogs);
 
   const allOrders = useSelector((state) => state.allOrders);
   const userOrders = useSelector((state) => state.user.orders);
+  const allDogs = useSelector((state) => state.dogs);
 
   const sendRequestHandler = (id) => {
     dispatch(setError({ status: false, text: "" }));
@@ -73,12 +74,22 @@ const DetailOrder = () => {
     const currentOrder =
       allOrders.find((el) => el._id === id) ||
       userOrders.find((el) => el._id === id);
-    if (currentOrder) setCurOrder(currentOrder);
+    if (currentOrder) {
+      setCurOrder(currentOrder);
+      setDogId(currentOrder.dogId);
+      const currentDog = allDogs.find(
+        (element) => element._id === currentOrder.dogId
+      );
+      setCurDog(currentDog);
+
+      // setCurDogAvatat(currentDog.avatar);
+    }
   }, [allOrders, userOrders]);
 
   return (
     <div className={classes.root}>
       <h3>Подробная информация о заказе</h3>
+      {/* <img src={curDog.avatar} alt="" /> */}
       {curOrder && (
         <Grid container spacing={3} direction="row">
           <Grid item xs={3}>
@@ -113,8 +124,8 @@ const DetailOrder = () => {
                 <Card className={classes.rootDetail}>
                   <CardActionArea>
                     <CardMedia
-                      className={classes.media}
-                      image={imgDog}
+                      className={curDogAvatat}
+                      // image={curDog.avatar}
                       title="Contemplative Reptile"
                     />
                     <CardContent>
