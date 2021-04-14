@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -35,7 +35,78 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// let socket = new WebSocket('ws://localhost:3001');
+// let socket = new WebSocket(window.location.origin.replace('http', 'ws'));
+
+// let socket = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx');
+let btnApprove = document.querySelector('[data-btn-approve]');
+
+
+// btnApprove.onClick = function() {
+//   console.log()
+//   const messageToServer = {
+//     type: 'newMessage',
+//     payload: {
+//       message: value,
+//     },
+//   }
+
+//   socket.send(JSON.stringify(messageToServer));
+
+// };
+
+// function submitHandler() {
+
+//   const messageToServer = {
+//     type: 'newMessage',
+//     payload: {
+//       message: value,
+//     },
+//   }
+
+//   socket.send(JSON.stringify(messageToServer));
+
+// }
+
+
+
+
+// socket.onmessage = function(event) {
+//   const parseMessage = JSON.parse(event.data)
+
+//   switch (parseMessage.type){
+//     case 'greeting':
+      
+//     break
+  
+//     default:
+//       break
+
+//   }
+
+// };
+
+// socket.onclose = function(event) {
+//   if (event.wasClean) {
+//     alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+//   } else {
+//     // например, сервер убил процесс или сеть недоступна
+//     // обычно в этом случае event.code 1006
+//     alert('[close] Соединение прервано');
+//   }
+// };
+
+// socket.onerror = function(error) {
+//   alert(`[error] ${error.message}`);
+// };
+
+
+
 export default function UserAccount() {
+
+  const [messages, setMessages] = useState([]);
+
+ 
   const classes = useStyles();
 
   const history = useHistory();
@@ -49,6 +120,18 @@ export default function UserAccount() {
       .then((response) => response.json())
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
+
+  // // утверждение исполнителя на заказ
+  // const approveExecutorHandler = (id) => {
+
+
+
+
+
+  //   dispatch(changeOrderStatusInWork(id));
+
+
+  // };
 
 
   const addOrderFormHandler = () => {
@@ -126,7 +209,7 @@ export default function UserAccount() {
 
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      {/* <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
@@ -161,14 +244,19 @@ export default function UserAccount() {
                 )}
               </Grid>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
     
+              {/* <div>
+                {
+                  messages.map((m, index) => <div key={index}>{m}</div>)
+                }
+              </div> */}
     </div>
 
 
 
-{/* 
-          <Grid item>
+
+          {/* <Grid item>
             <Paper className={classes.paper}>Мои питомцы</Paper>
             <Box m={3}>
               <Grid item container spacing={2} direction="row">
@@ -195,7 +283,7 @@ export default function UserAccount() {
                 )}
               </Grid>
             </Box>
-          </Grid>
+          </Grid> */}
           <Grid item>
             <Paper className={classes.paper}>Текущие заказы</Paper>
             <Box m={2}>
@@ -225,7 +313,7 @@ export default function UserAccount() {
                 )}
               </Grid>
             </Box>
-          </Grid> */}
+          </Grid>
         </Grid>
         <Grid item xs={1}></Grid>
       </Grid>

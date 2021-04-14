@@ -63,11 +63,11 @@ export default function EditDog() {
 
             <TextField
               id="outlined-multiline"
+              defaultValue={dog.nickname}
               label="Имя питомца"
               name="nickname"
               multiline
               rowsMax={4}
-              defaultValue={dog.nickname}
               variant="outlined"
             />
           
