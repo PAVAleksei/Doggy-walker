@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   item: {
     display: "flex",
     justifyContent: "space-between;",
-    alignItems: "stretch",
+    alignItems: "center",
   },
 }));
 
@@ -36,6 +36,7 @@ function HistoryOrders() {
   const orders = useSelector((state) => state.user.orders).filter(
     (el) => !el.closed
   );
+  const allDogs = useSelector((state) => state.dogs);
 
   const handlerToAccount = () => {
     history.push("/account");
@@ -85,6 +86,8 @@ function HistoryOrders() {
                       completed={order.completed}
                       closed={order.closed}
                       id={order._id}
+                      dogId={order.dogId}
+                     
                     />
                   ))
                 ) : (
