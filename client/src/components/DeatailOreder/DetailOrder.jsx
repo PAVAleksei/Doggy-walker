@@ -71,6 +71,7 @@ const DetailOrder = () => {
 	const [load, setLoad] = useState(false);
 	let { id } = useParams();
 
+
 	const allOrders = useSelector((state) => state.allOrders);
 	const userOrders = useSelector((state) => state.user.orders);
 	const allDogs = useSelector((state) => state.dogs);
@@ -107,13 +108,15 @@ const DetailOrder = () => {
 			);
 			setCurDog(currentDog);
 
-			// console.log(currentDog.avatar);
-			setCurDogAvatat(currentDog.avatar);
-			setTimeout(() => {
-				setLoad(true);
-			}, 200);
-		}
-	}, [allOrders, userOrders]);
+
+      console.log(currentDog.avatar);
+      setCurDogAvatat(currentDog.avatar);
+      // setTimeout(() => {
+      //   setLoad(true);
+      // }, 300);
+    }
+  }, [allOrders, userOrders]);
+
 
 	return (
 		<>

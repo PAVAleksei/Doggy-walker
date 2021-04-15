@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDogsAC } from "../../redux/actionCreators/dogAC";
 import { Box, Button, jssPreset } from "@material-ui/core";
 import {
-	setOrders,
-	setOrdersCustomer,
+  setOrders,
+  setOrdersCustomer,
 } from "../../redux/actionCreators/orderAc";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -22,6 +22,7 @@ import { signupAC } from "../../redux/actionCreators/userAC";
 import Louder from "../Louder/Louder";
 
 const useStyles = makeStyles((theme) => ({
+
 	root: {
 		flexGrow: 1,
 	},
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 	button: {
 		width: '100%',
 	}
+
 }));
 
 // let socket = new WebSocket('ws://127.0.0.1:3001');
@@ -106,46 +108,48 @@ let btnApprove = document.querySelector("[data-btn-approve]");
 // };
 
 export default function UserAccount() {
-	const [messages, setMessages] = useState([]);
-	const [load, setLoad] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [load, setLoad] = useState(true);
 
-	const classes = useStyles();
+  const classes = useStyles();
 
-	const history = useHistory();
-	const dispatch = useDispatch();
-	const animalByUser = useSelector((state) => state.user.animal);
-	const orders = useSelector((state) => state.user.orders);
-	// const orders = useSelector(state => state.allOrders);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const animalByUser = useSelector((state) => state.user.animal);
+  const orders = useSelector((state) => state.user.orders);
+  // const orders = useSelector(state => state.allOrders);
 
-	useEffect(() => {
-		fetch("http://127.0.0.1:3001/api/v1/dog")
-			.then((response) => response.json())
-			.then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
-	}, []);
-	useEffect(() => {
-		fetch("http://127.0.0.1:3001/user/checkAuth", {
-			credentials: "include",
-		})
-			.then((res) => res.json())
-			.then((resFromServer) => dispatch(signupAC(resFromServer)))
-			.then(
-				setTimeout(() => {
-					setLoad(true);
-				}, 200)
-			);
-	}, []);
+  useEffect(() => {
+    fetch("http://127.0.0.1:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
+  // Возможно надо проверить!
+  // useEffect(() => {
+  // 	fetch("http://localhost:3001/user/checkAuth", {
+  // 		credentials: "include",
+  // 	})
+  // 		.then((res) => res.json())
+  // 		.then((resFromServer) => dispatch(signupAC(resFromServer)))
+  // 		.then(
+  // 			setTimeout(() => {
+  // 				setLoad(true);
+  // 			}, 200)
+  // 		);
+  // }, []);
 
-	const addOrderFormHandler = () => {
-		history.push("/order");
-	};
 
-	const addDogFormHandler = () => {
-		history.push("/addDog");
-	};
-	const handlerToAccount = () => {
-		// history.push("/account");
-		history.go(0);
-	};
+  const addOrderFormHandler = () => {
+    history.push("/order");
+  };
+
+  const addDogFormHandler = () => {
+    history.push("/addDog");
+  };
+  const handlerToAccount = () => {
+    // history.push("/account");
+    history.go(0);
+  };
 
 	return (
 		<>
@@ -291,4 +295,5 @@ export default function UserAccount() {
 				)}
 		</>
 	);
+
 }
