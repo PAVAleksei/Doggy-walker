@@ -57,9 +57,13 @@ const UserSchema = new Schema(
       default: 0,
     },
     telegram: {
-      type: String,
-      default: 0,
-    },
+			type: String,
+			default: "",
+		},
+		telegramid: {
+			type: Number,
+			default: null,
+		},
 
     kind: {
       type: String,

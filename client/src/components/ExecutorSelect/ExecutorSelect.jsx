@@ -328,7 +328,7 @@ const ExecutorSelect = () => {
                       <HomeIcon />
                       <AddressSuggestions class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart" token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={district} onChange={setDistrict} />
                     </>
-                  ),
+                  )
                 }}
               />
                 <TextField
@@ -353,7 +353,7 @@ const ExecutorSelect = () => {
                   name="passportSeries"
                   type="text"
                   required
-                  label="Серия поспорта"
+                  label="Серия паспорта"
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
@@ -367,7 +367,7 @@ const ExecutorSelect = () => {
                   name="passportNumber"
                   type="text"
                   required
-                  label="Номер поспорта"
+                  label="Номер паспорта"
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
