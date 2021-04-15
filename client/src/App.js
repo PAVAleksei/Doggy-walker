@@ -29,7 +29,6 @@ import { Container } from "@material-ui/core";
 import { Footer } from "./components/Footer/Footer";
 import { getDogsAC } from "./redux/actionCreators/dogAC";
 
-
 function App() {
   const dispatch = useDispatch();
   const kindUser = useSelector((state) => state.user.kind);
