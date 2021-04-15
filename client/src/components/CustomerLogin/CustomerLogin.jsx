@@ -19,11 +19,6 @@ const useStyles = makeStyles((theme) => ({
       width: "35ch",
     },
   },
-  // img:{
-  //   backgroundImage: `url('https://img-authors.flaticon.com/google.jpg')`,
-  //   backgroundRepeat: 'no-repeat',
-  //   width: '30px'
-  // }
 }));
 
 const CustomerLogin = () => {
@@ -101,7 +96,7 @@ const CustomerLogin = () => {
 
             <Grid>
               <Box m={5}>
-                <Grid container spacing={1} justify="center">
+                <Grid container spacing={5} justify="center">
                   <Grid item>
                     <Button
                       variant="outlined"
@@ -121,20 +116,14 @@ const CustomerLogin = () => {
                       Войти
                   </Button>
                   </Grid>
-
-
-                  <Grid item>
-                    <Button className={classes.img} variant="contained" size="large" color="secondary">
-                    <a href="http://localhost:3001/auth/google">Google</a>
-                    </Button>
-                    {/* <GoogleButton
-  onClick={googleClickHandle}
-                    >
-
-                    </GoogleButton> */}
-                  </Grid>
-                  
                 </Grid>
+                <Box m={3}>
+                  <Grid container justify="center">
+                    <a href="http://localhost:3001/auth/google" style={{ 'text-decoration': 'none', }}>
+                      <GoogleButton className={classes.googleButton} />
+                    </a>
+                  </Grid>
+                  </Box>
               </Box>
             </Grid>
           </form>

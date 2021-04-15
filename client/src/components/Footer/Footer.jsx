@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  footer: {
+    marginTop: 'auto'
+  }
 }));
 
 export const Footer = () => {
@@ -25,12 +28,13 @@ export const Footer = () => {
   }
 
   return (
-    <>
-      <Box m={3}>
+    // <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', }}>
+    <Box className={classes.footer} m={2}>
+      <Box m={1}>
 
         <Typography variant="h6" aling="center" gutterBottom>
-          
-    </Typography>
+
+        </Typography>
       </Box>
       <BottomNavigation
         value={value}
@@ -66,6 +70,7 @@ export const Footer = () => {
       >
         Product by "Doggy walker community" 2021, все права защищены!
         </Typography>
-    </>
+    </Box>
+    // </div>
   )
 }

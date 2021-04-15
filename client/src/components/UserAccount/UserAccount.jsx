@@ -22,22 +22,23 @@ import { signupAC } from "../../redux/actionCreators/userAC";
 import Louder from "../Louder/Louder";
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1,
-	},
-	paper: {
-		padding: theme.spacing(1),
-		textAlign: "center",
-		color: theme.palette.text.secondary,
-		paddingTop: 10,
-	},
-	accordeon: {
-		width: "100%",
-	},
-	heading: {
-		fontSize: theme.typography.pxToRem(15),
-		fontWeight: theme.typography.fontWeightRegular,
-	},
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    paddingTop: 10,
+  },
+  accordeon: {
+    width: "100%",
+    paddingBottom: '8px'
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
 }));
 
 // let socket = new WebSocket('ws://localhost:3001');
@@ -157,17 +158,17 @@ export default function UserAccount() {
 							<Grid item xs={3}>
 								<Paper className={classes.paper}>Мои данные</Paper>
 								<Info />
-								<Box m={3}>
+								{/* <Box m={3}>
 									<Button variant="outlined" color="primary">
 										Пополнить счет
                 </Button>
-								</Box>
+								</Box> */}
 								<Box m={3}>
 									<Button variant="outlined">Мои заказы</Button>
 								</Box>
-								<Box m={3}>
+								{/* <Box m={3}>
 									<Button variant="outlined">Мои отзывы</Button>
-								</Box>
+								</Box> */}
 								<Box m={3}>
 									<Button variant="outlined" onClick={addOrderFormHandler}>
 										Добавить заказ
@@ -181,7 +182,7 @@ export default function UserAccount() {
 								<Box m={3}>
 									<Button variant="outlined"><a href="https://t.me/Doggy_walker_bot">Telegram Bot</a></Button>
 								</Box>
-								<Box m={5}>
+								<Box m={3}>
 									<Grid>
 										<Button
 											onClick={() => handlerToAccount()}
@@ -195,45 +196,43 @@ export default function UserAccount() {
 								</Box>
 							</Grid>
 
-							<Grid item xs={7} direction="column">
-								<div className={classes.accordeon}>
-									<Accordion>
-										<AccordionSummary
-											expandIcon={<ExpandMoreIcon />}
-											aria-controls="panel1a-content"
-											id="panel1a-header"
-										>
-											<Typography className={classes.heading}>
-												Мои питомцы
-                    </Typography>
-										</AccordionSummary>
-										<AccordionDetails>
-											<Grid item container spacing={2} direction="row">
-												{animalByUser?.length ? (
-													animalByUser?.map((dog) => (
-														<Grid item xs={12} sm={3}>
-															<DogInfo
-																key={dog._id}
-																id={dog._id}
-																nickname={dog.nickname}
-																breed={dog.breed}
-																gender={dog.gender}
-																weight={dog.weight}
-																pullsTheLeash={dog.pullsTheLeash}
-																contactWithOther={dog.contactWithOther}
-																phobia={dog.phobia}
-																letGo={dog.letGo}
-																avatar={dog.avatar}
-															/>
-														</Grid>
-													))
-												) : (
-														<p>Пока нет сохраненных питомцев</p>
-													)}
-											</Grid>
-										</AccordionDetails>
-									</Accordion>
-								</div>
+        <Grid item xs={7} direction="column">
+          <div className={classes.accordeon}>
+            <Accordion >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography className={classes.heading}>Мои питомцы</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid item container spacing={2} direction="row">
+                  {animalByUser?.length ? (
+                    animalByUser?.map((dog) => (
+                      <Grid item xs={12} sm={3}>
+                        <DogInfo
+                          key={dog._id}
+                          id={dog._id}
+                          nickname={dog.nickname}
+                          breed={dog.breed}
+                          gender={dog.gender}
+                          weight={dog.weight}
+                          pullsTheLeash={dog.pullsTheLeash}
+                          contactWithOther={dog.contactWithOther}
+                          phobia={dog.phobia}
+                          letGo={dog.letGo}
+                          avatar={dog.avatar}
+                        />
+                      </Grid>
+                    ))
+                  ) : (
+                    <p>Пока нет сохраненных питомцев</p>
+                  )}
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+          </div>
 
 								<Grid item>
 									<Paper className={classes.paper}>Текущие заказы</Paper>
