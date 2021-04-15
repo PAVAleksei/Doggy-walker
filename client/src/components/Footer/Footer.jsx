@@ -29,7 +29,7 @@ export const Footer = () => {
 
   return (
     // <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', }}>
-    <Box className={classes.footer} m={3}>
+    <Box className={classes.footer} m={2}>
       <Box m={1}>
 
         <Typography variant="h6" aling="center" gutterBottom>

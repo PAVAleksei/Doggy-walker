@@ -65,7 +65,7 @@ const CustomerSelect = () => {
   };
 
   return (
-    <Box m={3}>
+    <Box m={2}>
       <Container>
         <Typography variant="h4">Регистрация</Typography>
         <Box m={3}>
