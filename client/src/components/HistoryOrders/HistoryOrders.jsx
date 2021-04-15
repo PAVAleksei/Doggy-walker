@@ -12,6 +12,8 @@ import CardList from "../CardList/CardList";
 import { useHistory } from "react-router";
 import HistoryOrderItem from "../HistoryOrderItem/HistoryOrderItem";
 import { setOrders } from "../../redux/actionCreators/orderAc";
+import { signupAC } from "../../redux/actionCreators/userAC";
+import Louder from "../Louder/Louder";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +41,14 @@ function HistoryOrders() {
     // dispatch(setOrdersCustomer()); // заказы заказчика
   }, []);
 
+  useEffect(() => {
+    fetch("http://localhost:3001/user/checkAuth", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((resFromServer) => dispatch(signupAC(resFromServer)));
+  }, []);
+
   const orders = useSelector((state) => state.user.orders).filter(
     (el) => !el.closed
   );
@@ -49,63 +59,106 @@ function HistoryOrders() {
   };
 
   return (
-    <div className={classes.root}>
-      <h3>История заказов Исполнителя</h3>
-      <Grid container spacing={3} direction="row">
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>Мои данные</Paper>
-          <Info />
-          <Box m={5}>
-            <Grid>
-              <Button
-                onClick={() => handlerToAccount()}
-                variant="contained"
-                size="large"
-                color="primary"
-              >
-                Личный кабинет
-              </Button>
-            </Grid>
-          </Box>
-        </Grid>
-
-        <Grid item xs={8} direction="column">
-          <Grid item>
-            <Paper className={classes.paper}>История заявок</Paper>
-            <Box m={5}>
-              <Grid
-                item
-                container
-                spacing={2}
-                direction="row"
-                className={classes.item}
-              >
-                {orders.length ? (
-                  orders.map((order) => (
-                    <HistoryOrderItem
-                      key={order._id}
-                      description={order.description}
-                      date={order.date}
-                      price={order.price}
-                      address={order.address.name}
-                      requested={order.requested}
-                      order={order}
-                      inWork={order.inWork}
-                      completed={order.completed}
-                      closed={order.closed}
-                      id={order._id}
-                      dogId={order.dogId}
-                    />
-                  ))
-                ) : (
-                  <p>Нет активных заказов</p>
-                )}
+    <>
+      {orders.length > 0 ? (
+        orders.map((order) => (
+          <div className={classes.root}>
+            <h3>История заказов Исполнителя</h3>
+            <Grid container spacing={3} direction="row">
+              <Grid item xs={3}>
+                <Paper className={classes.paper}>Мои данные</Paper>
+                <Info />
+                <Box m={5}>
+                  <Grid>
+                    <Button
+                      onClick={() => handlerToAccount()}
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                    >
+                      Личный кабинет
+                    </Button>
+                  </Grid>
+                </Box>
               </Grid>
-            </Box>
+
+              <Grid item xs={8} direction="column">
+                <Grid item>
+                  <Paper className={classes.paper}>История заявок</Paper>
+                  <Box m={5}>
+                    <Grid
+                      item
+                      container
+                      spacing={2}
+                      direction="row"
+                      className={classes.item}
+                    >
+                      <HistoryOrderItem
+                        key={order._id}
+                        description={order.description}
+                        date={order.date}
+                        price={order.price}
+                        address={order.address.name}
+                        requested={order.requested}
+                        order={order}
+                        inWork={order.inWork}
+                        completed={order.completed}
+                        closed={order.closed}
+                        id={order._id}
+                        dogId={order.dogId}
+                      />
+                    </Grid>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </div>
+        ))
+      ) : orders.length === 0 ? (
+        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
+          <Louder />
+        </div>
+      ) : (
+        <div className={classes.root}>
+          <h3>История заказов Исполнителя</h3>
+          <Grid container spacing={3} direction="row">
+            <Grid item xs={3}>
+              <Paper className={classes.paper}>Мои данные</Paper>
+              <Info />
+              <Box m={5}>
+                <Grid>
+                  <Button
+                    onClick={() => handlerToAccount()}
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                  >
+                    Личный кабинет
+                  </Button>
+                </Grid>
+              </Box>
+            </Grid>
+
+            <Grid item xs={8} direction="column">
+              <Grid item>
+                <Paper className={classes.paper}>История заявок</Paper>
+                <Box m={5}>
+                  <Grid
+                    item
+                    container
+                    spacing={2}
+                    direction="row"
+                    className={classes.item}
+                  >
+                    <p>Нет активных заказов</p>
+                  </Grid>
+                </Box>
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 
