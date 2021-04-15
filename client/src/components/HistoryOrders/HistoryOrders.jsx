@@ -1,5 +1,5 @@
 import YandexMap from "../YandexMap/YandexMap";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -36,6 +36,8 @@ function HistoryOrders() {
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
+  //лоадер
+  const [load, setLoad] = useState(false);
   useEffect(() => {
     dispatch(setOrders()); // все заказы в системе
     // dispatch(setOrdersCustomer()); // заказы заказчика
@@ -61,39 +63,39 @@ function HistoryOrders() {
   return (
     <>
       {orders.length > 0 ? (
-        orders.map((order) => (
-          <Box m={3}>
-            <div className={classes.root}>
-              <h3>История заказов Исполнителя</h3>
-              <Grid container spacing={3} direction="row">
-                <Grid item xs={3}>
-                  <Paper className={classes.paper}>Мои данные</Paper>
-                  <Info />
-                  <Box m={5}>
-                    <Grid>
-                      <Button
-                        onClick={() => handlerToAccount()}
-                        variant="contained"
-                        size="large"
-                        color="primary"
-                      >
-                        Личный кабинет
-                      </Button>
-                    </Grid>
-                  </Box>
-                </Grid>
+        <Box m={3}>
+          <div className={classes.root}>
+            <h3>История заказов Исполнителя</h3>
+            <Grid container spacing={3} direction="row">
+              <Grid item xs={3}>
+                <Paper className={classes.paper}>Мои данные</Paper>
+                <Info />
+                <Box m={5}>
+                  <Grid>
+                    <Button
+                      onClick={() => handlerToAccount()}
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                    >
+                      Личный кабинет
+                    </Button>
+                  </Grid>
+                </Box>
+              </Grid>
 
-                <Grid item xs={8} direction="column">
-                  <Grid item>
-                    <Paper className={classes.paper}>История заявок</Paper>
-                    <Box m={5}>
-                      <Grid
-                        item
-                        container
-                        spacing={2}
-                        direction="row"
-                        className={classes.item}
-                      >
+              <Grid item xs={8} direction="column">
+                <Grid item>
+                  <Paper className={classes.paper}>История заявок</Paper>
+                  <Box m={5}>
+                    <Grid
+                      item
+                      container
+                      spacing={2}
+                      direction="row"
+                      className={classes.item}
+                    >
+                      {orders.map((order) => (
                         <HistoryOrderItem
                           key={order._id}
                           description={order.description}
@@ -108,19 +110,15 @@ function HistoryOrders() {
                           id={order._id}
                           dogId={order.dogId}
                         />
-                      </Grid>
-                    </Box>
-                  </Grid>
+                      ))}{" "}
+                    </Grid>
+                  </Box>
                 </Grid>
               </Grid>
-            </div>
-          </Box>
-        ))
+            </Grid>
+          </div>
+        </Box>
       ) : orders.length === 0 ? (
-        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
-          <Louder />
-        </div>
-      ) : (
         <Box m={3}>
           <div className={classes.root}>
             <h3>История заказов Исполнителя</h3>
@@ -161,6 +159,10 @@ function HistoryOrders() {
             </Grid>
           </div>
         </Box>
+      ) : (
+        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
+          <Louder />
+        </div>
       )}
     </>
   );

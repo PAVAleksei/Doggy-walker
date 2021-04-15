@@ -12,97 +12,106 @@ import CardList from "../CardList/CardList";
 import { useHistory } from "react-router";
 import { setOrders } from "../../redux/actionCreators/orderAc";
 import Louder from "../Louder/Louder";
+import { getDogsAC } from "../../redux/actionCreators/dogAC";
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1,
-	},
-	paper: {
-		padding: theme.spacing(1),
-		textAlign: "center",
-		color: theme.palette.text.secondary,
-		paddingTop: 10,
-	},
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    paddingTop: 10,
+  },
 }));
 
 function ExecutorAccount() {
-	//обновялет все ордера в редакс
-	// const allOrders = useSelector((state) => state.allOrders);
-	// useEffect(() => dispatch(setOrders()), [allOrders]);
+  //обновялет все ордера в редакс
+  // const allOrders = useSelector((state) => state.allOrders);
+  // useEffect(() => dispatch(setOrders()), [allOrders]);
 
-	const history = useHistory();
-	const classes = useStyles();
-	const dispatch = useDispatch();
-	const [load, setLoad] = useState(false);
+  const history = useHistory();
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const [load, setLoad] = useState(false);
 
-	const handlerHistoryOrders = () => {
-		history.push("/historyOrders");
-	};
-	const handlerDoneOrders = () => {
-		history.push("/doneOrders");
-	};
+  const handlerHistoryOrders = () => {
+    history.push("/historyOrders");
+  };
+  const handlerDoneOrders = () => {
+    history.push("/doneOrders");
+  };
 
-	useEffect(() => {
-		dispatch(setOrders());
-		setTimeout(() => {
-			setLoad(true);
-		}, 200);
+  useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
 
-		// все заказы в системе
-	}, []);
+  useEffect(() => {
+    dispatch(setOrders());
+    setTimeout(() => {
+      setLoad(true);
+    }, 200);
 
-	return (
-		<>
-			{!load ? (
-				<div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
-					<Louder />
-				</div>
-			) : (
-					<Box m={3}>
-						<div className={classes.root}>
-							<h3>Личный кабинет Исполнителя</h3>
-							<Grid container spacing={3} direction="row">
-								<Grid item xs={3}>
-									<Paper className={classes.paper}>Мои данные</Paper>
-									<Info />
-									<Box m={3}>
-										<Button variant="outlined" onClick={handlerHistoryOrders}>
-											Текущие заказы
+    // все заказы в системе
+  }, []);
+
+  return (
+    <>
+      {!load ? (
+        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
+          <Louder />
+        </div>
+      ) : (
+        <Box m={3}>
+          <div className={classes.root}>
+            <h3>Личный кабинет Исполнителя</h3>
+            <Grid container spacing={3} direction="row">
+              <Grid item xs={3}>
+                <Paper className={classes.paper}>Мои данные</Paper>
+                <Info />
+                <Box m={3}>
+                  <Button variant="outlined" onClick={handlerHistoryOrders}>
+                    Текущие заказы
                   </Button>
-									</Box>
-									<Box m={3}>
-										<Button variant="outlined" onClick={handlerDoneOrders}>
-											Выполненные заказы
+                </Box>
+                <Box m={3}>
+                  <Button variant="outlined" onClick={handlerDoneOrders}>
+                    Выполненные заказы
                   </Button>
-									</Box>
-									<Box m={3}>
-										<Button variant="outlined">Мои отзывы</Button>
-									</Box>
-									<Box m={3}>
-										<Button variant="outlined"><a href="https://t.me/Doggy_walker_bot">Telegram Bot</a></Button>
-									</Box>
-								</Grid>
-								<Grid item xs={8} direction="column">
-									<Grid item>
-										<Paper className={classes.paper}>Все открытые заказы</Paper>
-										<CardList />
-									</Grid>
+                </Box>
+                <Box m={3}>
+                  <Button variant="outlined">Мои отзывы</Button>
+                </Box>
+                <Box m={3}>
+                  <Button variant="outlined">
+                    <a href="https://t.me/Doggy_walker_bot">Telegram Bot</a>
+                  </Button>
+                </Box>
+              </Grid>
+              <Grid item xs={8} direction="column">
+                <Grid item>
+                  <Paper className={classes.paper}>Все открытые заказы</Paper>
+                  <CardList />
+                </Grid>
 
-									<Grid item>
-										<Paper className={classes.paper}>Все заказы на карте</Paper>
-										<Box m={3}>
-											<Grid item container spacing={2} direction="row">
-												<YandexMap />
-											</Grid>
-										</Box>
-									</Grid>
-								</Grid>
-							</Grid>
-						</div>
-					</Box>
-				)}
-		</>
-	);
+                <Grid item>
+                  <Paper className={classes.paper}>Все заказы на карте</Paper>
+                  <Box m={3}>
+                    <Grid item container spacing={2} direction="row">
+                      <YandexMap />
+                    </Grid>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </div>
+        </Box>
+      )}
+    </>
+  );
 }
 
 export default ExecutorAccount;
