@@ -151,6 +151,9 @@ export default function UserAccount() {
           <Box m={1}>
             <Button variant="outlined" onClick={addDogFormHandler}>Добавить питомца</Button>
           </Box>
+          <Box m={3}>
+            <Button variant="outlined"><a href="https://t.me/Doggy_walker_bot">Telegram Bot</a></Button>
+          </Box>
         </Grid>
 
         <Grid item xs={7} direction="column">

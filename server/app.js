@@ -22,7 +22,7 @@ const numberScene = currentScene.genNumberScene();
 const nameScene = currentScene.genNameScene();
 const { getOrCreateUser } = require('./helpers/helpers');
 const { User } = require('./db/models/user.model');
-
+const fetch = require('node-fetch')
 
 
 const PORT = process.env.PORT ?? 3000;
@@ -57,15 +57,31 @@ bot.start(async (ctx) => {
 	const { from: { id: telegramId, username } } = ctx.update.message;
 	console.log({telegramId});
 	console.log({username});
-  const user = await getOrCreateUser(telegramId, username);
+	const user = await getOrCreateUser(telegramId, username);
+	console.log('user', user);
+	if (user) {
+		ctx.reply('Привет, любитель собакенов!');
+	} else {
+		ctx.reply('Неверно указан логин Telegram');
+	}
   try {
     await user.save();
   } catch (error) {
     console.log(error);
   }
-  ctx.reply('Привет, любитель собакенов!');
+  // ctx.reply('Привет, любитель собакенов!');
 });
+// console.log(bot)
 
+
+bot.hears('да', (ctx) => {
+	// console.log(ctx.update.message.chat);
+	// console.log(ctx);
+
+	// fetch
+	ctx.reply('gogogog');
+	// ctx.scene.enter('number');
+});
 // bot.start((ctx) => {
 // 	ctx.replyWithHTML(
 // 		`Приветсвую тебя, ${ctx.message.from.first_name} в <b>Doggy-walker</b>\n\n` +

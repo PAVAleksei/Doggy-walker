@@ -22,7 +22,7 @@ router.get('/checkAuth', async (req, res) => {
       orders: user.orders,
       animal: user.animal,
       photo: user.photo,
-
+			telegram: user.telegram,
     });
   }
 });
