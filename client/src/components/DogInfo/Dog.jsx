@@ -49,7 +49,7 @@ export default function Dog() {
   const dispatch = useDispatch();
   const { id } = useParams()
   const dog = useSelector(state => state.dog);
-  console.log(dog, 'dog');
+//   console.log(dog, 'dog');
 
   const history = useHistory();
 

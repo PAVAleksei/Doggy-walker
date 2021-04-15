@@ -23,11 +23,11 @@ router.get("/orders", async (req, res) => {
 // orders конкретного заказчика /api/:userid/orders
 
 router.get("/customer/orders", async (req, res) => {
-	console.log("====orders", req);
+	// console.log("====orders", req);
 	if (req.user) {
 		try {
 			const orders = await Order.find({ clientId: req.user._id });
-			console.log(orders);
+			// console.log(orders);
 			return res.json(orders);
 		} catch (error) {
 			console.log("Error to receive orders from mongo");
@@ -89,7 +89,7 @@ router.patch("/orders/requestedChange/:id", async (req, res) => {
 		const currExecutor = await User.findByIdAndUpdate(currOrder.executorId, {
 			$pull: { orders: currOrder._id },
 		});
-		console.log(currExecutor);
+		// console.log(currExecutor);
 
 		await Order.findByIdAndUpdate(currOrderId, {
 			$set: { requested: false, status: "Открыто" },
@@ -106,7 +106,7 @@ router.patch("/orders/requestedChange/:id", async (req, res) => {
 		);
 
 		const executerUserOfCurrentOrder = await User.findById(currOrder.executorId)
-		console.log('executor who doing walk but not assept by user ----> ', executerUserOfCurrentOrder);
+		// console.log('executor who doing walk but not assept by user ----> ', executerUserOfCurrentOrder);
 
 		if (executerUserOfCurrentOrder.telegramid) {
 		bot.telegram.sendMessage(
@@ -149,9 +149,9 @@ router.patch("/orders/inwork/:id", async (req, res) => {
 			`Заказ ${currOrder.description} был подтвержден, \n 🐶 ждёт Вас по адресу:📍${currOrder.address.name} \n в 🕰 ${currOrder.date} http://127.0.0.1:3000/order/${currOrder._id}`);
 		}
 		
-console.log(bot);
-console.log(bot.messages);
-console.log(bot.telegram);
+// console.log(bot);
+// console.log(bot.messages);
+// console.log(bot.telegram);
 
 		return res.json(newOrder);
 
@@ -181,7 +181,7 @@ router.patch("/orders/completed/:id", async (req, res) => {
 		setTimeout(() => { }, 60 * 1000);
 
 		const UserOfCurrentOrder = await User.findById(currOrder.clientId);
-		console.log('user who made order ----> ', UserOfCurrentOrder);
+		// console.log('user who made order ----> ', UserOfCurrentOrder);
 
 		if (UserOfCurrentOrder.telegramid) {
 		bot.telegram.sendMessage(
@@ -280,7 +280,7 @@ router.post("/customer/orders", async (req, res) => {
 
 			allExecuterUsers.forEach((user) => {
 				if (user.telegramid) {
-					console.log('it true');
+					// console.log('it true');
 					bot.telegram.sendMessage(
 						Number(user.telegramid),
 						`Появился новый заказ: ${order.description} \n по адресу:📍 ${order.address.name} \n http://127.0.0.1:3000/order/${order._id}`);
@@ -292,7 +292,7 @@ router.post("/customer/orders", async (req, res) => {
 			return res.json(order);
 
 		} catch (error) {
-			console.log(error);
+			console.log(error, 'from orderRouter');
 			return res.sendStatus(500);
 		}
 	} else {
@@ -334,7 +334,7 @@ router.post("/executor/order", async (req, res) => {
 			});
 			return res.json(currOrder);
 		} catch (error) {
-			console.log("error");
+			console.log(error, 'from orderRouter /executor/order');
 			return res.sendStatus(500);
 		}
 	} else {

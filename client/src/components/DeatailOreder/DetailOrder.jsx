@@ -107,7 +107,7 @@ const DetailOrder = () => {
       );
       setCurDog(currentDog);
 
-      console.log(currentDog.avatar);
+      // console.log(currentDog.avatar);
       setCurDogAvatat(currentDog.avatar);
       setTimeout(() => {
         setLoad(true);

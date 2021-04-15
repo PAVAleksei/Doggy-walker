@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
       const user = await User.findByIdAndUpdate(owner, { $push: { animal: newDog } });
       res.status(200).json(newDog);
     } catch (error) {
-      console.log(error);
+      console.log(error, 'from gogRouter');
     }
   }
 });
@@ -51,7 +51,7 @@ router.post('/avatar/:id', uploadMulter.single('file'), async (req, res) => {
     await dog.save();
     return res.json({ avatar: dog.avatar, id: dog._id });
   } catch (e) {
-    console.log(e);
+    console.log(e, 'from dogRouter post avatar/:id');
     return res.status(400).json({ message: 'Upload avatar error' });
   }
 });

@@ -48,7 +48,7 @@ router.post('/avatar', uploadMulter.single('file'), async (req, res) => {
     await user.save();
     return res.json(user.photo);
   } catch (e) {
-    console.log(e);
+    console.log(e, 'from userRouter');
     return res.status(400).json({ message: 'Upload avatar error' });
   }
 });

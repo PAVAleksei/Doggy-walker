@@ -58,7 +58,7 @@ function ExecutorCardOrder({
   const dogImg = useSelector(
     (state) => state.dogs.find((el) => el._id == dogId)?.avatar
   );
-  console.log(dogId);
+  // console.log(dogId);
 
   const handlerDetailInfo = (id) => {
     history.push(`/order/${id}`);

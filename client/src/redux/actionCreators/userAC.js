@@ -44,7 +44,7 @@ export const sagaSignupAC = ({
 };
 
 export const signupAC = (resFromServer) => {
-  console.log(resFromServer);
+  // console.log(resFromServer);
   return {
     type: AUTH,
     payload: {
@@ -109,7 +109,7 @@ export const addOrderCustomer = (order) => async (dispatch, setState) => {
     })
       .then((response) => response.json())
       .then((newOrder) => {
-        console.log(newOrder);
+        // console.log(newOrder);
         dispatch(addOrderCustomerFromServer(newOrder));
         // return history.push('/account');
       });
@@ -135,7 +135,7 @@ export const addOrderFromExecutorThunk = (id) => async (dispatch, setState) => {
     })
       .then((response) => response.json())
       .then((newOrder) => {
-        console.log(newOrder);
+        // console.log(newOrder);
         dispatch(addOrderFromExecutor(newOrder));
       });
   }
@@ -225,7 +225,7 @@ export const addDogAC = (newDog) => {
 };
 
 export const deleteFetchDogAC = (id) => async (dispatch) => {
-  console.log(id);
+  // console.log(id);
   const response = await fetch(`http://localhost:3001/api/v1/dog/${id}`, {
     method: "DELETE",
     credentials: "include",
@@ -252,7 +252,7 @@ export const editDogFetch = (editDog, id) => async (dispatch) => {
     body: JSON.stringify(editDog, id),
   });
   const responseFromServ = await response.json();
-  console.log(responseFromServ, "responseFromServ");
+  // console.log(responseFromServ, "responseFromServ");
   dispatch(editDogAC(responseFromServ));
 };
 
@@ -276,7 +276,7 @@ export const uploadAvatarFetch = (formData) => async (dispatch) => {
     const responseFromServ = await response.json();
     dispatch(uploadAvatarAC(responseFromServ));
   } catch (e) {
-    console.log(e);
+    console.log(e, 'From userAC');
   }
 };
 

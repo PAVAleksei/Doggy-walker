@@ -40,7 +40,7 @@ function Header() {
             <MenuIcon />
           </IconButton> */}
           <Typography align="left" variant="h6" className={classes.title}>
-            DOG WALKER
+            DOGGY WALKER
             </Typography>
           <Box mr={1}>
           {checkAuth ? (

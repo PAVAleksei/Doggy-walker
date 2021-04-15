@@ -46,19 +46,19 @@ bot.use(async (ctx, next) => {
   try {
     await next();
   } catch (error) {
-    console.log(error);
+    console.log(error, 'From server app');
     await ctx.reply('Что-то пошло не так 😢, уже чиним🥷');
   }
 });
 
 bot.start(async (ctx) => {
 	// console.log('ctx----> ', ctx);
-	console.log('ctx.update ----> ', ctx.update.message.from);
+	// console.log('ctx.update ----> ', ctx.update.message.from);
 	const { from: { id: telegramId, username } } = ctx.update.message;
-	console.log({telegramId});
-	console.log({username});
+	// console.log({telegramId});
+	// console.log({username});
 	const user = await getOrCreateUser(telegramId, username);
-	console.log('user', user);
+	// console.log('user', user);
 	if (user) {
 		ctx.reply('Привет, любитель собакенов!');
 	} else {
@@ -67,7 +67,7 @@ bot.start(async (ctx) => {
   try {
     await user.save();
   } catch (error) {
-    console.log(error);
+    console.log(error, 'From app bot.start');
   }
   // ctx.reply('Привет, любитель собакенов!');
 });
@@ -109,7 +109,7 @@ bot.hears("id", (ctx) => {
 bot.on('text', (ctx) => {
 	ctx.telegram.sendMessage(ctx.message.chat.id, `Hello ${ctx.state.role}`);
 
-	console.log('role --> ', ctx.message);
+	// console.log('role --> ', ctx.message);
 });
 
 bot.hears('hi', (ctx) => ctx.reply('Hey there'));

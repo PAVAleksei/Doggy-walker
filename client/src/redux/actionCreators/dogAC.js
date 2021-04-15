@@ -23,15 +23,15 @@ export const uploadDogAvatarFetch = (formData, id) => async (dispatch) => {
       body: formData
     })
     const responseFromServ = await response.json()
-    console.log(responseFromServ, 'responseFromServ');
+    // console.log(responseFromServ, 'responseFromServ');
     dispatch(uploadAvatarAC(responseFromServ))
   } catch (e) {
-    console.log(e);
+    console.log(e, 'Fron dogAC');
   }
 }
 
 export const uploadAvatarAC = (avatar) => {
-  console.log(avatar, 'avatar');
+  // console.log(avatar, 'avatar');
   return {
     type: DOG_AVATAR,
     payload: avatar,
