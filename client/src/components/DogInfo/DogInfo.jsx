@@ -70,7 +70,7 @@ export default function DogInfo({ id, nickname, breed, gender, avatar }) {
         component="label"
       >
         <input onChange={(e) => inputAvatarHandler(e)} accept="image/*" type="file" hidden name="photo" />
-        <Avatar className={classes.big} src={avatar} />
+        <Avatar style={{cursor:'pointer'}} className={classes.big} src={avatar} />
       </Link>
       <CardContent>
         <Typography variant="h6" component="h4">
