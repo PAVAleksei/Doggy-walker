@@ -35,10 +35,10 @@ function Header() {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton edge="start"
+          {/* <IconButton edge="start"
             color="inherit" aria-label="menu">
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography align="left" variant="h6" className={classes.title}>
             DOG WALKER
             </Typography>
