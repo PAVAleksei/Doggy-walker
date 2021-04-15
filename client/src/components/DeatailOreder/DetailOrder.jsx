@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 10,
   },
   rootDetail: {
-    border: "1px solid #1C3E6A",
+    // border: "1px solid #1C3E6A",
     width: 480,
     height: 600,
     display: "flex",
@@ -113,7 +113,7 @@ const DetailOrder = () => {
   return (
     <div className={classes.root}>
       <h3>Подробная информация о заказе</h3>
-
+      <Box m={3}>
       {curOrder && (
         <Grid container spacing={3} direction="row">
           <Grid item xs={3}>
@@ -142,7 +142,7 @@ const DetailOrder = () => {
           </Grid>
           <Grid item xs={8} direction="column">
             <Grid item>
-              <Paper className={classes.paper}>Информация о заказе</Paper>
+              <Paper className={classes.paper}>Заказ</Paper>
               <Box className={classes.pos} m={1.5}>
                 <Card className={(classes.rootDetail, classes.detail)}>
                   <CardActionArea>
@@ -153,7 +153,7 @@ const DetailOrder = () => {
                     />
                     <CardContent>
                       <Typography gutterBottom component="h2">
-                        Запланированная дата:&nbsp;
+                        Запланированная дата: &nbsp;
                         {new Date(curOrder.date).toLocaleString("ru-RU")}
                       </Typography>
                       <Typography
@@ -197,6 +197,7 @@ const DetailOrder = () => {
           </Grid>
         </Grid>
       )}
+      </Box>
     </div>
   );
 };

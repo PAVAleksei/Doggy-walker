@@ -18,7 +18,7 @@ import {
 const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
-    border: "1px solid #1C3E6A",
+    // border: "1px solid #1C3E6A",
     height: 500,
     // width: 300,
     display: "flex",

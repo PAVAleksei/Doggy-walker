@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
-    border: "1px solid #1C3E6A",
+    // border: "1px solid #1C3E6A",
     width: 450,
     height: 470,
     marginBottom: 40,
@@ -99,7 +99,7 @@ const HistoryOrderItem = ({
               }}
             >
               <Typography gutterBottom component="h2">
-                Запланированная дата:{new Date(date).toLocaleString("ru-RU")}
+                Запланированная дата: {new Date(date).toLocaleString("ru-RU")}
               </Typography>
               <Typography variant="body2" color="text.primary" component="p">
                 Описание: {description}
