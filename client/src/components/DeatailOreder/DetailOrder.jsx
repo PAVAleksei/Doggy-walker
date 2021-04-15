@@ -142,9 +142,8 @@ const DetailOrder = () => {
           </Grid>
           <Grid item xs={8} direction="column">
             <Grid item>
-              <Paper className={classes.paper}>Заказ</Paper>
-              <p>Информация о заказе</p>
-              <Box className={classes.pos} m={4}>
+              <Paper className={classes.paper}>Информация о заказе</Paper>
+              <Box className={classes.pos} m={1.5}>
                 <Card className={(classes.rootDetail, classes.detail)}>
                   <CardActionArea>
                     <CardMedia
