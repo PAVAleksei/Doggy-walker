@@ -327,6 +327,7 @@ export const closeOrderCustomerFromServer = (updatedOrder) => {
 };
 
 export const changeStatusExecutorInWorkFromServer = (updatedOrder) => {
+  console.log('acchangeStatusExecutorInWorkFromServer')
   return {
     type: CHANGE_ORDER_EXECUTOR_STATUS_IN_WORK,
     payload: updatedOrder,

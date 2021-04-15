@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
-    border: "1px solid #1C3E6A",
+    // border: "1px solid #1C3E6A",
     width: 450,
     height: 470,
     marginBottom: 40,
@@ -70,7 +70,6 @@ const HistoryOrderItem = ({
     }
   });
 
-
   // const imgDog = allDogs.find((el) => el._id == dogId);
   // console.log(imgDog.avatar);
 
@@ -101,7 +100,7 @@ const HistoryOrderItem = ({
               }}
             >
               <Typography gutterBottom component="h2">
-                Запланированная дата:{new Date(date).toLocaleString("ru-RU")}
+                Запланированная дата: {new Date(date).toLocaleString("ru-RU")}
               </Typography>
               <Typography variant="body2" color="text.primary" component="p">
                 Описание: {description}
@@ -139,8 +138,8 @@ const HistoryOrderItem = ({
               onClick={handlerDoneOrder}
             >
               {order.completed
-                ? "Я закрыл заказ, жду чтобы заказчик закрыл"
-                : "Я Выполнил, жду чтобы заказчик подтвердил"}
+                ? "Ожидание подтверждения от заказчика"
+                : "Я Выполнил"}
             </Button>
           ) : (
             <span>

@@ -29,7 +29,6 @@ import { Container } from "@material-ui/core";
 import { Footer } from "./components/Footer/Footer";
 import { getDogsAC } from "./redux/actionCreators/dogAC";
 
-
 function App() {
   
   const dispatch = useDispatch();
@@ -52,7 +51,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/v1/dog")
+    // fetch("http://localhost:3001/api/v1/dog")
+    fetch(`${window.location.origin}/api/v1/dog`)
       .then((response) => response.json())
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
@@ -60,7 +60,7 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className="App" >
       <Router>
         <Header />
 

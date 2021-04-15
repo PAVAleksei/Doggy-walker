@@ -20,7 +20,7 @@ import {
 const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
-    border: "1px solid #1C3E6A",
+    // border: "1px solid #1C3E6A",
     height: 500,
     // width: 300,
     display: "flex",
@@ -104,17 +104,17 @@ function CardOrder({
     };
 
     socket.onerror = function(error) {
-      alert(`[error] ${error.message}`);
+      // alert(`[error] ${error.message}`);
     };
     
     return () => {
       socket.onclose = function(event) {
         if (event.wasClean) {
-          alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+          // alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
         } else {
           // например, сервер убил процесс или сеть недоступна
           // обычно в этом случае event.code 1006
-          alert('[close] Соединение прервано');
+          // alert('[close] Соединение прервано');
         }
       };
     }
