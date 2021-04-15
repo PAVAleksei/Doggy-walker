@@ -1,20 +1,16 @@
-import { ADD_DOG, EDIT_DOG, GET_DOGS } from "../types/dogTypes"
+import { ADD_DOG, DELETE_DOG, GET_DOGS } from "../types/dogTypes"
 
 const addDogsReducer = (state = [], action) => {
 
 
   switch (action.type) {
-    case ADD_DOG:
-      return [
-        ...state,
-        action.payload
-      ]
-      
-      case GET_DOGS:
-      return action.payload
-  
+    
 
-      
+    case GET_DOGS:
+      return action.payload
+
+    
+
     default:
       return state
   }

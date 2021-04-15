@@ -3,9 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Box, Button, FormControl } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { editDogFetch, getDogAC } from '../../redux/actionCreators/dogAC';
+import { getDogAC } from '../../redux/actionCreators/dogAC';
 import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
+import { editDogFetch } from '../../redux/actionCreators/userAC';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +45,7 @@ export default function EditDog() {
       dispatch(editDogFetch(valuesOfFields, dog._id));
 
       formRef.current.reset();
-      // history(-1)
+      history.push("/account");
     }
   };
 
@@ -62,11 +63,11 @@ export default function EditDog() {
 
             <TextField
               id="outlined-multiline"
+              defaultValue={dog.nickname}
               label="Имя питомца"
               name="nickname"
               multiline
               rowsMax={4}
-              defaultValue={dog.nickname}
               variant="outlined"
             />
           
@@ -136,14 +137,7 @@ export default function EditDog() {
               defaultValue={dog.letGo}
               variant="outlined"
             />
-            <TextField
-              id="outlined-textarea"
-              label="Фото"
-              name="avatar"
-              multiline
-              variant="outlined"
-              defaultValue={dog.avatar}
-            />
+            
           </div>
         </Box>
         <Box m={3}>
@@ -153,7 +147,7 @@ export default function EditDog() {
             size="large"
             color="primary"
           >
-            Добавить
+            Редактировать
           </Button>
         </Box>
       </form>

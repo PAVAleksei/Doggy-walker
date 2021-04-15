@@ -4,7 +4,10 @@ import {
   Toolbar,
   IconButton,
   Button,
+  Box,
 } from "@material-ui/core";
+import MenuIcon from '@material-ui/icons/Menu'
+
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 
@@ -16,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2 ),
   },
   title: {
     flexGrow: 1,
@@ -24,23 +27,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header() {
-  const checkAuth = useSelector((state) => state.user.isAuth);
-  // console.log(checkAuth);
 
+  const checkAuth = useSelector((state) => state.user.isAuth);
   const classes = useStyles();
 
   return (
-    <>
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+    <div className={classes.root}>
+      <AppBar position="fixed">
+        <Toolbar>
+          <IconButton edge="start"
+            color="inherit" aria-label="menu">
             <MenuIcon />
-          </IconButton> */}
-            <Typography variant="h6" className={classes.title}>
-              DOG WALKER
+          </IconButton>
+          <Typography align="left" variant="h6" className={classes.title}>
+            DOG WALKER
             </Typography>
-            {checkAuth ? (
+          <Box mr={1}>
+          {checkAuth ? (
               <>
                 <Button color="inherit">
                   <Link className={styles.navlinks} to="/">
@@ -82,7 +85,7 @@ function Header() {
                   </Button> */}
 
                 <Button color="inherit">
-                  <Link className={styles.navlinks} to="/executor">
+                  <Link className={styles.navlinks} to="/executorLogin">
                     Исполнитель
                   </Link>
                 </Button>
@@ -90,17 +93,21 @@ function Header() {
                 {/* <Button color="inherit"><Link className={styles.navlinks} to="/register">Регистрация</Link>
                   </Button> */}
                 <Button color="inherit">
-                  <Link className={styles.navlinks} to="/customer">
+                  <Link className={styles.navlinks} to="/customerLogin">
                     Заказчик
                   </Link>
                 </Button>
               </>
             )}
-          </Toolbar>
-        </AppBar>
-      </div>
-    </>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </div>
+
+    
   );
 }
 
 export default Header;
+
+
