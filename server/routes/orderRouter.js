@@ -54,11 +54,7 @@ router.patch("/orders/requested/:id", async (req, res) => {
         {
           requested: !currOrder.requested,
           executorId: userId,
-<<<<<<< HEAD
           status: 'Найден исполнитель',
-=======
-          status: "Найден исполнитель",
->>>>>>> 80b43aa2d40e243f7350e94d32657973e8cf0c4c
         },
         {
           new: true,
@@ -127,7 +123,7 @@ router.patch("/orders/inwork/:id", async (req, res) => {
 
 		const executerUserOfCurrentOrder = User.findById(currOrder.executorId)
 		console.log(executerUserOfCurrentOrder);
-
+_
 		bot.telegram.sendMessage(
 			chat_id=Number(executerUserOfCurrentOrder.telegramid),
 			text=`Заказ был подтвержден: ${currOrder.description} по адресу:📍${order.address.name} \n http://127.0.0.1:3000/order/${order._id}`);
@@ -239,12 +235,11 @@ router.post("/customer/orders", async (req, res) => {
 
 			console.log(allExecuterUsers[24].telegramid);
 
-		
+		allExecuterUsers.forEach(user => {
 			bot.telegram.sendMessage(
-				chat_id=Number(allExecuterUsers[24].telegramid),
+				chat_id=Number(user.telegramid),
 				text=`Появился новый заказ: ${order.description} по адресу:📍${order.address.name} \n http://127.0.0.1:3000/order/${order._id}`);
-			
-		
+			})
 			// http://localhost:3000/order/${order._id}
 			
 			return res.json(order);
