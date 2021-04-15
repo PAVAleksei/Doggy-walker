@@ -58,43 +58,45 @@ function ExecutorAccount() {
           <Louder />
         </div>
       ) : (
-        <div className={classes.root}>
-          <h3>Личный кабинет Исполнителя</h3>
-          <Grid container spacing={3} direction="row">
-            <Grid item xs={3}>
-              <Paper className={classes.paper}>Мои данные</Paper>
-              <Info />
-              <Box m={3}>
-                <Button variant="outlined" onClick={handlerHistoryOrders}>
-                  Текущие заказы
-                </Button>
-              </Box>
-              <Box m={3}>
-                <Button variant="outlined" onClick={handlerDoneOrders}>
-                  Выполненные заказы
-                </Button>
-              </Box>
-              <Box m={3}>
-                <Button variant="outlined">Мои отзывы</Button>
-              </Box>
-            </Grid>
-            <Grid item xs={8} direction="column">
-              <Grid item>
-                <Paper className={classes.paper}>Все открытые заказы</Paper>
-                <CardList />
-              </Grid>
-
-              <Grid item>
-                <Paper className={classes.paper}>Все заказы на карте</Paper>
+        <Box m={3}>
+          <div className={classes.root}>
+            <h3>Личный кабинет Исполнителя</h3>
+            <Grid container spacing={3} direction="row">
+              <Grid item xs={3}>
+                <Paper className={classes.paper}>Мои данные</Paper>
+                <Info />
                 <Box m={3}>
-                  <Grid item container spacing={2} direction="row">
-                    <YandexMap />
-                  </Grid>
+                  <Button variant="outlined" onClick={handlerHistoryOrders}>
+                    Текущие заказы
+                  </Button>
+                </Box>
+                <Box m={3}>
+                  <Button variant="outlined" onClick={handlerDoneOrders}>
+                    Выполненные заказы
+                  </Button>
+                </Box>
+                <Box m={3}>
+                  <Button variant="outlined">Мои отзывы</Button>
                 </Box>
               </Grid>
+              <Grid item xs={8} direction="column">
+                <Grid item>
+                  <Paper className={classes.paper}>Все открытые заказы</Paper>
+                  <CardList />
+                </Grid>
+
+                <Grid item>
+                  <Paper className={classes.paper}>Все заказы на карте</Paper>
+                  <Box m={3}>
+                    <Grid item container spacing={2} direction="row">
+                      <YandexMap />
+                    </Grid>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </div>
+          </div>
+        </Box>
       )}
     </>
   );

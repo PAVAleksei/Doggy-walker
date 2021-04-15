@@ -26,7 +26,7 @@ function CardList() {
   const classes = useStyles();
 
   return (
-    <Box m={3}>
+    <Box m={1.5}>
       <Grid item container spacing={2} direction="row">
         {allOrders?.length ? (
           allOrders.map((order) => (

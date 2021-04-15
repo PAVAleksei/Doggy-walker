@@ -62,6 +62,66 @@ function HistoryOrders() {
     <>
       {orders.length > 0 ? (
         orders.map((order) => (
+          <Box m={3}>
+            <div className={classes.root}>
+              <h3>История заказов Исполнителя</h3>
+              <Grid container spacing={3} direction="row">
+                <Grid item xs={3}>
+                  <Paper className={classes.paper}>Мои данные</Paper>
+                  <Info />
+                  <Box m={5}>
+                    <Grid>
+                      <Button
+                        onClick={() => handlerToAccount()}
+                        variant="contained"
+                        size="large"
+                        color="primary"
+                      >
+                        Личный кабинет
+                      </Button>
+                    </Grid>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={8} direction="column">
+                  <Grid item>
+                    <Paper className={classes.paper}>История заявок</Paper>
+                    <Box m={5}>
+                      <Grid
+                        item
+                        container
+                        spacing={2}
+                        direction="row"
+                        className={classes.item}
+                      >
+                        <HistoryOrderItem
+                          key={order._id}
+                          description={order.description}
+                          date={order.date}
+                          price={order.price}
+                          address={order.address.name}
+                          requested={order.requested}
+                          order={order}
+                          inWork={order.inWork}
+                          completed={order.completed}
+                          closed={order.closed}
+                          id={order._id}
+                          dogId={order.dogId}
+                        />
+                      </Grid>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </div>
+          </Box>
+        ))
+      ) : orders.length === 0 ? (
+        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
+          <Louder />
+        </div>
+      ) : (
+        <Box m={3}>
           <div className={classes.root}>
             <h3>История заказов Исполнителя</h3>
             <Grid container spacing={3} direction="row">
@@ -93,70 +153,14 @@ function HistoryOrders() {
                       direction="row"
                       className={classes.item}
                     >
-                      <HistoryOrderItem
-                        key={order._id}
-                        description={order.description}
-                        date={order.date}
-                        price={order.price}
-                        address={order.address.name}
-                        requested={order.requested}
-                        order={order}
-                        inWork={order.inWork}
-                        completed={order.completed}
-                        closed={order.closed}
-                        id={order._id}
-                        dogId={order.dogId}
-                      />
+                      <p>Нет активных заказов</p>
                     </Grid>
                   </Box>
                 </Grid>
               </Grid>
             </Grid>
           </div>
-        ))
-      ) : orders.length === 0 ? (
-        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
-          <Louder />
-        </div>
-      ) : (
-        <div className={classes.root}>
-          <h3>История заказов Исполнителя</h3>
-          <Grid container spacing={3} direction="row">
-            <Grid item xs={3}>
-              <Paper className={classes.paper}>Мои данные</Paper>
-              <Info />
-              <Box m={5}>
-                <Grid>
-                  <Button
-                    onClick={() => handlerToAccount()}
-                    variant="contained"
-                    size="large"
-                    color="primary"
-                  >
-                    Личный кабинет
-                  </Button>
-                </Grid>
-              </Box>
-            </Grid>
-
-            <Grid item xs={8} direction="column">
-              <Grid item>
-                <Paper className={classes.paper}>История заявок</Paper>
-                <Box m={5}>
-                  <Grid
-                    item
-                    container
-                    spacing={2}
-                    direction="row"
-                    className={classes.item}
-                  >
-                    <p>Нет активных заказов</p>
-                  </Grid>
-                </Box>
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
+        </Box>
       )}
     </>
   );
