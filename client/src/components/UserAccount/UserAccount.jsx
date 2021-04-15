@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accordeon: {
     width: "100%",
+    paddingBottom: '8px'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -155,7 +156,7 @@ export default function UserAccount() {
 
         <Grid item xs={7} direction="column">
           <div className={classes.accordeon}>
-            <Accordion>
+            <Accordion >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"

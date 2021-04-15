@@ -3,6 +3,7 @@ body {
   font-family: 'Brygada 1918', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* height: 100vh; */
 }
 
 code {
