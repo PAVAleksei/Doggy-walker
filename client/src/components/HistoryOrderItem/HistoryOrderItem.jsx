@@ -70,7 +70,6 @@ const HistoryOrderItem = ({
     }
   });
 
-
   // const imgDog = allDogs.find((el) => el._id == dogId);
   // console.log(imgDog.avatar);
 
@@ -137,8 +136,8 @@ const HistoryOrderItem = ({
               onClick={handlerDoneOrder}
             >
               {order.completed
-                ? "Я закрыл заказ, жду чтобы заказчик закрыл"
-                : "Я Выполнил, жду чтобы заказчик подтвердил"}
+                ? "Ожидание подтверждения от заказчика"
+                : "Я Выполнил"}
             </Button>
           ) : (
             <span>

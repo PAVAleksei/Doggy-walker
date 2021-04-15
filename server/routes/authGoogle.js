@@ -23,7 +23,8 @@ router.post('/register', (req, res, next) => {
         kind: user.kind,
         orders: user.orders,
         verification: user.verification,
-        district: user.district,
+				district: user.district,
+				
       });
     });
   })(req, res, next);
