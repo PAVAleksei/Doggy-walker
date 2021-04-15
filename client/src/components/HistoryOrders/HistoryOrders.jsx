@@ -43,6 +43,7 @@ function HistoryOrders() {
   };
 
   return (
+    <Box m={3}>
     <div className={classes.root}>
       <h3>История заказов Исполнителя</h3>
       <Grid container spacing={3} direction="row">
@@ -100,6 +101,7 @@ function HistoryOrders() {
         </Grid>
       </Grid>
     </div>
+    </Box>
   );
 }
 

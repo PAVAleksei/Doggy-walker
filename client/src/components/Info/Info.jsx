@@ -13,6 +13,7 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  Box,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
     // minWidth: 175,
     // maxWidth: 175,
     margin: 10,
-    paddingTop: 7,
+    paddingTop: 15,
   },
   bullet: {
     display: "inline-block",
@@ -64,6 +65,7 @@ export default function Info() {
 
 
   return (
+    <Box m={1.5}>
     <Card className={classes.root}>
       <Link
         variant="contained"
@@ -80,7 +82,7 @@ export default function Info() {
           {user.email}
         </Typography>
         <Typography className={classes.title} color="textSecondary">
-          Тип: {user.kind}
+          Вы: {user.kind}
         </Typography>
       </CardContent>
       <CardActions>
@@ -89,5 +91,6 @@ export default function Info() {
         </Link>
       </CardActions>
     </Card>
+    </Box>
   );
 }

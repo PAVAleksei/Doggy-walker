@@ -45,6 +45,7 @@ function ExecutorAccount() {
   }, []);
 
   return (
+    <Box m={3}>
     <div className={classes.root}>
       <h3>Личный кабинет Исполнителя</h3>
       <Grid container spacing={3} direction="row">
@@ -82,6 +83,7 @@ function ExecutorAccount() {
         </Grid>
       </Grid>
     </div>
+    </Box>
   );
 }
 

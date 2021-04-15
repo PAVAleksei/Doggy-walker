@@ -14,7 +14,7 @@ import { changeOrderStatusInWork } from "../../redux/actionCreators/userAC"
 const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
-    border: "1px solid #1C3E6A",
+    // border: "1px solid #1C3E6A",
     height: 470,
     display: "flex",
     flexDirection: "column",
@@ -54,7 +54,7 @@ function DetailedCardOrder({ id, description, date, price, address, requested, i
           />
           <CardContent>
             <Typography gutterBottom component="h2">
-              Запланированная дата:
+              Запланированная дата: 
               {date.toLocaleString("ru-RU")}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
