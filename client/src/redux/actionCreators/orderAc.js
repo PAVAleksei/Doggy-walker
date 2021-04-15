@@ -134,6 +134,7 @@ export const changeOrderStatusRequested = (id) => (dispatch, setState) => {
   })
     .then((res) => res.json())
     .then((updatedOrder) => {
+
       dispatch(changeOrderStatusRequestedFromServer(updatedOrder));
     })
     .catch((error) => {

@@ -9,9 +9,11 @@ import {
   ADD_ORDER_EXECUTOR,
   USER_AVATAR,
   CLOSE_ORDER_CUSTOMER,
+  CHANGE_ORDER_EXECUTOR_STATUS_IN_WORK,
 } from "../types/usertypes";
 import { setError } from "./errorAC";
 import { ADD_DOG, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
+
 
 export const sagaSignupAC = ({
   email,
@@ -147,7 +149,7 @@ export const addOrderFromExecutor = (newOrder) => {
     payload: newOrder,
   };
 };
-export const changeOrderStatusInWork = (id) => (dispatch, setState) => {
+export const changeOrderStatusInWork = (id, socket) => (dispatch, setState) => {
   fetch(`http://localhost:3001/api/orders/inwork/${id}`, {
     method: "PATCH",
     headers: {
@@ -158,6 +160,15 @@ export const changeOrderStatusInWork = (id) => (dispatch, setState) => {
   })
     .then((res) => res.json())
     .then((updatedOrder) => {
+
+      const messageToServer = {
+        type: 'approve executor',
+        payload: {
+          message: id,
+        }
+      }
+      socket.send(JSON.stringify(messageToServer));
+
       dispatch(changeOrderStatusInWorkFromServer(updatedOrder));
     })
     .catch((error) => {
@@ -188,6 +199,7 @@ export const changeOrderCustomerStatusRequested = (id) => (
   })
     .then((res) => res.json())
     .then((updatedOrder) => {
+  
       dispatch(changeOrderStatusInWorkFromServer(updatedOrder));
     })
     .catch((error) => {
@@ -310,6 +322,13 @@ export const closeOrderCustomer = (id) => (dispatch, setState) => {
 export const closeOrderCustomerFromServer = (updatedOrder) => {
   return {
     type: CLOSE_ORDER_CUSTOMER,
+    payload: updatedOrder,
+  };
+};
+
+export const changeStatusExecutorInWorkFromServer = (updatedOrder) => {
+  return {
+    type: CHANGE_ORDER_EXECUTOR_STATUS_IN_WORK,
     payload: updatedOrder,
   };
 };

@@ -1,5 +1,5 @@
 import YandexMap from "../YandexMap/YandexMap";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CardList from "../CardList/CardList";
 import { useHistory } from "react-router";
 import { setOrders } from "../../redux/actionCreators/orderAc";
+import { changeOrderCustomerStatusRequestedFromServer, changeStatusExecutorInWorkFromServer } from "../../redux/actionCreators/userAC";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 function ExecutorAccount() {
   //обновялет все ордера в редакс
   // const allOrders = useSelector((state) => state.allOrders);
@@ -32,6 +35,69 @@ function ExecutorAccount() {
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const {current: socket} = useRef(new WebSocket('ws://localhost:3001'))
+
+  useEffect(() => {
+
+    socket.onopen = function(e) {
+    // alert("[open] Соединение установлено");
+    // alert("Отправляем данные на сервер");
+      const messageToServer = {
+          type: 'greeting',
+      }
+
+    socket.send(JSON.stringify(messageToServer));
+
+  };
+
+    socket.onmessage = function(event) {  
+
+      const parseMessage = JSON.parse(event.data);
+    
+      // console.log(parseMessage);
+    
+      switch (parseMessage.type) {
+        case 'greeting':
+          break
+    
+        case 'approve executor':
+          dispatch(changeStatusExecutorInWorkFromServer(parseMessage.payload.order))
+          break
+
+        case 'deny executor':
+          dispatch(changeOrderCustomerStatusRequestedFromServer())
+          break
+
+        default:
+          break
+      }
+        
+    };
+    
+    socket.onerror = function(error) {
+      alert(`[error] ${error.message}`);
+    };
+
+    return () => {
+      socket.onclose = function(event) {
+        if (event.wasClean) {
+          alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+        } else {
+          // например, сервер убил процесс или сеть недоступна
+          // обычно в этом случае event.code 1006
+          alert('[close] Соединение прервано');
+        }
+      };
+
+    }
+
+
+}, [])
+
+  
+
+ 
 
   const handlerHistoryOrders = () => {
     history.push("/historyOrders");

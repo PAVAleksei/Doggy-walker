@@ -76,6 +76,8 @@ const HistoryOrderItem = ({
 
   const handlerDoneOrder = () => {
     dispatch(changeOrderStatusCompleted(id));
+
+    
     // таймер на закрытие задачи у заказчика
     dispatch(closeOrderCustomer(id));
   };

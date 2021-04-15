@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -11,7 +11,9 @@ import { Box } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeOrderCustomerStatusRequested,
+  changeOrderCustomerStatusRequestedFromServer,
   changeOrderStatusInWork,
+  changeStatusExecutorInWorkFromServer,
   closeOrderCustomer,
 } from "../../redux/actionCreators/userAC";
 
@@ -37,6 +39,13 @@ const useStyles = makeStyles({
   },
 });
 
+
+// const btnApprove = document.querySelector('[data-btn-approve]');
+
+
+
+
+
 function CardOrder({
   id,
   description,
@@ -51,8 +60,67 @@ function CardOrder({
   status,
   dogId,
 }) {
+
+
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const {current: socket} = useRef(new WebSocket('ws://localhost:3001'))
+
+
+  useEffect(() => {
+    socket.onopen = function(e) {
+      // alert("[open] Соединение установлено");
+      // alert("Отправляем данные на сервер");
+      const messageToServer = {
+          type: 'greeting',
+        }
+    
+      socket.send(JSON.stringify(messageToServer));
+    
+    };
+    
+    socket.onmessage = function(event) {
+    
+      const parseMessage = JSON.parse(event.data);
+    
+      switch (parseMessage.type) {
+        case 'greeting':
+          break
+    
+        case 'approve executor':
+          dispatch(changeStatusExecutorInWorkFromServer(parseMessage.payload.order))
+          break
+
+        case 'send request':
+          console.log('parseMessage.payload.order ======>>', parseMessage.payload.order);
+          dispatch(changeOrderCustomerStatusRequestedFromServer(parseMessage.payload.order))
+          break
+
+        default:
+          break
+      }
+      
+    };
+
+    socket.onerror = function(error) {
+      alert(`[error] ${error.message}`);
+    };
+    
+    return () => {
+      socket.onclose = function(event) {
+        if (event.wasClean) {
+          alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+        } else {
+          // например, сервер убил процесс или сеть недоступна
+          // обычно в этом случае event.code 1006
+          alert('[close] Соединение прервано');
+        }
+      };
+    }
+    
+  }, [])
+
 
   const dogs = useSelector((state) => state.user.animal);
   const dogPhoto = dogs.find((el) => el._id === dogId)?.avatar;
@@ -60,11 +128,12 @@ function CardOrder({
   const editHandler = () => {};
 
   const approveExecutorHandler = (id) => {
-    dispatch(changeOrderStatusInWork(id));
+    dispatch(changeOrderStatusInWork(id, socket));
   };
 
   const denyExecutorHandler = (id) => {
     dispatch(changeOrderCustomerStatusRequested(id));
+
   };
 
   const closeOrderHandler = () => {
@@ -143,6 +212,7 @@ function CardOrder({
             alignItems="center"
           >
             <Button
+              data-btn-approve="data-btn-approve"
               disabled={inWork}
               onClick={() => approveExecutorHandler(id)}
               variant="contained"

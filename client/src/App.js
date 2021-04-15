@@ -9,9 +9,9 @@ import OrderForm from "./components/OrderForm/OrderForm";
 import Services from "./components/Services/Services";
 import AddDog from "./components/DogInfo/AddDog";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signupAC } from "./redux/actionCreators/userAC";
+import { changeOrderCustomerStatusRequestedFromServer, changeStatusExecutorInWorkFromServer, signupAC } from "./redux/actionCreators/userAC";
 import UserAccount from "./components/UserAccount/UserAccount";
 import EditDog from "./components/DogInfo/Edit";
 import Verification from "./components/Verification/Verification";
@@ -31,8 +31,12 @@ import { getDogsAC } from "./redux/actionCreators/dogAC";
 
 
 function App() {
+  
   const dispatch = useDispatch();
   const kindUser = useSelector((state) => state.user.kind);
+
+
+  
 
   useEffect(() => {
     fetch("http://localhost:3001/user/checkAuth", {
@@ -53,6 +57,8 @@ function App() {
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
 
+
+
   return (
     <div className="App">
       <Router>
@@ -60,7 +66,7 @@ function App() {
 
         <Switch>
           <Route exact path="/order/:id">
-            <DetailOrder />
+            <DetailOrder/>
           </Route>
           <Route exact path="/historyOrders">
             <HistoryOrders />
@@ -89,7 +95,7 @@ function App() {
             <CenteredGrid />
           </Route> */}
           <Route path="/account">
-            {kindUser === "Исполнитель" ? <ExecutorAccount /> : <UserAccount />}
+            {kindUser === "Исполнитель" ? <ExecutorAccount/> : <UserAccount />}
           </Route>
           <Route path="/services">
             <Services />

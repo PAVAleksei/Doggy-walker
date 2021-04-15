@@ -4,6 +4,9 @@ const passport = require('passport');
 const express = require('express');
 const sessions = require('express-session');
 const MongoStore = require('connect-mongo');
+const WebSocket = require('ws');
+const http = require('http');
+
 const path = require('path');
 const { connect } = require('mongoose');
 const cors = require('cors');
@@ -15,13 +18,14 @@ const orderRouter = require('./routes/orderRouter');
 const dogRouter = require('./routes/dogRouter');
 const verificationRouter = require('./routes/verificationRouter');
 const { User } = require('./db/models/user.model');
+const { Order } = require('./db/models/order.model');
 
 
 
 const PORT = process.env.PORT ?? 3000;
 
-const map = new Map();
 const app = express();
+const map = new Map();
 
 app.set('cookieName', 'sid');
 // cors
@@ -80,12 +84,101 @@ app.use('/api', orderRouter);
 app.use('/api/v1/dog', dogRouter);
 app.use('/verification', verificationRouter);
 
-// app.use('/api/orders', orderRouter);
+
+
+const server = http.createServer(app);
+
+const wss = new WebSocket.Server({ clientTracking: false, noServer: true });
+
+server.on('upgrade', function (request, socket, head) {
+  console.log('Parsing session from request...');
+  
+
+  sessionParser(request, {}, () => {
+    // console.log(request.session)
+    
+    if (!request.session?.user) {
+      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+      socket.destroy();
+      return;
+    }
+
+    console.log('Session is parsed!');
+
+    wss.handleUpgrade(request, socket, head, function (ws) {
+      wss.emit('connection', ws, request);
+    });
+  });
+});
+
+wss.on('connection', (ws, request) => {
+  const userId = request.session.user;
+
+  map.set(userId, ws);
+
+  ws.on('message', (message) => {
+
+    console.log(message);
+    const parseIncomingMessage = JSON.parse(message);
+
+
+    switch(parseIncomingMessage.type){
+      case 'greeting':
+        break
+
+      case 'approve executor':
+        Order.findById(parseIncomingMessage.payload.message).then((updatedOrder) => {
+          console.log(updatedOrder);
+          for (const [id, clientConnection] of map) {
+            if (clientConnection.readyState === WebSocket.OPEN) {
+              const messageToUsers = {
+                type: 'approve executor',
+                payload: {
+                  order: updatedOrder
+                }
+              }
+              clientConnection.send(JSON.stringify(messageToUsers));
+            }
+          }
+        })
+        break
+
+      case 'send request':
+        Order.findById(parseIncomingMessage.payload.message).then((updatedOrder) => {
+          console.log('updatedorder =========>', updatedOrder);
+          for (const [id, clientConnection] of map) {
+            if (clientConnection.readyState === WebSocket.OPEN) {
+              const messageToUsers = {
+                type: 'send request',
+                payload: {
+                  order: updatedOrder
+                }
+              }
+              clientConnection.send(JSON.stringify(messageToUsers));
+            }
+          }
+        })
+        break
+
+      
+
+      default:
+        break
+    }    
+    
+    
+
+    console.log(`Received message ${message} from user ${userId}`);
+  });
+
+  ws.on('close', function () {
+    map.delete(userId);
+  });
+});
 
 
 
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server started on port ${PORT}.`);
 
   connect(
@@ -100,6 +193,23 @@ app.listen(PORT, () => {
       console.log('Connection to database is successful.');
     },
   );
-})
+});
+
+// app.listen(PORT, () => {
+//   console.log(`Server started on port ${PORT}.`);
+
+//   connect(
+//     process.env.DB_CONNECTION_CLOUD,
+//     {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//       useCreateIndex: true,
+//       useFindAndModify: false,
+//     },
+//     () => {
+//       console.log('Connection to database is successful.');
+//     },
+//   );
+// })
 
 module.exports = app;
