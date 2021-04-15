@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
       const owner = req.user._id;
       const newDog = await Dog.create({ ...req.body.newDog, owner });
       const user = await User.findByIdAndUpdate(owner, { $push: { animal: newDog } });
+      console.log(newDog, 'base');
       res.status(200).json(newDog);
     } catch (error) {
       console.log(error);
