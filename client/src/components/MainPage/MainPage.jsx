@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     padding: theme.spacing(6),
     marginTop: theme.spacing(8),
+    textShadow: '1px 1px 3px #000000, 1px 1px 3px #000000',
   },
   cardMedia: {
     paddingTop: "56.25%",
@@ -56,7 +57,7 @@ function MainPage() {
     <>
       < main >
         <Paper className={classes.mainFeaturesPost}
-          style={{ backgroundImage: `url(https://lapkins.ru/upload/uf/260/26006f98875ee66214d0472c55b76834.jpg)` }}>
+          style={{ backgroundImage: `url(http://sun9-34.userapi.com/c840433/v840433167/25d5f/DzhWLhvmOvc.jpg)` }}>
           <Container fixed>
             <div className={classes.overlay} />
             <Grid container>
@@ -68,14 +69,14 @@ function MainPage() {
                     color="inherit"
                     gutterBottom
                   >
-                    Doggy Walker
+                    DOGGY WALKER
               </Typography>
                   <Typography
                     component="h5"
                     color="inherit"
                     paragraph
                   >
-                    fhfhfhf fhfhfhfh fjufjfjufuf fjufufuf fjfjuf fiuff fufjf fif fjufjf fidb fif dn dif fidididifiufhj ddifjufufr difdifb fkj
+                    Ищите сервис выгула и передержки для вашей собаки в Москве?
               </Typography>
                 </div>
               </Grid>
@@ -88,7 +89,9 @@ function MainPage() {
         <Container maxWidth="md">
           <Typography variant="h2" color="textPrimary" aling="center" gutterBottom>Doggy Walker</Typography>
           <Typography variant="h5" color="textSecondary" aling="center" paragraph>
-            Моими самыми любимыми животными всегда были и останутся собаки. Ни у кого нет таких преданных глаз, как у них. Эти верные и смелые существа могут быть и другом для своего хозяина, и защитником, и даже напарником в работе. А сколько раз собаки спасали людей, отыскивали их под завалами. Приручив собак, люди получили верных спутников и помощников.
+          Ищите сервис выгула и передержки для вашей собаки в Москве?
+          Профессиональная забота о вашем питомце!
+
           </Typography>
 
           <div className={classes.MainButtons}>

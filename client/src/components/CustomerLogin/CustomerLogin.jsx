@@ -10,6 +10,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { SagaSignInAC } from "../../redux/actionCreators/userAC";
 import { useHistory } from "react-router-dom";
+import GoogleButton from 'react-google-button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
       width: "35ch",
     },
   },
+  // img:{
+  //   backgroundImage: `url('https://img-authors.flaticon.com/google.jpg')`,
+  //   backgroundRepeat: 'no-repeat',
+  //   width: '30px'
+  // }
 }));
 
 const CustomerLogin = () => {
@@ -41,8 +47,14 @@ const CustomerLogin = () => {
     }
   };
 
+  const HandleClick = () => {
+    history.push('/customer')
+  }
+  // const googleClickHandle = () => {
+  //   history.push('/customer')
+  // }
   return (
-    <Box m={3}>
+    <Box m={5}>
       <Container>
         <Typography variant="h4">Вход</Typography>
         <Box m={3}>
@@ -88,28 +100,47 @@ const CustomerLogin = () => {
             </Grid>
 
             <Grid>
-              <Box m={3}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  type="submit"
-                >
-                  Вход
-                </Button>
-              </Box>
-            </Grid>
-            <Grid>
-              <Box m={3}>
-                <Button variant="contained" size="large" color="secondary">
-                  <a href="http://localhost:3001/auth/google">Google</a>
-                </Button>
+              <Box m={5}>
+                <Grid container spacing={1} justify="center">
+                  <Grid item>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      size="large"
+                      onClick={HandleClick}
+                    >Регистрация
+                      </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                      type="submit"
+                    >
+                      Войти
+                  </Button>
+                  </Grid>
+
+
+                  <Grid item>
+                    <Button className={classes.img} variant="contained" size="large" color="secondary">
+                    <a href="http://localhost:3001/auth/google">Google</a>
+                    </Button>
+                    {/* <GoogleButton
+  onClick={googleClickHandle}
+                    >
+
+                    </GoogleButton> */}
+                  </Grid>
+                  
+                </Grid>
               </Box>
             </Grid>
           </form>
         </Box>
       </Container>
-    </Box>
+    </Box >
   );
 };
 
