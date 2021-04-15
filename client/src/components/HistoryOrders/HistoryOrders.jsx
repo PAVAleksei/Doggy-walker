@@ -16,23 +16,24 @@ import { signupAC } from "../../redux/actionCreators/userAC";
 import Louder from "../Louder/Louder";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    paddingTop: 10,
-  },
-  item: {
-    display: "flex",
-    justifyContent: "space-between;",
-    alignItems: "center",
-  },
+	root: {
+		flexGrow: 1,
+	},
+	paper: {
+		padding: theme.spacing(1),
+		textAlign: "center",
+		color: theme.palette.text.secondary,
+		paddingTop: 10,
+	},
+	item: {
+		display: "flex",
+		justifyContent: "space-between;",
+		alignItems: "center",
+	},
 }));
 
 function HistoryOrders() {
+
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -43,22 +44,24 @@ function HistoryOrders() {
     // dispatch(setOrdersCustomer()); // заказы заказчика
   }, []);
 
-  useEffect(() => {
-    fetch("http://localhost:3001/user/checkAuth", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((resFromServer) => dispatch(signupAC(resFromServer)));
-  }, []);
 
-  const orders = useSelector((state) => state.user.orders).filter(
-    (el) => !el.closed
-  );
-  const allDogs = useSelector((state) => state.dogs);
+	useEffect(() => {
+		fetch("http://127.0.0.1:3001/user/checkAuth", {
+			credentials: "include",
+		})
+			.then((res) => res.json())
+			.then((resFromServer) => dispatch(signupAC(resFromServer)));
+	}, []);
 
-  const handlerToAccount = () => {
-    history.push("/account");
-  };
+	const orders = useSelector((state) => state.user.orders).filter(
+		(el) => !el.closed
+	);
+	const allDogs = useSelector((state) => state.dogs);
+
+	const handlerToAccount = () => {
+		history.push("/account");
+	};
+
 
   return (
     <>
@@ -135,10 +138,12 @@ function HistoryOrders() {
                       color="primary"
                     >
                       Личный кабинет
+
                     </Button>
-                  </Grid>
-                </Box>
-              </Grid>
+											</Grid>
+										</Box>
+									</Grid>
+
 
               <Grid item xs={8} direction="column">
                 <Grid item>
@@ -166,6 +171,7 @@ function HistoryOrders() {
       )}
     </>
   );
+
 }
 
 export default HistoryOrders;

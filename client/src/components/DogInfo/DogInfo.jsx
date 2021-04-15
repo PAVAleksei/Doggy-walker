@@ -45,7 +45,7 @@ export default function DogInfo({ id, nickname, breed, gender, avatar }) {
   const dispatch = useDispatch()
   const bull = <span className={classes.bullet}>•</span>;
   const dog = useSelector(state => state.user.animal)
-  console.log(dog, 'dog');
+//   console.log(dog, 'dog');
 
   const uploadHandler = async (file) => {
     const formData = new FormData();
@@ -70,7 +70,7 @@ export default function DogInfo({ id, nickname, breed, gender, avatar }) {
         component="label"
       >
         <input onChange={(e) => inputAvatarHandler(e)} accept="image/*" type="file" hidden name="photo" />
-        <Avatar className={classes.big} src={avatar} />
+        <Avatar style={{cursor:'pointer'}} className={classes.big} src={avatar} />
       </Link>
       <CardContent>
         <Typography variant="h6" component="h4">

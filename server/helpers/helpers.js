@@ -7,12 +7,12 @@ const getOrCreateUser = async (telegramId, username) => {
 		console.log('user ---->> ', user);
 		if (user) {
 			user.telegramid = telegramId;
-			console.log(user, '<------- user');
+			// console.log(user, '<------- user');
 			return user;
 		}
 
 	} catch (error) {
-		console.log(error);
+		console.log(error, 'from helpers.js');
 	}
 
 };
