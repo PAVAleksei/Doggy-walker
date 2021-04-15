@@ -23,10 +23,10 @@ function orderReducer(state = [], action) {
         el._id === action.payload._id ? action.payload : el
       );
 
-    case CHANGE_ORDER_STATUS_COMPLETED:
-      return state.map((el) =>
-        el._id === action.payload._id ? action.payload : el
-      );
+    // case CHANGE_ORDER_STATUS_COMPLETED:
+    //   return state.map((el) =>
+    //     el._id === action.payload._id ? action.payload : el
+    //   );
 
     default:
       return state;

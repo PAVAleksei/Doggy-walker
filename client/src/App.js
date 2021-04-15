@@ -24,7 +24,11 @@ import { setOrders, setOrdersCustomer } from "./redux/actionCreators/orderAc";
 import Dog from "./components/DogInfo/Dog";
 import DetailOrder from "./components/DeatailOreder/DetailOrder";
 import HistoryOrders from "./components/HistoryOrders/HistoryOrders";
-import DoneOrder from "./components/DoneOrders/DoneOrders";
+import DoneOrdersList from "./components/DoneOrdersList/DoneOrdersList";
+import { Container } from "@material-ui/core";
+import { Footer } from "./components/Footer/Footer";
+import { getDogsAC } from "./redux/actionCreators/dogAC";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -41,12 +45,19 @@ function App() {
   useEffect(() => {
     dispatch(setOrders()); // все заказы в системе
     // dispatch(setOrdersCustomer()); // заказы заказчика
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
 
   return (
     <div className="App">
       <Router>
         <Header />
+
         <Switch>
           <Route exact path="/order/:id">
             <DetailOrder />
@@ -55,7 +66,7 @@ function App() {
             <HistoryOrders />
           </Route>
           <Route exact path="/doneOrders">
-            <DoneOrder />
+            <DoneOrdersList />
           </Route>
           <Route exact path="/">
             <MainPage />
@@ -102,6 +113,7 @@ function App() {
             <EditUser />
           </Route>
         </Switch>
+        <Footer />
       </Router>
     </div>
   );

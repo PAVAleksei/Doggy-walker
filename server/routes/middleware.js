@@ -1,5 +1,5 @@
 function authenticated(req,res,next) {
-  if (req.session.user.id) {
+  if (req.user._id) {
     return next();
   }
   res.sendStatus(401);

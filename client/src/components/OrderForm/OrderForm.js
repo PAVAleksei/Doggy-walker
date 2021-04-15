@@ -5,6 +5,7 @@ import {
   Grid,
   TextareaAutosize,
   TextField,
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import DateFnsUtils from "@date-io/date-fns";
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      // width: '25ch',
+      // width: '45ch',
     },
   },
   margin: {
@@ -44,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
   address: {
     width: "50ch",
 
+  },
+  input:{
+    maxWidth: '50px',
+    minWidth: '50px'
   }
 }));
 
@@ -57,7 +62,7 @@ function OrderForm() {
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const error = useSelector((state) => state.error);
-  const [address, setAddress] = useState();
+  const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(300);
 
@@ -71,7 +76,6 @@ function OrderForm() {
   const handleDateChange = (date) => {
     // const dateRu = date.toLocaleString('ru-RU');
     const newDate = (new Date(date));
-    console.log(newDate);
     setSelectedDate(newDate);
   };
 
@@ -88,32 +92,43 @@ function OrderForm() {
     
     setError({ status: false, text: "" });
 
-    const addressToServer = { 
-      name: address.value,
-      coordinates: [Number(address.data.geo_lat), Number(address.data.geo_lon)]
-    }
+  console.log('address', address);
 
-     console.log(addressToServer);
 
-    if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000 && description.trim() && addressToServer && curDog && price) {
-      setError({ status: false, text: "" });
+    if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000){
 
-      try {
-        dispatch(addOrderCustomer({ selectedDate, description, addressToServer, curDog, price }))
-          // .then((newOrder) => {
-          //   console.log(newOrder); 
-          //   dispatch(addOrderCustomerFromServer(newOrder))
-            return history.push('/account');
-          // })
-          // .catch(error => {
-          //   setError({status: true, text: 'Для введения заказа необходимо авторизоваться.'})
-          //   return history.push('/customer');
-          // })
-      } catch (error) {
-        return dispatch(
-          setError({ status: true, text: "Не удалось добавить новое задание." })
+      // if (!address) return setError({ status: true, text: "Заполните адрес." });
+
+      if (description.trim() && address && curDog && price) {
+       setError({ status: false, text: "" });
+ 
+        const addressToServer = { 
+          name: address.value,
+          coordinates: [Number(address.data.geo_lat), Number(address.data.geo_lon)]
+        }
+
+       try {
+         dispatch(addOrderCustomer({ selectedDate, description, addressToServer, curDog, price }))
+           // .then((newOrder) => {
+           //   console.log(newOrder); 
+           //   dispatch(addOrderCustomerFromServer(newOrder))
+             return history.push('/account');
+           // })
+           // .catch(error => {
+           //   setError({status: true, text: 'Для введения заказа необходимо авторизоваться.'})
+           //   return history.push('/customer');
+           // })
+       } catch (error) {
+         return dispatch(
+           setError({ status: true, text: "Не удалось добавить новое задание." })
+         );
+       }
+      } else {
+        dispatch(
+          setError({ status: true, text: "Необходимо заполнить все поля." })
         );
       }
+    
     } else {
       dispatch(
         setError({
@@ -125,10 +140,11 @@ function OrderForm() {
   };
 
   return (
+      <Box m={5}>
     <div className={classes.root}>
       <Container>
-        <h3>Оформить заказ</h3>
-        <Box>
+      <Typography variant="h4">Вход</Typography>
+        <Box m={3}>
           <Grid>
             <TextField
               disabled
@@ -142,7 +158,7 @@ function OrderForm() {
             <KeyboardDatePicker
               disableToolbar
               variant="inline"
-              format="MM/dd/yyyy"
+              format="dd/MM/yyyy"
               margin="normal"
               id="date-picker-inline"
               label="Date picker inline"
@@ -168,6 +184,7 @@ function OrderForm() {
           </MuiPickersUtilsProvider>
           <Grid>
             <TextField
+                required
                 id="outlined-select-currency-native"
                 name="curDog"
                 select
@@ -189,13 +206,14 @@ function OrderForm() {
           </Grid>
           <Grid>
 						<Box m={3}>
-						<AddressSuggestions class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart" token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} />
+						<AddressSuggestions className={classes.input}  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart" token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} />
               {/* <AddressSuggestions token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} /> */}
             </Box>
           </Grid>
           <Grid>
             <Box m={3}>
               <TextareaAutosize
+                required
                 className={classes.area}
                 onChange={handleDescriptionChange}
                 value={description}
@@ -207,6 +225,7 @@ function OrderForm() {
           </Grid>
           <Grid>
             <TextField
+              required
               id="standard-required"
               onChange={handlePriceChange}
               value={price}
@@ -220,9 +239,12 @@ function OrderForm() {
             Оформить заказ
           </Button>
         </Box>
-        {error?.status ? <div>{error.text}</div> : ""}
+        <Box color="warning.main">…
+          {error?.status ? <div>{error.text}</div> : ""}
+        </Box>
       </Container>
     </div>
+    </Box>
   );
 }
 

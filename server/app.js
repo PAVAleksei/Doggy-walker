@@ -21,7 +21,13 @@ const currentScene = new SceneGenerator();
 const numberScene = currentScene.genNumberScene();
 const nameScene = currentScene.genNameScene();
 const { getOrCreateUser } = require('./helpers/helpers');
+const { User } = require('./db/models/user.model');
 
+
+
+const PORT = process.env.PORT ?? 3000;
+
+const map = new Map();
 const app = express();
 const bot = new Telegraf(process.env.TOKEN);
 

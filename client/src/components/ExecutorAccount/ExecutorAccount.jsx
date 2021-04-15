@@ -40,6 +40,10 @@ function ExecutorAccount() {
     history.push("/doneOrders");
   };
 
+  useEffect(() => {
+    dispatch(setOrders()); // все заказы в системе
+  }, []);
+
   return (
     <div className={classes.root}>
       <h3>Личный кабинет Исполнителя</h3>
@@ -47,23 +51,23 @@ function ExecutorAccount() {
         <Grid item xs={3}>
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
-          <Box m={1}>
+          <Box m={3}>
             <Button variant="outlined" onClick={handlerHistoryOrders}>
               Текущие заказы
             </Button>
           </Box>
-          <Box m={1}>
+          <Box m={3}>
             <Button variant="outlined" onClick={handlerDoneOrders}>
               Выполненные заказы
             </Button>
           </Box>
-          <Box m={1}>
+          <Box m={3}>
             <Button variant="outlined">Мои отзывы</Button>
           </Box>
         </Grid>
         <Grid item xs={8} direction="column">
           <Grid item>
-            <Paper className={classes.paper}>Все заказы</Paper>
+            <Paper className={classes.paper}>Все открытые заказы</Paper>
             <CardList />
           </Grid>
 

@@ -13,6 +13,7 @@ import {
 } from "../types/usertypes";
 import { ADD_DOG, DOG_AVATAR, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
 import { VERIFICATION_USER } from "../types/verificationUserTypes";
+import { CHANGE_ORDER_STATUS_COMPLETED } from "../types/orderTypes";
 
 function userReducer(state = {}, action) {
   switch (action.type) {
@@ -65,7 +66,7 @@ function userReducer(state = {}, action) {
     case EDIT_DOG:
       return {
         ...state,
-        animal: [action.payload],
+        animal: [...state.animal.map(el => el._id === action.payload._id ? action.payload : el)],
       };
 
     case CHANGE_ORDER_STATUS_IN_WORK:
@@ -88,32 +89,40 @@ function userReducer(state = {}, action) {
         ],
       };
 
-      case CLOSE_ORDER_CUSTOMER:
-        return {
-          ...state,
-          orders: [
-            ...state.orders.map((el) =>
-              el._id === action.payload._id ? action.payload : el
-            ),
-          ],
-        };
+    case CHANGE_ORDER_STATUS_COMPLETED:
+      return {
+        ...state,
+        orders: [
+          ...state.orders.map((el) =>
+            el._id === action.payload._id ? action.payload : el
+          ),
+        ],
+      };
+
+    case CLOSE_ORDER_CUSTOMER:
+      return {
+        ...state,
+        orders: [
+          ...state.orders.map((el) =>
+            el._id === action.payload._id ? action.payload : el
+          ),
+        ],
+      };
 
     case USER_AVATAR:
       return {
-        ...state, photo: [action.payload]
-      }
+        ...state,
+        photo: [action.payload],
+      };
 
     case DOG_AVATAR:
-
-      const avatar = state.animal.find(
-        el => el._id === action.payload.id
-      )
-      avatar.avatar = action.payload.avatar
+      const avatar = state.animal.find((el) => el._id === action.payload.id);
+      avatar.avatar = action.payload.avatar;
 
       return {
         ...state,
-        animal: state.animal.map(el => el._id === avatar._id ? avatar : el)
-      }
+        animal: state.animal.map((el) => (el._id === avatar._id ? avatar : el)),
+      };
 
     default:
       return state;

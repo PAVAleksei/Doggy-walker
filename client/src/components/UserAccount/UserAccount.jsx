@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -9,7 +9,15 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDogsAC } from "../../redux/actionCreators/dogAC";
 import { Box, Button, jssPreset } from "@material-ui/core";
-import { setOrders, setOrdersCustomer } from "../../redux/actionCreators/orderAc";
+import {
+  setOrders,
+  setOrdersCustomer,
+} from "../../redux/actionCreators/orderAc";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,9 +29,79 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     paddingTop: 10,
   },
+  accordeon: {
+    width: "100%",
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
 }));
 
+// let socket = new WebSocket('ws://localhost:3001');
+// let socket = new WebSocket(window.location.origin.replace('http', 'ws'));
+
+// let socket = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx');
+let btnApprove = document.querySelector("[data-btn-approve]");
+
+// btnApprove.onClick = function() {
+//   console.log()
+//   const messageToServer = {
+//     type: 'newMessage',
+//     payload: {
+//       message: value,
+//     },
+//   }
+
+//   socket.send(JSON.stringify(messageToServer));
+
+// };
+
+// function submitHandler() {
+
+//   const messageToServer = {
+//     type: 'newMessage',
+//     payload: {
+//       message: value,
+//     },
+//   }
+
+//   socket.send(JSON.stringify(messageToServer));
+
+// }
+
+// socket.onmessage = function(event) {
+//   const parseMessage = JSON.parse(event.data)
+
+//   switch (parseMessage.type){
+//     case 'greeting':
+
+//     break
+
+//     default:
+//       break
+
+//   }
+
+// };
+
+// socket.onclose = function(event) {
+//   if (event.wasClean) {
+//     alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+//   } else {
+//     // например, сервер убил процесс или сеть недоступна
+//     // обычно в этом случае event.code 1006
+//     alert('[close] Соединение прервано');
+//   }
+// };
+
+// socket.onerror = function(error) {
+//   alert(`[error] ${error.message}`);
+// };
+
 export default function UserAccount() {
+  const [messages, setMessages] = useState([]);
+
   const classes = useStyles();
 
   const history = useHistory();
@@ -31,13 +109,12 @@ export default function UserAccount() {
   const animalByUser = useSelector((state) => state.user.animal);
   const orders = useSelector((state) => state.user.orders);
   // const orders = useSelector(state => state.allOrders);
-  
+
   useEffect(() => {
     fetch("http://localhost:3001/api/v1/dog")
       .then((response) => response.json())
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
-
 
   const addOrderFormHandler = () => {
     history.push("/order");
@@ -45,7 +122,7 @@ export default function UserAccount() {
 
   const addDogFormHandler = () => {
     history.push("/addDog");
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -55,33 +132,69 @@ export default function UserAccount() {
         <Grid item xs={3}>
           <Paper className={classes.paper}>Мои данные</Paper>
           <Info />
-          <Box m={1}>
-            <Button variant="outlined" color="primary">Пополнить счет</Button>
+          <Box m={3}>
+            <Button variant="outlined" color="primary">
+              Пополнить счет
+            </Button>
           </Box>
-          <Box m={1}>
+          <Box m={3}>
             <Button variant="outlined">Мои заказы</Button>
           </Box>
-          <Box m={1}>
+          <Box m={3}>
             <Button variant="outlined">Мои отзывы</Button>
-          </Box>
-          <Box m={1}>
-            {/* <Link to="/addAnimal" >Добавить питомца</Link> */}
-            <Button variant="outlined" onClick={addDogFormHandler}>Добавить питомца</Button>
           </Box>
           <Box m={1}>
             <Button variant="outlined" onClick={addOrderFormHandler}>
               Добавить заказ
             </Button>
           </Box>
+          <Box m={1}>
+            <Button variant="outlined" onClick={addDogFormHandler}>Добавить питомца</Button>
+          </Box>
         </Grid>
 
         <Grid item xs={7} direction="column">
-          <Grid item>
+          <div className={classes.accordeon}>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography className={classes.heading}>Мои питомцы</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid item container spacing={2} direction="row">
+                  {animalByUser?.length ? (
+                    animalByUser?.map((dog) => (
+                      <Grid item xs={12} sm={3}>
+                        <DogInfo
+                          key={dog._id}
+                          id={dog._id}
+                          nickname={dog.nickname}
+                          breed={dog.breed}
+                          gender={dog.gender}
+                          weight={dog.weight}
+                          pullsTheLeash={dog.pullsTheLeash}
+                          contactWithOther={dog.contactWithOther}
+                          phobia={dog.phobia}
+                          letGo={dog.letGo}
+                          avatar={dog.avatar}
+                        />
+                      </Grid>
+                    ))
+                  ) : (
+                    <p>Пока нет сохраненных питомцев</p>
+                  )}
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+
+          {/* <Grid item>
             <Paper className={classes.paper}>Мои питомцы</Paper>
             <Box m={3}>
               <Grid item container spacing={2} direction="row">
-                {/* <Box m={4}> */}
-
                 {animalByUser?.length ? (
                   animalByUser?.map((dog) => (
                     <Grid item xs={12} sm={3}>
@@ -103,17 +216,13 @@ export default function UserAccount() {
                 ) : (
                   <p>Пока нет сохраненных питомцев</p>
                 )}
-
-                {/* </Box> */}
               </Grid>
             </Box>
-          </Grid>
+          </Grid> */}
           <Grid item>
             <Paper className={classes.paper}>Текущие заказы</Paper>
             <Box m={2}>
               <Grid item container spacing={2} direction="row">
-                {/* <Box m={4}> */}
-
                 {orders?.length ? (
                   orders?.map((order) => (
                     <Grid item xs={12} sm={3}>
@@ -137,7 +246,6 @@ export default function UserAccount() {
                 ) : (
                   <p>Нет заказов</p>
                 )}
-                {/* </Box> */}
               </Grid>
             </Box>
           </Grid>
