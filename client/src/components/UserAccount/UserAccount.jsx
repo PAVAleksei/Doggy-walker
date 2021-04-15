@@ -104,13 +104,14 @@ let btnApprove = document.querySelector("[data-btn-approve]");
 
 export default function UserAccount() {
 	const [messages, setMessages] = useState([]);
-	const [load, setLoad] = useState(false);
+	const [load, setLoad] = useState(true);
 
 	const classes = useStyles();
 
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const animalByUser = useSelector((state) => state.user.animal);
+  console.log(animalByUser, 'animalByUser');
 	const orders = useSelector((state) => state.user.orders);
 	// const orders = useSelector(state => state.allOrders);
 
@@ -119,18 +120,18 @@ export default function UserAccount() {
 			.then((response) => response.json())
 			.then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
 	}, []);
-	useEffect(() => {
-		fetch("http://localhost:3001/user/checkAuth", {
-			credentials: "include",
-		})
-			.then((res) => res.json())
-			.then((resFromServer) => dispatch(signupAC(resFromServer)))
-			.then(
-				setTimeout(() => {
-					setLoad(true);
-				}, 200)
-			);
-	}, []);
+	// useEffect(() => {
+	// 	fetch("http://localhost:3001/user/checkAuth", {
+	// 		credentials: "include",
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((resFromServer) => dispatch(signupAC(resFromServer)))
+	// 		.then(
+	// 			setTimeout(() => {
+	// 				setLoad(true);
+	// 			}, 200)
+	// 		);
+	// }, []);
 
 	const addOrderFormHandler = () => {
 		history.push("/order");
