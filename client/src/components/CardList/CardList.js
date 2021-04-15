@@ -8,6 +8,7 @@ import {
 } from "../../redux/actionCreators/orderAc";
 import ExecutorCardOrder from "../ExecutorCardOrder/ExecutorCardOrder";
 import { makeStyles } from "@material-ui/core/styles";
+import Louder from "../Louder/Louder";
 
 const useStyles = makeStyles({
   all: {
@@ -25,7 +26,7 @@ function CardList() {
   const classes = useStyles();
 
   return (
-    <Box m={3}>
+    <Box m={1.5}>
       <Grid item container spacing={2} direction="row">
         {allOrders?.length ? (
           allOrders.map((order) => (
@@ -42,8 +43,12 @@ function CardList() {
               />
             </Grid>
           ))
-        ) : (
+        ) : allOrders.length === 0 ? (
           <p>Нет заказов</p>
+        ) : (
+          <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
+            <Louder />
+          </div>
         )}
       </Grid>
     </Box>

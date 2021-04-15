@@ -19,7 +19,7 @@ import { getDogsAC } from "../../redux/actionCreators/dogAC";
 const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
-    border: "1px solid #1C3E6A",
+    // border: "1px solid #1C3E6A",
     width: 450,
     height: 470,
     marginBottom: 40,
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     height: 190,
   },
   pos: {
-    margin: 0,
+    margin: 2,
   },
   profile: {
     display: "flex",
@@ -56,20 +56,27 @@ const DoneOrderItem = ({
   let history = useHistory();
   let dispatch = useDispatch();
 
+  useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
+
   const allDogs = useSelector((state) => state.dogs);
+  const imgDog = allDogs.find((el) => el._id == dogId).avatar;
 
   return (
-    <Box className={classes.pos} m={4}>
+    <Box className={classes.pos} m={1}>
       <Card className={classes.root}>
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            // image={currDog.avatar}
+            image={imgDog}
             title="Contemplative Reptile"
           />
           <CardContent className={classes.profile}>
             <Typography gutterBottom component="h2">
-              Дата выгула:{new Date(date).toLocaleString("ru-RU")}
+              Дата выгула: {new Date(date).toLocaleString("ru-RU")}
             </Typography>
             {/* <Typography variant="body2" color="textSecondary" component="p">
                 Описание: {description}

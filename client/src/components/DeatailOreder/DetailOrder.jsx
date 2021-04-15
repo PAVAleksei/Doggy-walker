@@ -27,6 +27,7 @@ import {
   addOrderFromExecutorThunk,
 } from "../../redux/actionCreators/userAC";
 import { getDogsAC } from "../../redux/actionCreators/dogAC";
+import Louder from "../Louder/Louder";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 10,
   },
   rootDetail: {
-    border: "1px solid #1C3E6A",
+    // border: "1px solid #1C3E6A",
     width: 480,
     height: 600,
     display: "flex",
@@ -67,6 +68,7 @@ const DetailOrder = () => {
   const [dogId, setDogId] = useState("");
   const [curDog, setCurDog] = useState(null);
   const [curDogAvatat, setCurDogAvatat] = useState(null);
+  const [load, setLoad] = useState(true);
   let { id } = useParams();
 
   const allOrders = useSelector((state) => state.allOrders);
@@ -107,97 +109,108 @@ const DetailOrder = () => {
 
       console.log(currentDog.avatar);
       setCurDogAvatat(currentDog.avatar);
+      // setTimeout(() => {
+      //   setLoad(true);
+      // }, 300);
     }
   }, [allOrders, userOrders]);
 
   return (
-    <div className={classes.root}>
-      <h3>Подробная информация о заказе</h3>
+    <>
+      {curOrder && load ? (
+        <div className={classes.root}>
+          <h3>Подробная информация о заказе</h3>
 
-      {curOrder && (
-        <Grid container spacing={3} direction="row">
-          <Grid item xs={3}>
-            <Paper className={classes.paper}>Мои данные</Paper>
-            <Info />
-            <Box m={3}>
-              <Button variant="outlined" onClick={handlerHistoryOrders}>
-                Мои текущие заказы
-              </Button>
-            </Box>
-            <Box m={3}>
-              <Button variant="outlined">Мои отзывы</Button>
-            </Box>
-            <Box m={5}>
-              <Grid>
-                <Button
-                  onClick={() => handlerToAccount()}
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                >
-                  Личный кабинет
-                </Button>
-              </Grid>
-            </Box>
-          </Grid>
-          <Grid item xs={8} direction="column">
-            <Grid item>
-              <Paper className={classes.paper}>Информация о заказе</Paper>
-              <Box className={classes.pos} m={1.5}>
-                <Card className={(classes.rootDetail, classes.detail)}>
-                  <CardActionArea>
-                    <CardMedia
-                      className={classes.media}
-                      image={curDogAvatat}
-                      title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom component="h2">
-                        Запланированная дата:&nbsp;
-                        {new Date(curOrder.date).toLocaleString("ru-RU")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                        variant="h6"
-                      >
-                        Комментарии от заказчика: {curOrder.description}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Адрес: {curOrder.address.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Стоимость: {curOrder.price} рублей
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions classes={classes.btn}>
+          <Box m={3}>
+            <Grid container spacing={3} direction="row">
+              <Grid item xs={3}>
+                <Paper className={classes.paper}>Мои данные</Paper>
+                <Info />
+                <Box m={3}>
+                  <Button variant="outlined" onClick={handlerHistoryOrders}>
+                    Мои текущие заказы
+                  </Button>
+                </Box>
+                <Box m={3}>
+                  <Button variant="outlined">Мои отзывы</Button>
+                </Box>
+                <Box m={5}>
+                  <Grid>
                     <Button
+                      onClick={() => handlerToAccount()}
                       variant="contained"
-                      disabled={curOrder.requested}
                       size="large"
                       color="primary"
-                      onClick={() => sendRequestHandler(id)}
                     >
-                      Подать заявку
+                      Личный кабинет
                     </Button>
-                  </CardActions>
-                </Card>
-              </Box>
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={8} direction="column">
+                <Grid item>
+                  <Paper className={classes.paper}>Информация о заказе</Paper>
+                  <Box className={classes.pos} m={1.5}>
+                    <Card className={(classes.rootDetail, classes.detail)}>
+                      <CardActionArea>
+                        <CardMedia
+                          className={classes.media}
+                          image={curDogAvatat}
+                          title="Contemplative Reptile"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom component="h2">
+                            Запланированная дата:&nbsp;
+                            {new Date(curOrder.date).toLocaleString("ru-RU")}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                            variant="h6"
+                          >
+                            Комментарии от заказчика: {curOrder.description}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                          >
+                            Адрес: {curOrder.address.name}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                          >
+                            Стоимость: {curOrder.price} рублей
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                      <CardActions classes={classes.btn}>
+                        <Button
+                          variant="contained"
+                          disabled={curOrder.requested}
+                          size="large"
+                          color="primary"
+                          onClick={() => sendRequestHandler(id)}
+                        >
+                          Подать заявку
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
+          </Box>
+        </div>
+      ) : (
+        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
+          <Louder />
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -96,7 +96,7 @@ export default function MultilineTextFields() {
             />
             <TextField
               id="outlined-textarea"
-              label="Контакт с другими собаками"
+              label="Контакт с животными"
               name="contactWithOther"
               multiline
               variant="outlined"

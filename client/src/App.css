@@ -1,5 +1,17 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+  padding-top: 64px;
+  /* min-height: 100%; */
 }
 
 .App-logo {
@@ -36,3 +48,4 @@
     transform: rotate(360deg);
   }
 }
+

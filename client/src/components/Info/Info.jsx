@@ -13,6 +13,7 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  Box,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,8 +23,8 @@ const useStyles = makeStyles({
   root: {
     // minWidth: 175,
     // maxWidth: 175,
-    margin: 10,
-    paddingTop: 7,
+   //  margin: 10,
+    paddingTop: 35,
   },
   bullet: {
     display: "inline-block",
@@ -36,7 +37,7 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-  big: {
+	big: {
     height: 130,
     width: 130,
     display: "inline-block",
@@ -64,13 +65,11 @@ export default function Info() {
 
 
   return (
+    <Box m={1}>
     <Card className={classes.root}>
-      <Link
-        variant="contained"
-        component="label"
-      >
+      <Link to="#" variant="contained" component="label" >
         <input onChange={(e) => inputAvatarHandler(e)} accept="image/*" type="file" hidden name="photo" />
-        <Avatar className={classes.big} src={user?.photo} />
+        <Avatar style={{cursor:'pointer'}} className={classes.big} src={user?.photo} />
       </Link>
       <CardContent>
         <Typography variant="h6" component="h4" gutterBottom>
@@ -80,14 +79,16 @@ export default function Info() {
           {user.email}
         </Typography>
         <Typography className={classes.title} color="textSecondary">
-          Тип: {user.kind}
+          Вы: {user.kind}
         </Typography>
-      </CardContent>
+		</CardContent>
+			  
       <CardActions>
         <Link to={`/user/${user.firstname}${user.lastname}`}>
           <EditIcon className={classes.posi} />
         </Link>
       </CardActions>
     </Card>
+    </Box>
   );
 }

@@ -11,6 +11,9 @@ import CardList from "../CardList/CardList";
 import { useHistory } from "react-router";
 import HistoryOrderItem from "../HistoryOrderItem/HistoryOrderItem";
 import DoneOrderItem from "../DoneOrderItem/DoneOrderItem";
+import { signupAC } from "../../redux/actionCreators/userAC";
+import Louder from "../Louder/Louder";
+import { getDogsAC } from "../../redux/actionCreators/dogAC";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,73 +35,135 @@ const useStyles = makeStyles((theme) => ({
 function DoneOrders() {
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const orders = useSelector((state) => state.user.orders).filter(
     (el) => el.closed
   );
+  ///возможно прблема из-за него
+  useEffect(() => {
+    fetch("http://localhost:3001/user/checkAuth", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((resFromServer) => dispatch(signupAC(resFromServer)));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
 
   const handlerToAccount = () => {
     history.push("/account");
   };
 
   return (
-    <div className={classes.root}>
-      <h3>Выполненные заказы Исполнителя</h3>
-      <Grid container spacing={3} direction="row">
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>Мои данные</Paper>
-          <Info />
-          <Box m={5}>
-            <Grid>
-              <Button
-                onClick={() => handlerToAccount()}
-                variant="contained"
-                size="large"
-                color="primary"
-              >
-                Личный кабинет
-              </Button>
-            </Grid>
-          </Box>
-        </Grid>
-
-        <Grid item xs={8} direction="column">
-          <Grid item>
-            <Paper className={classes.paper}>История заявок</Paper>
-            <Box m={5}>
-              <Grid
-                item
-                container
-                spacing={2}
-                direction="row"
-                className={classes.item}
-              >
-                {orders.length ? (
-                  orders.map((order) => (
-                    <DoneOrderItem
-                      key={order._id}
-                      description={order.description}
-                      date={order.date}
-                      price={order.price}
-                      address={order.address.name}
-                      requested={order.requested}
-                      order={order}
-                      inWork={order.inWork}
-                      completed={order.completed}
-                      closed={order.closed}
-                      id={order._id}
-                      dogId={order.dogId}
-                    />
-                  ))
-                ) : (
-                  <p>Нет выполненных заказов</p>
-                )}
+    <>
+      {orders.length > 0 ? (
+        <Box m={3}>
+          <div className={classes.root}>
+            <h3>Выполненные заказы Исполнителя</h3>
+            <Grid container spacing={3} direction="row">
+              <Grid item xs={3}>
+                <Paper className={classes.paper}>Мои данные</Paper>
+                <Info />
+                <Box m={5}>
+                  <Grid>
+                    <Button
+                      onClick={() => handlerToAccount()}
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                    >
+                      Личный кабинет
+                    </Button>
+                  </Grid>
+                </Box>
               </Grid>
-            </Box>
-          </Grid>
-        </Grid>
-      </Grid>
-    </div>
+
+              <Grid item xs={8} direction="column">
+                <Grid item>
+                  <Paper className={classes.paper}>История заявок</Paper>
+                  <Box m={5}>
+                    <Grid
+                      item
+                      container
+                      spacing={2}
+                      direction="row"
+                      className={classes.item}
+                    >
+                      {orders.map((order) => (
+                        <DoneOrderItem
+                          key={order._id}
+                          description={order.description}
+                          date={order.date}
+                          price={order.price}
+                          address={order.address.name}
+                          requested={order.requested}
+                          order={order}
+                          inWork={order.inWork}
+                          completed={order.completed}
+                          closed={order.closed}
+                          id={order._id}
+                          dogId={order.dogId}
+                        />
+                      ))}
+                    </Grid>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </div>
+        </Box>
+      ) : orders.length === 0 ? (
+        <Box m={3}>
+          <div className={classes.root}>
+            <h3>Выполненные заказы Исполнителя</h3>
+            <Grid container spacing={3} direction="row">
+              <Grid item xs={3}>
+                <Paper className={classes.paper}>Мои данные</Paper>
+                <Info />
+                <Box m={5}>
+                  <Grid>
+                    <Button
+                      onClick={() => handlerToAccount()}
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                    >
+                      Личный кабинет
+                    </Button>
+                  </Grid>
+                </Box>
+              </Grid>
+
+              <Grid item xs={8} direction="column">
+                <Grid item>
+                  <Paper className={classes.paper}>История заявок</Paper>
+                  <Box m={5}>
+                    <Grid
+                      item
+                      container
+                      spacing={2}
+                      direction="row"
+                      className={classes.item}
+                    >
+                      <p>Нет выполненных заказов</p>
+                    </Grid>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </div>
+        </Box>
+      ) : (
+        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
+          <Louder />
+        </div>
+      )}
+    </>
   );
 }
 

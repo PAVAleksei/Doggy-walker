@@ -17,7 +17,7 @@ import { useEffect } from "react";
 const useStyles = makeStyles({
   root: {
     // maxWidth: 345,
-    border: "1px solid #1C3E6A",
+    // border: "1px solid #1C3E6A",
     // width: 340,
     height: 440,
     display: "flex",

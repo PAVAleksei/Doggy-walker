@@ -214,6 +214,7 @@ export const addNewDogFetch = (newDog) => async (dispatch) => {
     body: JSON.stringify({ newDog }),
   });
   const responseFromServ = await response.json();
+  console.log(responseFromServ, 'new dog');
   dispatch(addDogAC(responseFromServ));
 };
 
@@ -313,3 +314,5 @@ export const closeOrderCustomerFromServer = (updatedOrder) => {
     payload: updatedOrder,
   };
 };
+
+

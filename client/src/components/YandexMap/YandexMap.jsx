@@ -30,7 +30,7 @@ function YandexMap() {
 
 	return (
 		<YMaps query={{ lang: 'ru_RU', ns: "use-load-option", apikey: key }}>
-			<Map width='100%' height='300px' defaultState={{
+			<Map width='100%' height='398px' defaultState={{
 				center: myAddress,
 				zoom: 13,
 			}} >
@@ -47,8 +47,8 @@ function YandexMap() {
 				<GeolocationControl options={{ float: 'left' }} />
 				<RouteButton instanceRef={ref => {
 					ref?.routePanel?.state.set({
-						from: "5-й Донской проезд, 4",
-						to: myAddress,
+						from: "ул Вавилова, д 1",
+						to: "",
 						type: "auto"
 					})
 				}}

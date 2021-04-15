@@ -9,6 +9,7 @@ const initState = {
 		orders: [],
 		animal: [],
 		district: [],
+		telegram: "",
 	},
 	dogs: [],
 	dog: {},
