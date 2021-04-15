@@ -5,6 +5,7 @@ import {
   Grid,
   TextareaAutosize,
   TextField,
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import DateFnsUtils from "@date-io/date-fns";
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      // width: '25ch',
+      // width: '45ch',
     },
   },
   margin: {
@@ -44,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
   address: {
     width: "50ch",
 
+  },
+  input:{
+    maxWidth: '50px',
+    minWidth: '50px'
   }
 }));
 
@@ -135,10 +140,11 @@ function OrderForm() {
   };
 
   return (
+      <Box m={5}>
     <div className={classes.root}>
       <Container>
-        <h3>Оформить заказ</h3>
-        <Box>
+      <Typography variant="h4">Вход</Typography>
+        <Box m={3}>
           <Grid>
             <TextField
               disabled
@@ -152,7 +158,7 @@ function OrderForm() {
             <KeyboardDatePicker
               disableToolbar
               variant="inline"
-              format="MM/dd/yyyy"
+              format="dd/MM/yyyy"
               margin="normal"
               id="date-picker-inline"
               label="Date picker inline"
@@ -200,7 +206,7 @@ function OrderForm() {
           </Grid>
           <Grid>
 						<Box m={3}>
-						<AddressSuggestions class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart" token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} />
+						<AddressSuggestions className={classes.input}  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart" token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} />
               {/* <AddressSuggestions token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} /> */}
             </Box>
           </Grid>
@@ -238,6 +244,7 @@ function OrderForm() {
         </Box>
       </Container>
     </div>
+    </Box>
   );
 }
 

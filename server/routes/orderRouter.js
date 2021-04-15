@@ -1,8 +1,12 @@
+require('dotenv').config();
 const router = require("express").Router();
 const authenticated = require("./middleware");
 const { Order } = require("../db/models/order.model");
 const { Dog } = require("../db/models/dog.model");
 const { User } = require("../db/models/user.model");
+const Telegraf = require('telegraf');
+
+const bot = new Telegraf(process.env.TOKEN);
 
 // все заказы /api/orders
 
@@ -50,11 +54,11 @@ router.patch("/orders/requested/:id", async (req, res) => {
         {
           requested: !currOrder.requested,
           executorId: userId,
-          status: "Найден исполнитель",
+          status: 'Найден исполнитель',
         },
         {
           new: true,
-        }
+        },
       );
       return res.json(newOrder);
     }
@@ -113,7 +117,18 @@ router.patch("/orders/inwork/:id", async (req, res) => {
       {
         new: true,
       }
-    );
+		);
+		
+		//в orders: executorId:607717444f83237b2710f1dc в users: telegramid:636932605
+
+		const executerUserOfCurrentOrder = User.findById(currOrder.executorId)
+		console.log(executerUserOfCurrentOrder);
+_
+		bot.telegram.sendMessage(
+			chat_id=Number(executerUserOfCurrentOrder.telegramid),
+			text=`Заказ был подтвержден: ${currOrder.description} по адресу:📍${order.address.name} \n http://127.0.0.1:3000/order/${order._id}`);
+		
+
     return res.json(newOrder);
   } catch (error) {
     console.log("Error to update order|inWork| to true");
@@ -214,11 +229,23 @@ router.post("/customer/orders", async (req, res) => {
         (el) => el._id
       );
 
-      const user = await User.findByIdAndUpdate(userId, { orders: ordersId });
+			const user = await User.findByIdAndUpdate(userId, { orders: ordersId });
 
-      return res.json(order);
+			const allExecuterUsers = await User.find({ kind: 'Исполнитель' });
+
+			console.log(allExecuterUsers[24].telegramid);
+
+		allExecuterUsers.forEach(user => {
+			bot.telegram.sendMessage(
+				chat_id=Number(user.telegramid),
+				text=`Появился новый заказ: ${order.description} по адресу:📍${order.address.name} \n http://127.0.0.1:3000/order/${order._id}`);
+			})
+			// http://localhost:3000/order/${order._id}
+			
+			return res.json(order);
+
     } catch (error) {
-      console.log("error");
+      console.log(error);
       return res.sendStatus(500);
     }
   } else {

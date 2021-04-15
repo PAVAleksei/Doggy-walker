@@ -143,15 +143,13 @@ export default function UserAccount() {
           <Box m={3}>
             <Button variant="outlined">Мои отзывы</Button>
           </Box>
-          <Box m={3}>
-            <Button variant="outlined" onClick={addDogFormHandler}>
-              Добавить питомца
-            </Button>
-          </Box>
-          <Box m={3}>
+          <Box m={1}>
             <Button variant="outlined" onClick={addOrderFormHandler}>
               Добавить заказ
             </Button>
+          </Box>
+          <Box m={1}>
+            <Button variant="outlined" onClick={addDogFormHandler}>Добавить питомца</Button>
           </Box>
         </Grid>
 

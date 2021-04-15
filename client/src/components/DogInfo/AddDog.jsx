@@ -120,13 +120,7 @@ export default function MultilineTextFields() {
               multiline
               variant="outlined"
             />
-            <TextField
-              id="outlined-textarea"
-              label="Фото"
-              name="avatar"
-              multiline
-              variant="outlined"
-            />
+            
           </div>
         </Box>
         <Box m={3}>

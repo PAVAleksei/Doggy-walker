@@ -29,7 +29,7 @@ export const Footer = () => {
       <Box m={3}>
 
         <Typography variant="h6" aling="center" gutterBottom>
-          И помни, собака - друг человека!
+          
     </Typography>
       </Box>
       <BottomNavigation
