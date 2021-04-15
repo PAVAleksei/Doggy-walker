@@ -23,8 +23,8 @@ const useStyles = makeStyles({
   root: {
     // minWidth: 175,
     // maxWidth: 175,
-    margin: 10,
-    paddingTop: 15,
+   //  margin: 10,
+    paddingTop: 35,
   },
   bullet: {
     display: "inline-block",
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-  big: {
+	big: {
     height: 130,
     width: 130,
     display: "inline-block",
@@ -65,14 +65,11 @@ export default function Info() {
 
 
   return (
-    <Box m={1.5}>
+    <Box m={1}>
     <Card className={classes.root}>
-      <Link
-        variant="contained"
-        component="label"
-      >
+      <Link to="#" variant="contained" component="label" >
         <input onChange={(e) => inputAvatarHandler(e)} accept="image/*" type="file" hidden name="photo" />
-        <Avatar className={classes.big} src={user?.photo} />
+        <Avatar style={{cursor:'pointer'}} className={classes.big} src={user?.photo} />
       </Link>
       <CardContent>
         <Typography variant="h6" component="h4" gutterBottom>
@@ -84,7 +81,8 @@ export default function Info() {
         <Typography className={classes.title} color="textSecondary">
           Вы: {user.kind}
         </Typography>
-      </CardContent>
+		</CardContent>
+			  
       <CardActions>
         <Link to={`/user/${user.firstname}${user.lastname}`}>
           <EditIcon className={classes.posi} />
