@@ -13,6 +13,7 @@ import HistoryOrderItem from "../HistoryOrderItem/HistoryOrderItem";
 import DoneOrderItem from "../DoneOrderItem/DoneOrderItem";
 import { signupAC } from "../../redux/actionCreators/userAC";
 import Louder from "../Louder/Louder";
+import { getDogsAC } from "../../redux/actionCreators/dogAC";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,13 +40,19 @@ function DoneOrders() {
   const orders = useSelector((state) => state.user.orders).filter(
     (el) => el.closed
   );
-
+  ///возможно прблема из-за него
   useEffect(() => {
     fetch("http://localhost:3001/user/checkAuth", {
       credentials: "include",
     })
       .then((res) => res.json())
       .then((resFromServer) => dispatch(signupAC(resFromServer)));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
 
   const handlerToAccount = () => {
@@ -55,39 +62,39 @@ function DoneOrders() {
   return (
     <>
       {orders.length > 0 ? (
-        orders.map((order) => (
-          <Box m={3}>
-            <div className={classes.root}>
-              <h3>Выполненные заказы Исполнителя</h3>
-              <Grid container spacing={3} direction="row">
-                <Grid item xs={3}>
-                  <Paper className={classes.paper}>Мои данные</Paper>
-                  <Info />
-                  <Box m={5}>
-                    <Grid>
-                      <Button
-                        onClick={() => handlerToAccount()}
-                        variant="contained"
-                        size="large"
-                        color="primary"
-                      >
-                        Личный кабинет
-                      </Button>
-                    </Grid>
-                  </Box>
-                </Grid>
+        <Box m={3}>
+          <div className={classes.root}>
+            <h3>Выполненные заказы Исполнителя</h3>
+            <Grid container spacing={3} direction="row">
+              <Grid item xs={3}>
+                <Paper className={classes.paper}>Мои данные</Paper>
+                <Info />
+                <Box m={5}>
+                  <Grid>
+                    <Button
+                      onClick={() => handlerToAccount()}
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                    >
+                      Личный кабинет
+                    </Button>
+                  </Grid>
+                </Box>
+              </Grid>
 
-                <Grid item xs={8} direction="column">
-                  <Grid item>
-                    <Paper className={classes.paper}>История заявок</Paper>
-                    <Box m={5}>
-                      <Grid
-                        item
-                        container
-                        spacing={2}
-                        direction="row"
-                        className={classes.item}
-                      >
+              <Grid item xs={8} direction="column">
+                <Grid item>
+                  <Paper className={classes.paper}>История заявок</Paper>
+                  <Box m={5}>
+                    <Grid
+                      item
+                      container
+                      spacing={2}
+                      direction="row"
+                      className={classes.item}
+                    >
+                      {orders.map((order) => (
                         <DoneOrderItem
                           key={order._id}
                           description={order.description}
@@ -102,19 +109,15 @@ function DoneOrders() {
                           id={order._id}
                           dogId={order.dogId}
                         />
-                      </Grid>
-                    </Box>
-                  </Grid>
+                      ))}
+                    </Grid>
+                  </Box>
                 </Grid>
               </Grid>
-            </div>
-          </Box>
-        ))
+            </Grid>
+          </div>
+        </Box>
       ) : orders.length === 0 ? (
-        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
-          <Louder />
-        </div>
-      ) : (
         <Box m={3}>
           <div className={classes.root}>
             <h3>Выполненные заказы Исполнителя</h3>
@@ -155,6 +158,10 @@ function DoneOrders() {
             </Grid>
           </div>
         </Box>
+      ) : (
+        <div style={{ paddingTop: "130px", paddingLeft: "80px" }}>
+          <Louder />
+        </div>
       )}
     </>
   );
