@@ -241,17 +241,6 @@ try {
 				return res.sendStatus(500);
 			}
 		}
-
-		setTimeout(() => {
-			try {
-				const order = closeFunc();
-				return res.json(order);
-			} catch (error) {
-				console.log("Error to update order|closed| to true by SetTimeout");
-				return res.sendStatus(500);
-			}
-			// }, 4*60*60*1000);
-		}, 60 * 1000);
 	}
 });
 
@@ -313,17 +302,15 @@ router.post("/customer/orders", async (req, res) => {
 
 // edit
 router.put("/customer/orders", async (req, res) => {
-	try {
-		const { id, editValue } = req.body;
-		await Order.updateOne({ _id: id }, { $set: { task: editValue } });
-		const updatedOrder = await Order.findById(id);
+  try {
+    const { id, editValue } = req.body;
+    await Order.updateOne({ _id: id }, { $set: { task: editValue } });
+    const updatedOrder = await Order.findById(id);
 
-		// setTimeout(() => {
-		return res.json(updatedOrder);
-		// }, 500)
-	} catch (error) {
-		return res.sendStatus(501);
-	}
+    return res.json(updatedOrder);
+  } catch (error) {
+    return res.sendStatus(501);
+  }
 });
 
 router.patch("/customer/orders", async (req, res) => {
