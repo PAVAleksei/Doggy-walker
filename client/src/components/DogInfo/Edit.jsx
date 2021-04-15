@@ -1,19 +1,18 @@
-import React, { useEffect, useRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import { Box, Button, FormControl } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDogAC } from '../../redux/actionCreators/dogAC';
-import { useHistory } from 'react-router';
-import { useParams } from 'react-router-dom';
-import { editDogFetch } from '../../redux/actionCreators/userAC';
+import React, { useEffect, useRef } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import { Box, Button, FormControl } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { getDogAC } from "../../redux/actionCreators/dogAC";
+import { useHistory } from "react-router";
+import { useParams } from "react-router-dom";
+import { editDogFetch } from "../../redux/actionCreators/userAC";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& .MuiTextField-root': {
+    "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: '25ch',
-
+      width: "25ch",
     },
   },
 }));
@@ -23,15 +22,17 @@ export default function EditDog() {
   const formRef = useRef(null);
   const history = useHistory();
   const dispatch = useDispatch();
-  const {id} = useParams()
+  const { id } = useParams();
 
-  const dog = useSelector(state => state.dog)
+  const allDog = useSelector((state) => state.dogs);
+  const currDog = allDog.find((el) => el._id == id);
+  console.log("currDog", currDog);
 
   useEffect(() => {
     fetch(`http://localhost:3001/api/v1/dog/${id}`)
-    .then(response => response.json())
-    .then(responseFromServer => dispatch(getDogAC(responseFromServer)))
-  }, [])
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogAC(responseFromServer)));
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -42,7 +43,7 @@ export default function EditDog() {
     if (
       Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
     ) {
-      dispatch(editDogFetch(valuesOfFields, dog._id));
+      dispatch(editDogFetch(valuesOfFields, currDog._id));
 
       formRef.current.reset();
       history.push("/account");
@@ -60,23 +61,22 @@ export default function EditDog() {
       >
         <Box m={3}>
           <div>
-
             <TextField
               id="outlined-multiline"
-              defaultValue={dog.nickname}
+              defaultValue={currDog.nickname}
               label="Имя питомца"
               name="nickname"
               multiline
               rowsMax={4}
               variant="outlined"
             />
-          
+
             <TextField
               id="outlined-textarea"
               label="Порода"
               name="breed"
               multiline
-              defaultValue={dog.breed}
+              defaultValue={currDog.breed}
               variant="outlined"
             />
             <TextField
@@ -84,7 +84,7 @@ export default function EditDog() {
               label="Пол"
               name="gender"
               multiline
-              defaultValue={dog.gender}
+              defaultValue={currDog.gender}
               variant="outlined"
             />
           </div>
@@ -97,7 +97,7 @@ export default function EditDog() {
               name="weight"
               multiline
               rowsMax={4}
-              defaultValue={dog.weight}
+              defaultValue={currDog.weight}
               variant="outlined"
             />
             <TextField
@@ -105,7 +105,7 @@ export default function EditDog() {
               label="Тянет за поводок?"
               name="pullsTheLeash"
               multiline
-              defaultValue={dog.pullsTheLeash}
+              defaultValue={currDog.pullsTheLeash}
               variant="outlined"
             />
             <TextField
@@ -113,7 +113,7 @@ export default function EditDog() {
               label="Контакт с другими собаками"
               name="contactWithOther"
               multiline
-              defaultValue={dog.contactWithOther}
+              defaultValue={currDog.contactWithOther}
               variant="outlined"
             />
           </div>
@@ -126,7 +126,7 @@ export default function EditDog() {
               name="phobia"
               multiline
               rowsMax={4}
-              defaultValue={dog.phobia}
+              defaultValue={currDog.phobia}
               variant="outlined"
             />
             <TextField
@@ -134,10 +134,9 @@ export default function EditDog() {
               label="Отпускать на площадке"
               name="letGo"
               multiline
-              defaultValue={dog.letGo}
+              defaultValue={currDog.letGo}
               variant="outlined"
             />
-            
           </div>
         </Box>
         <Box m={3}>

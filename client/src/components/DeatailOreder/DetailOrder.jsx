@@ -68,7 +68,7 @@ const DetailOrder = () => {
   const [dogId, setDogId] = useState("");
   const [curDog, setCurDog] = useState(null);
   const [curDogAvatat, setCurDogAvatat] = useState(null);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   let { id } = useParams();
 
   const allOrders = useSelector((state) => state.allOrders);
@@ -109,9 +109,9 @@ const DetailOrder = () => {
 
       console.log(currentDog.avatar);
       setCurDogAvatat(currentDog.avatar);
-      setTimeout(() => {
-        setLoad(true);
-      }, 200);
+      // setTimeout(() => {
+      //   setLoad(true);
+      // }, 300);
     }
   }, [allOrders, userOrders]);
 
