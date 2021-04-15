@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: "center",
 		color: theme.palette.text.secondary,
 		paddingTop: 10,
+
 	},
 	accordeon: {
 		width: "100%",
@@ -38,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: theme.typography.pxToRem(15),
 		fontWeight: theme.typography.fontWeightRegular,
 	},
+	button: {
+		width: '100%',
+	}
 }));
 
 // let socket = new WebSocket('ws://localhost:3001');
@@ -155,48 +159,61 @@ export default function UserAccount() {
 						<Grid container spacing={3} direction="row">
 							<Grid item xs={1}></Grid>
 							<Grid item xs={3}>
-								<Paper className={classes.paper}>Мои данные</Paper>
-								<Info />
-								<Box m={3}>
-									<Button variant="outlined" color="primary">
-										Пополнить счет
-                </Button>
+								<Box m={1}>
+									<Paper className={classes.paper}>Мои данные</Paper>
 								</Box>
-								<Box m={3}>
-									<Button variant="outlined">Мои заказы</Button>
+								<Box xs={3}>
+									<Info xs={3} />
 								</Box>
-								<Box m={3}>
-									<Button variant="outlined">Мои отзывы</Button>
+								{/* <Box xs={3}> */}
+								{/* <Button className={classes.button} variant="outlined" color="primary">Пополнить счет
+               				 </Button> */}
+								{/* </Box> */}
+								<Box m={1}>
+									<Button className={classes.button} variant="outlined">Мои заказы</Button>
 								</Box>
-								<Box m={3}>
-									<Button variant="outlined" onClick={addOrderFormHandler}>
+
+								{/* <Box xs={3}>
+									<Button className={classes.button} variant="outlined">Мои отзывы</Button>
+								</Box> */}
+
+								<Box m={1}>
+									<Button className={classes.button} variant="outlined" onClick={addOrderFormHandler}>
 										Добавить заказ
-                </Button>
+               			 </Button>
 								</Box>
-								<Box m={3}>
-									<Button variant="outlined" onClick={addDogFormHandler}>
+								<Box m={1}>
+									<Button className={classes.button} variant="outlined" onClick={addDogFormHandler}>
 										Добавить питомца
-                </Button>
+                			</Button>
 								</Box>
-								<Box m={3}>
-									<Button variant="outlined"><a href="https://t.me/Doggy_walker_bot">Telegram Bot</a></Button>
+
+								<Box m={1}>
+									<Button className={classes.button} variant="outlined"><a style={{'text-decoration': 'none', 'color': 'rgba(0, 0, 0, 0.87)'}} href="https://t.me/Doggy_walker_bot">Telegram Bot</a></Button>
 								</Box>
-								<Box m={5}>
+
+								<Box m={1}>
 									<Grid>
 										<Button
+											className={classes.button}
 											onClick={() => handlerToAccount()}
 											variant="contained"
 											size="large"
 											color="primary"
 										>
 											Личный кабинет
-                  </Button>
+                  				</Button>
 									</Grid>
 								</Box>
 							</Grid>
 
 							<Grid item xs={7} direction="column">
+							<Box m={1}>
+								<Paper className={classes.paper}>Мои питомцы</Paper>
+								</Box>
+								<Box m={1}>
 								<div className={classes.accordeon}>
+									
 									<Accordion>
 										<AccordionSummary
 											expandIcon={<ExpandMoreIcon />}
@@ -204,8 +221,8 @@ export default function UserAccount() {
 											id="panel1a-header"
 										>
 											<Typography className={classes.heading}>
-												Мои питомцы
-                    </Typography>
+											🐶
+                   					 </Typography>
 										</AccordionSummary>
 										<AccordionDetails>
 											<Grid item container spacing={2} direction="row">
@@ -234,9 +251,11 @@ export default function UserAccount() {
 										</AccordionDetails>
 									</Accordion>
 								</div>
-
+								</Box>
 								<Grid item>
-									<Paper className={classes.paper}>Текущие заказы</Paper>
+								<Box m={1}>
+								<Paper className={classes.paper}>Текущие заказы</Paper>
+								</Box>
 									<Box m={2}>
 										<Grid item container spacing={2} direction="row">
 											{orders?.length ? (

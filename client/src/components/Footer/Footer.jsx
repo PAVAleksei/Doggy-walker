@@ -32,7 +32,7 @@ export const Footer = () => {
           
     </Typography>
       </Box>
-      <BottomNavigation
+      {/* <BottomNavigation
         value={value}
         onChange={handleChange}
         className={classes.root}
@@ -57,7 +57,7 @@ export const Footer = () => {
           value="folder"
           icon={<FolderIcon />}
         />
-      </BottomNavigation>
+      </BottomNavigation> */}
       <Typography
         aling="center"
         color="textSecondary"
