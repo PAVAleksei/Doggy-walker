@@ -14,6 +14,8 @@ import {
   registerWithGoogleThunk,
   sagaSignupAC,
 } from "../../redux/actionCreators/userAC";
+import GoogleButton from 'react-google-button'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,7 +65,7 @@ const CustomerSelect = () => {
   };
 
   return (
-    <Box m={3}>
+    <Box m={2}>
       <Container>
         <Typography variant="h4">Регистрация</Typography>
         <Box m={3}>
@@ -184,25 +186,19 @@ const CustomerSelect = () => {
                 </Button>
               </Box>
             </Grid>
-
-
-              
-            
-            <Grid>
-              <Box m={3}>
-                <Button variant="outlined" color="primary" size="large">
-                  <a href="http://localhost:3001/auth/google">Google</a>
-                </Button>
-              </Box>
-            </Grid>
+            <Box m={1}>
+              <Grid container justify="center">
+                <a href="http://localhost:3001/auth/google" style={{ 'text-decoration': 'none', }}>
+                  <GoogleButton className={classes.googleButton} />
+                </a>
+              </Grid>
+            </Box>
           </form>
         </Box>
-
-        <Grid></Grid>
       </Container>
-      
-  </Box>
-  
+
+    </Box>
+
   );
 };
 

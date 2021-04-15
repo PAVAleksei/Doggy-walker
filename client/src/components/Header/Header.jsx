@@ -16,7 +16,7 @@ import styles from "./header.module.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+
   },
   menuButton: {
     marginRight: theme.spacing(2 ),
@@ -33,7 +33,7 @@ function Header() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           {/* <IconButton edge="start"
             color="inherit" aria-label="menu">

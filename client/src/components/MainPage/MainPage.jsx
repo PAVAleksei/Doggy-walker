@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Paper, Typography } from "@material-ui/core";
-import  PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled"
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled"
 import LayerIcon from "@material-ui/icons/Layers"
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     padding: theme.spacing(6),
     marginTop: theme.spacing(8),
-    textShadow: '1px 1px 3px #000000, 1px 1px 3px #000000',
+    textShadow: '1px 1px 3px #000000, 1px 1px 3px #000000'
   },
   cardMedia: {
     paddingTop: "56.25%",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     marginTop: theme.spacing(4)
   },
-  
+
 }))
 
 function MainPage() {
@@ -89,8 +89,8 @@ function MainPage() {
         <Container maxWidth="md">
           <Typography variant="h2" color="textPrimary" aling="center" gutterBottom>Doggy Walker</Typography>
           <Typography variant="h5" color="textSecondary" aling="center" paragraph>
-          Ищите сервис выгула и передержки для вашей собаки в Москве?
-          Профессиональная забота о вашем питомце!
+            Ищите сервис выгула и передержки для вашей собаки в Москве?
+            Профессиональная забота о вашем питомце!
 
           </Typography>
 
@@ -126,7 +126,7 @@ function MainPage() {
                     </CardContent>
                     <CardActions>
                       <Button size='small' color='primary'>
-                       Подробнее
+                        Подробнее
                       </Button>
 
                       {/* <LayerIcon />
