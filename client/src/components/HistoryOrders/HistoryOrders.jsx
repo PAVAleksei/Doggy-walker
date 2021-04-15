@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CardList from "../CardList/CardList";
 import { useHistory } from "react-router";
 import HistoryOrderItem from "../HistoryOrderItem/HistoryOrderItem";
+import { setOrders } from "../../redux/actionCreators/orderAc";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
 function HistoryOrders() {
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setOrders()); // все заказы в системе
+    // dispatch(setOrdersCustomer()); // заказы заказчика
+  }, []);
 
   const orders = useSelector((state) => state.user.orders).filter(
     (el) => !el.closed
