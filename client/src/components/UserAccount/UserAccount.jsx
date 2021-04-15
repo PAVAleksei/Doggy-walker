@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-// let socket = new WebSocket('ws://localhost:3001');
+// let socket = new WebSocket('ws://127.0.0.1:3001');
 // let socket = new WebSocket(window.location.origin.replace('http', 'ws'));
 
 // let socket = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx');
@@ -118,12 +118,12 @@ export default function UserAccount() {
 	// const orders = useSelector(state => state.allOrders);
 
 	useEffect(() => {
-		fetch("http://localhost:3001/api/v1/dog")
+		fetch("http://127.0.0.1:3001/api/v1/dog")
 			.then((response) => response.json())
 			.then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
 	}, []);
 	useEffect(() => {
-		fetch("http://localhost:3001/user/checkAuth", {
+		fetch("http://127.0.0.1:3001/user/checkAuth", {
 			credentials: "include",
 		})
 			.then((res) => res.json())
@@ -189,7 +189,7 @@ export default function UserAccount() {
 								</Box>
 
 								<Box m={1}>
-									<Button className={classes.button} variant="outlined"><a style={{'text-decoration': 'none', 'color': 'rgba(0, 0, 0, 0.87)'}} href="https://t.me/Doggy_walker_bot">Telegram Bot</a></Button>
+									<Button className={classes.button} variant="outlined"><a style={{ 'text-decoration': 'none', 'color': 'rgba(0, 0, 0, 0.87)' }} href="https://t.me/Doggy_walker_bot">Telegram Bot</a></Button>
 								</Box>
 
 								<Box m={1}>
@@ -208,54 +208,54 @@ export default function UserAccount() {
 							</Grid>
 
 							<Grid item xs={7} direction="column">
-							<Box m={1}>
-								<Paper className={classes.paper}>Мои питомцы</Paper>
+								<Box m={1}>
+									<Paper className={classes.paper}>Мои питомцы</Paper>
 								</Box>
 								<Box m={1}>
-								<div className={classes.accordeon}>
-									
-									<Accordion>
-										<AccordionSummary
-											expandIcon={<ExpandMoreIcon />}
-											aria-controls="panel1a-content"
-											id="panel1a-header"
-										>
-											<Typography className={classes.heading}>
-											🐶
+									<div className={classes.accordeon}>
+
+										<Accordion>
+											<AccordionSummary
+												expandIcon={<ExpandMoreIcon />}
+												aria-controls="panel1a-content"
+												id="panel1a-header"
+											>
+												<Typography className={classes.heading}>
+													🐶
                    					 </Typography>
-										</AccordionSummary>
-										<AccordionDetails>
-											<Grid item container spacing={2} direction="row">
-												{animalByUser?.length ? (
-													animalByUser?.map((dog) => (
-														<Grid item xs={12} sm={3}>
-															<DogInfo
-																key={dog._id}
-																id={dog._id}
-																nickname={dog.nickname}
-																breed={dog.breed}
-																gender={dog.gender}
-																weight={dog.weight}
-																pullsTheLeash={dog.pullsTheLeash}
-																contactWithOther={dog.contactWithOther}
-																phobia={dog.phobia}
-																letGo={dog.letGo}
-																avatar={dog.avatar}
-															/>
-														</Grid>
-													))
-												) : (
-														<p>Пока нет сохраненных питомцев</p>
-													)}
-											</Grid>
-										</AccordionDetails>
-									</Accordion>
-								</div>
+											</AccordionSummary>
+											<AccordionDetails>
+												<Grid item container spacing={2} direction="row">
+													{animalByUser?.length ? (
+														animalByUser?.map((dog) => (
+															<Grid item xs={12} sm={3}>
+																<DogInfo
+																	key={dog._id}
+																	id={dog._id}
+																	nickname={dog.nickname}
+																	breed={dog.breed}
+																	gender={dog.gender}
+																	weight={dog.weight}
+																	pullsTheLeash={dog.pullsTheLeash}
+																	contactWithOther={dog.contactWithOther}
+																	phobia={dog.phobia}
+																	letGo={dog.letGo}
+																	avatar={dog.avatar}
+																/>
+															</Grid>
+														))
+													) : (
+															<p>Пока нет сохраненных питомцев</p>
+														)}
+												</Grid>
+											</AccordionDetails>
+										</Accordion>
+									</div>
 								</Box>
 								<Grid item>
-								<Box m={1}>
-								<Paper className={classes.paper}>Текущие заказы</Paper>
-								</Box>
+									<Box m={1}>
+										<Paper className={classes.paper}>Текущие заказы</Paper>
+									</Box>
 									<Box m={2}>
 										<Grid item container spacing={2} direction="row">
 											{orders?.length ? (

@@ -62,15 +62,15 @@ router.patch("/orders/requested/:id", async (req, res) => {
 				},
 			);
 
-				// console.log('id executora ', currOrder.executorId);
+			// console.log('id executora ', currOrder.executorId);
 			const UserOfCurrentOrder = await User.findById(currOrder.clientId);
-		// console.log('user who made order ----> ', UserOfCurrentOrder);
+			// console.log('user who made order ----> ', UserOfCurrentOrder);
 
-		if (UserOfCurrentOrder.telegramid) {
-		bot.telegram.sendMessage(
-			Number(UserOfCurrentOrder.telegramid),
-			`На Ваш заказ ${currOrder.description} появился отклик, посмотреть: http://127.0.0.1:3000/order/${currOrder._id}`);
-		}
+			if (UserOfCurrentOrder.telegramid) {
+				bot.telegram.sendMessage(
+					Number(UserOfCurrentOrder.telegramid),
+					`На Ваш заказ ${currOrder.description} появился отклик, посмотреть: http://127.0.0.1:3000/order/${currOrder._id}`);
+			}
 			return res.json(newOrder);
 		}
 	} catch (error) {
@@ -109,12 +109,12 @@ router.patch("/orders/requestedChange/:id", async (req, res) => {
 		// console.log('executor who doing walk but not assept by user ----> ', executerUserOfCurrentOrder);
 
 		if (executerUserOfCurrentOrder.telegramid) {
-		bot.telegram.sendMessage(
-			Number(executerUserOfCurrentOrder.telegramid),
-			`Заказ ${currOrder.description} был отклонён`);
+			bot.telegram.sendMessage(
+				Number(executerUserOfCurrentOrder.telegramid),
+				`Заказ ${currOrder.description} был отклонён`);
 		}
-		
-		
+
+
 		return res.json(newOrder);
 	} catch (error) {
 		console.log("Error to update order|requested| to true", error);
@@ -144,14 +144,14 @@ router.patch("/orders/inwork/:id", async (req, res) => {
 		// console.log('executor who doing walk ----> ', executerUserOfCurrentOrder);
 
 		if (executerUserOfCurrentOrder.telegramid) {
-		bot.telegram.sendMessage(
-			Number(executerUserOfCurrentOrder.telegramid),
-			`Заказ ${currOrder.description} был подтвержден, \n 🐶 ждёт Вас по адресу:📍${currOrder.address.name} \n в 🕰 ${currOrder.date} http://127.0.0.1:3000/order/${currOrder._id}`);
+			bot.telegram.sendMessage(
+				Number(executerUserOfCurrentOrder.telegramid),
+				`Заказ ${currOrder.description} был подтвержден, \n 🐶 ждёт Вас по адресу:📍${currOrder.address.name} \n в 🕰 ${currOrder.date} http://127.0.0.1:3000/order/${currOrder._id}`);
 		}
-		
-// console.log(bot);
-// console.log(bot.messages);
-// console.log(bot.telegram);
+
+		// console.log(bot);
+		// console.log(bot.messages);
+		// console.log(bot.telegram);
 
 		return res.json(newOrder);
 
@@ -184,9 +184,9 @@ router.patch("/orders/completed/:id", async (req, res) => {
 		// console.log('user who made order ----> ', UserOfCurrentOrder);
 
 		if (UserOfCurrentOrder.telegramid) {
-		bot.telegram.sendMessage(
-			Number(UserOfCurrentOrder.telegramid),
-			`Ваш заказ ${currOrder.description} успешно выполнен 👍, подтвердить: http://127.0.0.1:3000/order/${currOrder._id}`);
+			bot.telegram.sendMessage(
+				Number(UserOfCurrentOrder.telegramid),
+				`Ваш заказ ${currOrder.description} успешно выполнен 👍, подтвердить: http://127.0.0.1:3000/order/${currOrder._id}`);
 		}
 
 		return res.json(currOrder);
@@ -211,23 +211,23 @@ router.patch("/orders/closed/:id", (req, res) => {
 			}
 		);
 
-// console.log(currOrderId);
+		// console.log(currOrderId);
 
-try {
-	const currentOrder = await Order.findById(currOrderId);
-	// console.log('executor who doing walk ----> ', currentOrder.executorId);
-	const executorCurrentOrder = await User.findById(currentOrder.executorId);
+		try {
+			const currentOrder = await Order.findById(currOrderId);
+			// console.log('executor who doing walk ----> ', currentOrder.executorId);
+			const executorCurrentOrder = await User.findById(currentOrder.executorId);
 
-	
-	if (executorCurrentOrder.telegramid) {
-	bot.telegram.sendMessage(
-		Number(executorCurrentOrder.telegramid),
-		`Заказ ${currentOrder.description} был закрыт, спасибо!`);
-	}
-	
-} catch (error) {
-	console.log(error, 'order close error');
-}
+
+			if (executorCurrentOrder.telegramid) {
+				bot.telegram.sendMessage(
+					Number(executorCurrentOrder.telegramid),
+					`Заказ ${currentOrder.description} был закрыт, спасибо!`);
+			}
+
+		} catch (error) {
+			console.log(error, 'order close error');
+		}
 
 
 		return closedOrder;
@@ -287,7 +287,7 @@ router.post("/customer/orders", async (req, res) => {
 					// return
 				}
 			});
-			// http://localhost:3000/order/${order._id}
+			// http://127.0.0.1:3000/order/${order._id}
 
 			return res.json(order);
 
@@ -302,15 +302,15 @@ router.post("/customer/orders", async (req, res) => {
 
 // edit
 router.put("/customer/orders", async (req, res) => {
-  try {
-    const { id, editValue } = req.body;
-    await Order.updateOne({ _id: id }, { $set: { task: editValue } });
-    const updatedOrder = await Order.findById(id);
+	try {
+		const { id, editValue } = req.body;
+		await Order.updateOne({ _id: id }, { $set: { task: editValue } });
+		const updatedOrder = await Order.findById(id);
 
-    return res.json(updatedOrder);
-  } catch (error) {
-    return res.sendStatus(501);
-  }
+		return res.json(updatedOrder);
+	} catch (error) {
+		return res.sendStatus(501);
+	}
 });
 
 router.patch("/customer/orders", async (req, res) => {
