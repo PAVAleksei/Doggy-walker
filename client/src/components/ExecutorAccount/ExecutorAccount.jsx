@@ -12,8 +12,10 @@ import CardList from "../CardList/CardList";
 import { useHistory } from "react-router";
 import { setOrders } from "../../redux/actionCreators/orderAc";
 import Louder from "../Louder/Louder";
+import { getDogsAC } from "../../redux/actionCreators/dogAC";
 
 const useStyles = makeStyles((theme) => ({
+
 	root: {
 		flexGrow: 1,
 	},
@@ -26,34 +28,40 @@ const useStyles = makeStyles((theme) => ({
 	button: {
 		width: '100%'
 	}
+
 }));
 
 function ExecutorAccount() {
-	//обновялет все ордера в редакс
-	// const allOrders = useSelector((state) => state.allOrders);
-	// useEffect(() => dispatch(setOrders()), [allOrders]);
+  //обновялет все ордера в редакс
+  // const allOrders = useSelector((state) => state.allOrders);
+  // useEffect(() => dispatch(setOrders()), [allOrders]);
 
-	const history = useHistory();
-	const classes = useStyles();
-	const dispatch = useDispatch();
-	const [load, setLoad] = useState(false);
+  const history = useHistory();
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const [load, setLoad] = useState(false);
 
-	const handlerHistoryOrders = () => {
-		history.push("/historyOrders");
-	};
-	const handlerDoneOrders = () => {
-		history.push("/doneOrders");
-	};
+  const handlerHistoryOrders = () => {
+    history.push("/historyOrders");
+  };
+  const handlerDoneOrders = () => {
+    history.push("/doneOrders");
+  };
 
-	useEffect(() => {
-		dispatch(setOrders());
-		setTimeout(() => {
-			setLoad(true);
-		}, 200);
+  useEffect(() => {
+    fetch("http://localhost:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
 
-		// все заказы в системе
-	}, []);
+  useEffect(() => {
+    dispatch(setOrders());
+    setTimeout(() => {
+      setLoad(true);
+    }, 200);
 
+    // все заказы в системе
+  }, []);
 	return (
 		<>
 			{!load ? (
@@ -118,6 +126,7 @@ function ExecutorAccount() {
 				)}
 		</>
 	);
+
 }
 
 export default ExecutorAccount;

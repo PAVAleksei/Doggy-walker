@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDogsAC } from "../../redux/actionCreators/dogAC";
 import { Box, Button, jssPreset } from "@material-ui/core";
 import {
-	setOrders,
-	setOrdersCustomer,
+  setOrders,
+  setOrdersCustomer,
 } from "../../redux/actionCreators/orderAc";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -22,6 +22,7 @@ import { signupAC } from "../../redux/actionCreators/userAC";
 import Louder from "../Louder/Louder";
 
 const useStyles = makeStyles((theme) => ({
+
 	root: {
 		flexGrow: 1,
 	},
@@ -42,9 +43,10 @@ const useStyles = makeStyles((theme) => ({
 	button: {
 		width: '100%',
 	}
+
 }));
 
-// let socket = new WebSocket('ws://localhost:3001');
+// let socket = new WebSocket('ws://127.0.0.1:3001');
 // let socket = new WebSocket(window.location.origin.replace('http', 'ws'));
 
 // let socket = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx');
@@ -106,47 +108,50 @@ let btnApprove = document.querySelector("[data-btn-approve]");
 // };
 
 export default function UserAccount() {
-	const [messages, setMessages] = useState([]);
-	const [load, setLoad] = useState(true);
 
-	const classes = useStyles();
+  const [messages, setMessages] = useState([]);
+  const [load, setLoad] = useState(true);
 
-	const history = useHistory();
-	const dispatch = useDispatch();
-	const animalByUser = useSelector((state) => state.user.animal);
-  console.log(animalByUser, 'animalByUser');
-	const orders = useSelector((state) => state.user.orders);
-	// const orders = useSelector(state => state.allOrders);
+  const classes = useStyles();
 
-	useEffect(() => {
-		fetch("http://localhost:3001/api/v1/dog")
-			.then((response) => response.json())
-			.then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
-	}, []);
-	// useEffect(() => {
-	// 	fetch("http://localhost:3001/user/checkAuth", {
-	// 		credentials: "include",
-	// 	})
-	// 		.then((res) => res.json())
-	// 		.then((resFromServer) => dispatch(signupAC(resFromServer)))
-	// 		.then(
-	// 			setTimeout(() => {
-	// 				setLoad(true);
-	// 			}, 200)
-	// 		);
-	// }, []);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const animalByUser = useSelector((state) => state.user.animal);
+  const orders = useSelector((state) => state.user.orders);
+  // const orders = useSelector(state => state.allOrders);
 
-	const addOrderFormHandler = () => {
-		history.push("/order");
-	};
+  useEffect(() => {
+    fetch("http://127.0.0.1:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
+  // Возможно надо проверить!
+//   useEffect(() => {
+//   	fetch("http://localhost:3001/user/checkAuth", {
+//   		credentials: "include",
+//   	})
+//   		.then((res) => res.json())
+//   		.then((resFromServer) => dispatch(signupAC(resFromServer)))
+//   		.then(
+//   			setTimeout(() => {
+//   				setLoad(true);
+//   			}, 200)
+//   		);
+//   }, []);
 
-	const addDogFormHandler = () => {
-		history.push("/addDog");
-	};
-	const handlerToAccount = () => {
-		// history.push("/account");
-		history.go(0);
-	};
+
+  const addOrderFormHandler = () => {
+    history.push("/order");
+  };
+
+  const addDogFormHandler = () => {
+    history.push("/addDog");
+  };
+  const handlerToAccount = () => {
+    // history.push("/account");
+    history.go(0);
+  };
+
 
 	return (
 		<>
@@ -190,7 +195,7 @@ export default function UserAccount() {
 								</Box>
 
 								<Box m={1}>
-									<Button className={classes.button} variant="outlined"><a style={{'text-decoration': 'none', 'color': 'rgba(0, 0, 0, 0.87)'}} href="https://t.me/Doggy_walker_bot">Telegram Bot</a></Button>
+									<Button className={classes.button} variant="outlined"><a style={{ 'text-decoration': 'none', 'color': 'rgba(0, 0, 0, 0.87)' }} href="https://t.me/Doggy_walker_bot">Telegram Bot</a></Button>
 								</Box>
 
 								<Box m={1}>
@@ -209,54 +214,54 @@ export default function UserAccount() {
 							</Grid>
 
 							<Grid item xs={7} direction="column">
-							<Box m={1}>
-								<Paper className={classes.paper}>Мои питомцы</Paper>
+								<Box m={1}>
+									<Paper className={classes.paper}>Мои питомцы</Paper>
 								</Box>
 								<Box m={1}>
-								<div className={classes.accordeon}>
-									
-									<Accordion>
-										<AccordionSummary
-											expandIcon={<ExpandMoreIcon />}
-											aria-controls="panel1a-content"
-											id="panel1a-header"
-										>
-											<Typography className={classes.heading}>
-											🐶
+									<div className={classes.accordeon}>
+
+										<Accordion>
+											<AccordionSummary
+												expandIcon={<ExpandMoreIcon />}
+												aria-controls="panel1a-content"
+												id="panel1a-header"
+											>
+												<Typography className={classes.heading}>
+													🐶
                    					 </Typography>
-										</AccordionSummary>
-										<AccordionDetails>
-											<Grid item container spacing={2} direction="row">
-												{animalByUser?.length ? (
-													animalByUser?.map((dog) => (
-														<Grid item xs={12} sm={3}>
-															<DogInfo
-																key={dog._id}
-																id={dog._id}
-																nickname={dog.nickname}
-																breed={dog.breed}
-																gender={dog.gender}
-																weight={dog.weight}
-																pullsTheLeash={dog.pullsTheLeash}
-																contactWithOther={dog.contactWithOther}
-																phobia={dog.phobia}
-																letGo={dog.letGo}
-																avatar={dog.avatar}
-															/>
-														</Grid>
-													))
-												) : (
-														<p>Пока нет сохраненных питомцев</p>
-													)}
-											</Grid>
-										</AccordionDetails>
-									</Accordion>
-								</div>
+											</AccordionSummary>
+											<AccordionDetails>
+												<Grid item container spacing={2} direction="row">
+													{animalByUser?.length ? (
+														animalByUser?.map((dog) => (
+															<Grid item xs={12} sm={3}>
+																<DogInfo
+																	key={dog._id}
+																	id={dog._id}
+																	nickname={dog.nickname}
+																	breed={dog.breed}
+																	gender={dog.gender}
+																	weight={dog.weight}
+																	pullsTheLeash={dog.pullsTheLeash}
+																	contactWithOther={dog.contactWithOther}
+																	phobia={dog.phobia}
+																	letGo={dog.letGo}
+																	avatar={dog.avatar}
+																/>
+															</Grid>
+														))
+													) : (
+															<p>Пока нет сохраненных питомцев</p>
+														)}
+												</Grid>
+											</AccordionDetails>
+										</Accordion>
+									</div>
 								</Box>
 								<Grid item>
-								<Box m={1}>
-								<Paper className={classes.paper}>Текущие заказы</Paper>
-								</Box>
+									<Box m={1}>
+										<Paper className={classes.paper}>Текущие заказы</Paper>
+									</Box>
 									<Box m={2}>
 										<Grid item container spacing={2} direction="row">
 											{orders?.length ? (
@@ -292,4 +297,5 @@ export default function UserAccount() {
 				)}
 		</>
 	);
+
 }

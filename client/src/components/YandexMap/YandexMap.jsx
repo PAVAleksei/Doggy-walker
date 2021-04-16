@@ -16,18 +16,6 @@ function YandexMap() {
 	// console.log('coordinates --->  ', coordinates);
 	// console.log('myAddress ---> ', myAddress);
 
-
-	// function routeToHint() {
-	// 		return route => {
-	// 			route.routePanel.state.set({
-	// 				fromEnabled: true,
-	// 				from: myAddress,
-	// 				to: [55.710897, 37.602985],
-	// 				type: "auto"
-	// 			});
-	// 		}
-	// 	}
-
 	return (
 		<YMaps query={{ lang: 'ru_RU', ns: "use-load-option", apikey: key }}>
 			<Map width='100%' height='398px' defaultState={{

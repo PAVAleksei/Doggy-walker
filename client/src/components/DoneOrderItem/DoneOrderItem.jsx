@@ -56,7 +56,14 @@ const DoneOrderItem = ({
   let history = useHistory();
   let dispatch = useDispatch();
 
+  useEffect(() => {
+    fetch("http://127.0.0.1:3001/api/v1/dog")
+      .then((response) => response.json())
+      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+  }, []);
+
   const allDogs = useSelector((state) => state.dogs);
+  const imgDog = allDogs.find((el) => el._id == dogId).avatar;
 
   return (
     <Box className={classes.pos} m={1}>
@@ -64,7 +71,7 @@ const DoneOrderItem = ({
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            // image={currDog.avatar}
+            image={imgDog}
             title="Contemplative Reptile"
           />
           <CardContent className={classes.profile}>

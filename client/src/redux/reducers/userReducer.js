@@ -61,8 +61,8 @@ function userReducer(state = {}, action) {
       };
 
     case DELETE_DOG:
-      console.log(state);
-      console.log(action.payload);
+      // console.log(state);
+      // console.log(action.payload);
       return {
         ...state,
         animal: [...state.animal.filter((el) => el._id !== action.payload)],
