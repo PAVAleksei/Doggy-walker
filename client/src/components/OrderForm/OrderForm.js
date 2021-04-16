@@ -162,7 +162,7 @@ function OrderForm() {
               />
             </Grid>
           </MuiPickersUtilsProvider>
-          <Box mt={3}>
+          <Box m={3}>
             <Grid>
               <TextField
                   // className={classes.select}
@@ -187,12 +187,24 @@ function OrderForm() {
                 </TextField>
             </Grid>
           </Box >
-          <Grid>
-						<Box mt={3}>
-						<AddressSuggestions className={classes.input}  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart" token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} />
-              {/* <AddressSuggestions token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} /> */}
-            </Box>
-          </Grid>
+					<Box m={3}>
+					<TextField
+						// name="district"
+						// required
+						// value={district.value}
+						// value={[district?.data?.geo_lat, district?.data?.geo_lon]}
+						label="Адрес"
+						variant="outlined"
+						InputProps={{
+							startAdornment: (
+							<>
+								{/* <HomeIcon /> */}
+								<AddressSuggestions className={classes.input}  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart" token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} />
+							</>
+							)
+						}}
+					/>
+</Box>
           <Grid>
             <Box mt={3}>
               <TextareaAutosize

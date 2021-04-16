@@ -2,6 +2,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Pap
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled"
 import LayerIcon from "@material-ui/icons/Layers"
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +53,13 @@ const useStyles = makeStyles((theme) => ({
 
 function MainPage() {
   const classes = useStyles();
+  const history = useHistory()
+
   const cards = [1, 2, 3, 4, 5, 6]
+
+  const servisHandle = () => {
+    history.push('/services')
+  }
   return (
     <>
       < main >
@@ -73,10 +80,10 @@ function MainPage() {
               </Typography>
                   <Typography
                     component="h5"
-                    color="inherit"
+                    color="black"
                     paragraph
                   >
-                    Ищите сервис выгула и передержки для вашей собаки в Москве?
+                    .
               </Typography>
                 </div>
               </Grid>
@@ -87,7 +94,7 @@ function MainPage() {
 
       <div className={classes.mainContent}>
         <Container maxWidth="md">
-          <Typography variant="h2" color="textPrimary" aling="center" gutterBottom>Doggy Walker</Typography>
+          <Typography variant="h2" color="textPrimary" aling="center" gutterBottom>Все для собак</Typography>
           <Typography variant="h5" color="textSecondary" aling="center" paragraph>
             Ищите сервис выгула и передержки для вашей собаки в Москве?
             Профессиональная забота о вашем питомце!
@@ -97,10 +104,10 @@ function MainPage() {
           <div className={classes.MainButtons}>
             <Grid container spacing={5} justify="center">
               <Grid item>
-                <Button variant="contained" color="primary">Donations</Button>
+                <Button onClick={servisHandle} variant="contained" color="primary">К Услугам</Button>
               </Grid>
               <Grid item>
-                <Button variant="outlined" color="primary">Learn more</Button>
+                <Button variant="outlined" color="primary">Подробнее</Button>
               </Grid>
             </Grid>
           </div>

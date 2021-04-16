@@ -52,9 +52,9 @@ bot.start(async (ctx) => {
   const user = await getOrCreateUser(telegramId, username);
   // console.log('user', user);
   if (user) {
-    ctx.reply('Привет, любитель собакенов!');
+    ctx.reply(`Привет, ${username}!`);
   } else {
-    ctx.reply('Неверно указан логин Telegram');
+    ctx.reply('Неверно указан логин Telegram, необходимо перейти в личный кабинет, перейти в редактирование профиля и указать свой аккаунт в Telegtam, после заново ввести команду /start');
   }
   try {
     await user.save();
