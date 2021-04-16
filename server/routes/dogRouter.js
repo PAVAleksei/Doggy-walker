@@ -5,6 +5,7 @@ const { User } = require('../db/models/user.model');
 const uploadMulter = require('../config/multer');
 
 router.post('/', async (req, res) => {
+
 	if (req.user) {
 		try {
 			const owner = req.user._id;
@@ -15,6 +16,7 @@ router.post('/', async (req, res) => {
 			console.log(error, 'from gogRouter');
 		}
 	}
+
 });
 
 router.get('/', async (req, res) => {

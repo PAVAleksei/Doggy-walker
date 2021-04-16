@@ -205,6 +205,7 @@ export const changeOrderCustomerStatusRequestedFromServer = (updatedOrder) => {
 };
 
 export const addNewDogFetch = (newDog) => async (dispatch) => {
+
 	const response = await fetch("http://127.0.0.1:3001/api/v1/dog", {
 		method: "POST",
 		headers: {
@@ -313,3 +314,5 @@ export const closeOrderCustomerFromServer = (updatedOrder) => {
 		payload: updatedOrder,
 	};
 };
+
+

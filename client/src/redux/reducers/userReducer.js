@@ -11,7 +11,7 @@ import {
   ADD_ORDER_EXECUTOR,
   CLOSE_ORDER_CUSTOMER,
 } from "../types/usertypes";
-import { ADD_DOG, DOG_AVATAR, DELETE_DOG, EDIT_DOG } from "../types/dogTypes";
+import { ADD_DOG, DOG_AVATAR, DELETE_DOG, EDIT_DOG, GET_DOGS } from "../types/dogTypes";
 import { VERIFICATION_USER } from "../types/verificationUserTypes";
 import { CHANGE_ORDER_STATUS_COMPLETED } from "../types/orderTypes";
 
@@ -50,6 +50,11 @@ function userReducer(state = {}, action) {
         orders: [...state.orders, action.payload],
       };
     case ADD_DOG:
+      console.log(action.payload,'dododododdodo');
+      console.log({
+        ...state,
+        animal: [...state.animal, action.payload],
+      }, 'llllllllll');
       return {
         ...state,
         animal: [...state.animal, action.payload],
@@ -123,6 +128,9 @@ function userReducer(state = {}, action) {
         ...state,
         animal: state.animal.map((el) => (el._id === avatar._id ? avatar : el)),
       };
+
+      
+      
 
     default:
       return state;

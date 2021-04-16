@@ -108,6 +108,7 @@ let btnApprove = document.querySelector("[data-btn-approve]");
 // };
 
 export default function UserAccount() {
+
   const [messages, setMessages] = useState([]);
   const [load, setLoad] = useState(true);
 
@@ -150,6 +151,7 @@ export default function UserAccount() {
     // history.push("/account");
     history.go(0);
   };
+
 
 	return (
 		<>

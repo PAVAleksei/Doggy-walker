@@ -1,3 +1,4 @@
+///
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import ExecutorAccount from "./components/ExecutorAccount/ExecutorAccount";
@@ -41,10 +42,12 @@ function App() {
 			.then((resFromServer) => dispatch(signupAC(resFromServer)));
 	}, []);
 
+
 	useEffect(() => {
 		dispatch(setOrders()); // все заказы в системе
 		// dispatch(setOrdersCustomer()); // заказы заказчика
 	}, []);
+
 
 	useEffect(() => {
 		fetch("http://127.0.0.1:3001/api/v1/dog")
