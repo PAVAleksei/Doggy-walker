@@ -48,7 +48,10 @@ export default function Dog() {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const { id } = useParams()
-	const dog = useSelector(state => state.dog);
+
+	// const dog = useSelector(state => state.dog);
+	const allDog = useSelector(state => state.dog);
+	const currDog = allDog.find(el => el._id == id)
 	//   console.log(dog, 'dog');
 
 	const history = useHistory();
@@ -74,36 +77,36 @@ export default function Dog() {
 					<CardActionArea>
 						<CardMedia
 							className={classes.media}
-							image={dog.avatar}
+							image={currDog.avatar}
 							title="Contemplative Reptile"
 						/>
 
 
 						<CardContent className={classes.infiDog}>
 							<Typography gutterBottom variant="h5" component="h2">
-								{dog.nickname}
+								{currDog.nickname}
 							</Typography>
 							<Box ml={19}>
 								<Typography align="left" variant="body2" color="textSecondary" component="p">
-									Порода: {dog.breed}
+									Порода: {currDog.breed}
 								</Typography>
 								<Typography align="left" variant="body2" color="textSecondary" component="p">
-									Пол: {dog.gender}
+									Пол: {currDog.gender}
 								</Typography>
 								<Typography align="left" variant="body2" color="textSecondary" component="p">
-									Вес: {dog.weight}
+									Вес: {currDog.weight}
 								</Typography>
 								<Typography align="left" variant="body2" color="textSecondary" component="p">
-									Чего боится: {dog.phobia}
+									Чего боится: {currDog.phobia}
 								</Typography>
 								<Typography align="left" variant="body2" color="textSecondary" component="p">
-									Тянет за поводок: {dog.pullsTheLeash}
+									Тянет за поводок: {currDog.pullsTheLeash}
 								</Typography>
 								<Typography align="left" variant="body2" color="textSecondary" component="p">
-									Отпускать с поводка: {dog.letGo}
+									Отпускать с поводка: {currDog.letGo}
 								</Typography>
 								<Typography align="left" variant="body2" color="textSecondary" component="p">
-									Контакт с другими животными: {dog.contactWithOther}
+									Контакт с другими животными: {currDog.contactWithOther}
 								</Typography>
 							</Box>
 						</CardContent>
@@ -116,3 +119,4 @@ export default function Dog() {
 		</Box>
 	);
 }
+///

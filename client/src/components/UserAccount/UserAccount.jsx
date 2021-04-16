@@ -125,18 +125,18 @@ export default function UserAccount() {
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
   // Возможно надо проверить!
-  // useEffect(() => {
-  // 	fetch("http://localhost:3001/user/checkAuth", {
-  // 		credentials: "include",
-  // 	})
-  // 		.then((res) => res.json())
-  // 		.then((resFromServer) => dispatch(signupAC(resFromServer)))
-  // 		.then(
-  // 			setTimeout(() => {
-  // 				setLoad(true);
-  // 			}, 200)
-  // 		);
-  // }, []);
+//   useEffect(() => {
+//   	fetch("http://localhost:3001/user/checkAuth", {
+//   		credentials: "include",
+//   	})
+//   		.then((res) => res.json())
+//   		.then((resFromServer) => dispatch(signupAC(resFromServer)))
+//   		.then(
+//   			setTimeout(() => {
+//   				setLoad(true);
+//   			}, 200)
+//   		);
+//   }, []);
 
 
   const addOrderFormHandler = () => {

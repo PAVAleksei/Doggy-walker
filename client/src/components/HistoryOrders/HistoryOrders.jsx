@@ -45,13 +45,13 @@ function HistoryOrders() {
   }, []);
 
 
-	useEffect(() => {
-		fetch("http://127.0.0.1:3001/user/checkAuth", {
-			credentials: "include",
-		})
-			.then((res) => res.json())
-			.then((resFromServer) => dispatch(signupAC(resFromServer)));
-	}, []);
+	// useEffect(() => {
+	// 	fetch("http://127.0.0.1:3001/user/checkAuth", {
+	// 		credentials: "include",
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((resFromServer) => dispatch(signupAC(resFromServer)));
+	// }, []);
 
 	const orders = useSelector((state) => state.user.orders).filter(
 		(el) => !el.closed

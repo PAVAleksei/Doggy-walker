@@ -24,7 +24,7 @@ router.post('/register', (req, res, next) => {
 				orders: user.orders,
 				verification: user.verification,
 				district: user.district,
-
+				animal: user.animal,
 			});
 		});
 	})(req, res, next);

@@ -11,6 +11,17 @@ router.get('/checkAuth', async (req, res) => {
 		const userId = req.session.passport.user;
 		const user = await User.findById(userId).populate('orders').populate('animal');
 		const dog = await Dog.findById(userId).populate('owner');
+		console.log({email: user.email,
+			firstname: user.firstname,
+			lastname: user.lastname,
+			kind: user.kind,
+			verification: user.verification,
+			dogcoins: user.dogcoins,
+			district: user.district,
+			orders: user.orders,
+			animal: user.animal,
+			photo: user.photo,
+			telegram: user.telegram,});
 		res.json({
 			email: user.email,
 			firstname: user.firstname,

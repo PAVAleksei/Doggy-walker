@@ -41,13 +41,13 @@ function DoneOrders() {
     (el) => el.closed
   );
   ///возможно прблема из-за него
-  useEffect(() => {
-    fetch("http://127.0.0.1:3001/user/checkAuth", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((resFromServer) => dispatch(signupAC(resFromServer)));
-  }, []);
+//   useEffect(() => {
+//     fetch("http://127.0.0.1:3001/user/checkAuth", {
+//       credentials: "include",
+//     })
+//       .then((res) => res.json())
+//       .then((resFromServer) => dispatch(signupAC(resFromServer)));
+//   }, []);
 
   useEffect(() => {
     fetch("http://127.0.0.1:3001/api/v1/dog")

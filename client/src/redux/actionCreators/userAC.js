@@ -44,7 +44,7 @@ export const sagaSignupAC = ({
 };
 
 export const signupAC = (resFromServer) => {
-	// console.log(resFromServer);
+	console.log(resFromServer);
 	return {
 		type: AUTH,
 		payload: {

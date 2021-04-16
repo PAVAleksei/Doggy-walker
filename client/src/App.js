@@ -47,8 +47,8 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		// fetch("http://127.0.0.1:3001/api/v1/dog")
-		fetch(`${window.location.origin}/api/v1/dog`)
+		fetch("http://127.0.0.1:3001/api/v1/dog")
+		// fetch(`${window.location.origin}/api/v1/dog`)
 			.then((response) => response.json())
 			.then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
 	}, []);
