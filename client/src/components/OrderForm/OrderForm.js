@@ -21,13 +21,12 @@ import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css'
 import { useHistory } from "react-router-dom";
 import { addOrderCustomer } from "../../redux/actionCreators/userAC";
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      // width: '45ch',
+      width: '45ch',
+      // align: 'center'
     },
   },
   margin: {
@@ -37,76 +36,59 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   textField: {
-    width: "25ch",
+    width: "45ch",
+  },
+  select:{
+    width: "40ch",
   },
   area: {
-    width: "32ch",
+    width: "45ch",
   },
   address: {
     width: "50ch",
-
   },
   input:{
     maxWidth: '50px',
     minWidth: '50px'
+  },
+  container:{
+    width: '45ch',
   }
 }));
-
 function OrderForm() {
-  
   const dogs = useSelector(state => state.user.animal)?.map(dog => ({ value: dog._id, label: dog.nickname}));
-
-
   const classes = useStyles();
-
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const error = useSelector((state) => state.error);
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(300);
-
   const [curDog, setCurDog] = useState(dogs?.length ? dogs[0]?.value : '');
   const history = useHistory();
-
   const dogSelectHandler = (event) => {
     setCurDog(event.target.value);
   };
-
   const handleDateChange = (date) => {
     // const dateRu = date.toLocaleString('ru-RU');
     const newDate = (new Date(date));
     setSelectedDate(newDate);
   };
-
   const handleDescriptionChange = (e) => {
-  
     setDescription(e.target.value);
   };
-
   const handlePriceChange = (e) => {
     setPrice(e.target.value);
   }
-
   const addNewOrderHandler = () => {
-    
     setError({ status: false, text: "" });
-
-  console.log('address', address);
-
-
     if (selectedDate >= Date.now() + 1 * 2 * 60 * 60 * 1000){
-
-      // if (!address) return setError({ status: true, text: "Заполните адрес." });
-
       if (description.trim() && address && curDog && price) {
        setError({ status: false, text: "" });
- 
         const addressToServer = { 
           name: address.value,
           coordinates: [Number(address.data.geo_lat), Number(address.data.geo_lon)]
         }
-
        try {
          dispatch(addOrderCustomer({ selectedDate, description, addressToServer, curDog, price }))
            // .then((newOrder) => {
@@ -128,7 +110,6 @@ function OrderForm() {
           setError({ status: true, text: "Необходимо заполнить все поля." })
         );
       }
-    
     } else {
       dispatch(
         setError({
@@ -138,13 +119,12 @@ function OrderForm() {
       );
     }
   };
-
   return (
-      <Box m={5}>
-    <div className={classes.root}>
-      <Container>
+    <Box mt={5}>
+    <Container className={classes.container}>
+    {/* <div className={classes.root}> */}
       <Typography variant="h4">Вход</Typography>
-        <Box m={3}>
+        <Box mt={3}>
           <Grid>
             <TextField
               disabled
@@ -182,36 +162,39 @@ function OrderForm() {
               />
             </Grid>
           </MuiPickersUtilsProvider>
+          <Box mt={3}>
+            <Grid>
+              <TextField
+                  // className={classes.select}
+                  // required
+                  id="outlined-select-currency-native"
+                  name="curDog"
+                  select
+                  label="Выберите питомца"
+                  value={curDog}
+                  onChange={dogSelectHandler}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  helperText="Выберите вашего питомца"
+                  variant="outlined"
+                >
+                  {dogs?.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
+            </Grid>
+          </Box >
           <Grid>
-            <TextField
-                required
-                id="outlined-select-currency-native"
-                name="curDog"
-                select
-                label="Выберите питомца"
-                value={curDog}
-                onChange={dogSelectHandler}
-                SelectProps={{
-                  native: true,
-                }}
-                helperText="Выберите вашего питомца"
-                variant="outlined"
-              >
-                {dogs?.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-          </Grid>
-          <Grid>
-						<Box m={3}>
+						<Box mt={3}>
 						<AddressSuggestions className={classes.input}  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart" token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} />
               {/* <AddressSuggestions token="8536f85322589081ac698e1b9d9f1979cbd98e52" value={address} onChange={setAddress} /> */}
             </Box>
           </Grid>
           <Grid>
-            <Box m={3}>
+            <Box mt={3}>
               <TextareaAutosize
                 required
                 className={classes.area}
@@ -224,28 +207,29 @@ function OrderForm() {
             </Box>
           </Grid>
           <Grid>
-            <TextField
-              required
-              id="standard-required"
-              onChange={handlePriceChange}
-              value={price}
-              label="Укажите желаемую стоимость"
-              defaultValue="300"
-            />
+            <Box mt={3}>
+              <TextField
+                // required
+                id="standard-required"
+                onChange={handlePriceChange}
+                value={price}
+                label="Укажите желаемую стоимость"
+                defaultValue="300"
+              />
+            </Box>
           </Grid>
         </Box>
-        <Box m={2}>
+        <Box mt={4}>
           <Button variant="contained" onClick={addNewOrderHandler}>
             Оформить заказ
           </Button>
         </Box>
-        <Box color="warning.main">…
+        <Box mt={4} color="warning.main">
           {error?.status ? <div>{error.text}</div> : ""}
         </Box>
-      </Container>
-    </div>
+    {/* </div> */}
+    </Container>
     </Box>
   );
 }
-
 export default OrderForm;

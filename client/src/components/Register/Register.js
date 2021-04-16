@@ -11,180 +11,180 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 import {
-  registerWithGoogleThunk,
-  sagaSignupAC,
+	registerWithGoogleThunk,
+	sagaSignupAC,
 } from "../../redux/actionCreators/userAC";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "35ch",
-    },
-  },
+	root: {
+		"& .MuiTextField-root": {
+			margin: theme.spacing(1),
+			width: "35ch",
+		},
+	},
 }));
 
 const currencies = [
-  {
-    value: "Заказчик",
-    label: "Заказчик",
-  },
-  {
-    value: "Исполнитель",
-    label: "Исполнитель",
-  },
+	{
+		value: "Заказчик",
+		label: "Заказчик",
+	},
+	{
+		value: "Исполнитель",
+		label: "Исполнитель",
+	},
 ];
 
 function Register() {
-  const classes = useStyles();
-  const [kind, setKind] = React.useState("");
-  const history = useHistory();
+	const classes = useStyles();
+	const [kind, setKind] = React.useState("");
+	const history = useHistory();
 
-  const handleChange = (event) => {
-    setKind(event.target.value);
-  };
+	const handleChange = (event) => {
+		setKind(event.target.value);
+	};
 
-  const formRef = useRef(null);
-  const dispatch = useDispatch();
+	const formRef = useRef(null);
+	const dispatch = useDispatch();
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const valuesOfFields = Object.fromEntries(
-      new FormData(formRef.current).entries()
-    );
-    if (
-      Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
-    ) {
-      dispatch(sagaSignupAC(valuesOfFields));
-      history.push("/");
+	const submitHandler = (e) => {
+		e.preventDefault();
+		const valuesOfFields = Object.fromEntries(
+			new FormData(formRef.current).entries()
+		);
+		if (
+			Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
+		) {
+			dispatch(sagaSignupAC(valuesOfFields));
+			history.push("/");
 
-      formRef.current.reset();
-    }
-  };
+			formRef.current.reset();
+		}
+	};
 
-  return (
-    <Box m={3}>
-      <Container>
-        <Typography variant="h4">Регистрация</Typography>
-        <Box m={3}>
-          <form
-            className={classes.root}
-            validate="true"
-            autoComplete="off"
-            ref={formRef}
-            onSubmit={submitHandler}
-          >
-            <Grid item>
-              <TextField
-                name="firstname"
-                required
-                id="outlined-required"
-                label="Имя"
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircle />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                name="lastname"
-                required
-                label="Фамилия"
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircle />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                name="email"
-                required
-                id="outlined-email-input"
-                label="Email"
-                type="email"
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                id="outlined-select-currency-native"
-                name="kind"
-                select
-                label="Категория"
-                value={kind}
-                onChange={handleChange}
-                SelectProps={{
-                  native: true,
-                }}
-                helperText="Выберите вашу роль"
-                variant="outlined"
-              >
-                {currencies.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid>
-              <TextField
-                name="password"
-                required
-                label="Пароль"
-                type="password"
-                autoComplete="current-password"
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LockIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
+	return (
+		<Box m={3}>
+			<Container>
+				<Typography variant="h4">Регистрация</Typography>
+				<Box m={3}>
+					<form
+						className={classes.root}
+						validate="true"
+						autoComplete="off"
+						ref={formRef}
+						onSubmit={submitHandler}
+					>
+						<Grid item>
+							<TextField
+								name="firstname"
+								required
+								id="outlined-required"
+								label="Имя"
+								variant="outlined"
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position="start">
+											<AccountCircle />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid>
+							<TextField
+								name="lastname"
+								required
+								label="Фамилия"
+								variant="outlined"
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position="start">
+											<AccountCircle />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid>
+							<TextField
+								name="email"
+								required
+								id="outlined-email-input"
+								label="Email"
+								type="email"
+								variant="outlined"
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position="start">
+											<EmailIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						<Grid>
+							<TextField
+								id="outlined-select-currency-native"
+								name="kind"
+								select
+								label="Категория"
+								value={kind}
+								onChange={handleChange}
+								SelectProps={{
+									native: true,
+								}}
+								helperText="Выберите вашу роль"
+								variant="outlined"
+							>
+								{currencies.map((option) => (
+									<option key={option.value} value={option.value}>
+										{option.label}
+									</option>
+								))}
+							</TextField>
+						</Grid>
+						<Grid>
+							<TextField
+								name="password"
+								required
+								label="Пароль"
+								type="password"
+								autoComplete="current-password"
+								variant="outlined"
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position="start">
+											<LockIcon />
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
 
-            <Grid>
-              <Box m={3}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                >
-                  Регистрация
+						<Grid>
+							<Box m={3}>
+								<Button
+									type="submit"
+									variant="contained"
+									size="large"
+									color="primary"
+								>
+									Регистрация
                 </Button>
-              </Box>
-            </Grid>
-            <Grid>
-              <Box m={3}>
-                <Button variant="contained" size="large" color="secondary">
-                  <a href="http://localhost:3001/auth/google">Google</a>
-                </Button>
-              </Box>
-            </Grid>
-          </form>
-        </Box>
-      </Container>
-    </Box>
-  );
+							</Box>
+						</Grid>
+						<Grid>
+							<Box m={3}>
+								<Button variant="contained" size="large" color="secondary">
+									<a href="http://127.0.0.1:3001/auth/google">Google</a>
+								</Button>
+							</Box>
+						</Grid>
+					</form>
+				</Box>
+			</Container>
+		</Box>
+	);
 }
 
 export default Register;

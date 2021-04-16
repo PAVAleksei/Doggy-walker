@@ -57,7 +57,7 @@ const DoneOrderItem = ({
   let dispatch = useDispatch();
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/v1/dog")
+    fetch("http://127.0.0.1:3001/api/v1/dog")
       .then((response) => response.json())
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);

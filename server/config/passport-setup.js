@@ -19,7 +19,8 @@ passport.deserializeUser((id, done) => {
 const authUser = async (req, email, password, done) => {
   try {
     if (/login/.test(req.path)) {
-      const user = await User.findOne({ email }).populate('orders').lean().exec();
+      const user = await User.findOne({ email }).populate('orders').populate('animal').lean()
+        .exec();
 
       if (!user) { return done(null, false, { message: 'Неверный логин или пароль' }); }
       if (await bcrypt.compare(password, user.password)) { return done(null, user); }
@@ -30,7 +31,8 @@ const authUser = async (req, email, password, done) => {
         req.body.lastname,
         req.body.kind)
     ) {
-      const user = await User.findOne({ email }).populate('orders').lean().exec();
+      const user = await User.findOne({ email }).populate('orders').populate('animal').lean()
+        .exec();
       if (!user) {
         try {
           const hashPass = await bcrypt.hash(password, 10);

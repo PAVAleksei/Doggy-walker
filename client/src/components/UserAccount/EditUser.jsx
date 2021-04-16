@@ -27,7 +27,7 @@ export default function EditUser() {
 	const user = useSelector(state => state.user)
 
 	// useEffect(() => {
-	//   fetch(`http://localhost:3001/api/v1/user`)
+	//   fetch(`http://127.0.0.1:3001/api/v1/user`)
 	//   .then(response => response.json())
 	//   .then(responseFromServer => dispatch(getDogAC(responseFromServer)))
 	// }, [])

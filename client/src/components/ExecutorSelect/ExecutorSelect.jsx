@@ -56,7 +56,7 @@ const ExecutorSelect = () => {
     const valuesOfFields = Object.fromEntries(
       new FormData(formRef.current).entries()
     );
-    console.log(valuesOfFields, 'valuesOfFields');
+   //  console.log(valuesOfFields, 'valuesOfFields');
     if (
       Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())
     ) {

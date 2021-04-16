@@ -29,7 +29,7 @@ export default function MultilineTextFields() {
     const valuesOfFields = Object.fromEntries(
       new FormData(formRef.current).entries()
     );
-    console.log(valuesOfFields);
+   //  console.log(valuesOfFields);
     // console.log(valuesOfFields);
     if (
       Object.keys(valuesOfFields).every((key) => valuesOfFields[key].trim())

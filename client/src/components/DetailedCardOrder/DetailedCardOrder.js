@@ -39,7 +39,7 @@ function DetailedCardOrder({ id, description, date, price, address, requested, i
   const editHandler = () => {};
 
   const approveExecutorHandler = (id) => {
-    console.log('===approve')
+    // console.log('===approve')
     dispatch(changeOrderStatusInWork(id));
   }
 
