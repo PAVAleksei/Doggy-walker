@@ -1,14 +1,16 @@
 # Doggy walker
 <br/>
 
-## Вэб приложение по поиску исполнителей для выгула собаки
+## Вэб приложение по поиску исполнителей для выгула собак
 <br/>
 
 ### Используемые технологии: React, Redux, Redux-Saga, Redux-Thunk, Express.js, Node.js, MongoDB(Mongoose, Atlas), PassportJs, Google OAuth2.0, Yandex Api, Material UI
 <br/>
+
 Doggy walker — это приложение, в котором заказчик сам устанавливает цену, которую он готов заплатить за услугу
 <br/>
 <br/>
+
 1. Домашняя страница. Часть 1
 <br/>
 <br/>
