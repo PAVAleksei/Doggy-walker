@@ -10,10 +10,9 @@ router.post('/', async (req, res) => {
       const owner = req.user._id;
       const newDog = await Dog.create({ ...req.body.newDog, owner });
       const user = await User.findByIdAndUpdate(owner, { $push: { animal: newDog } });
-      console.log(newDog, 'base');
       res.status(200).json(newDog);
     } catch (error) {
-      console.log(error);
+      console.log(error, 'from gogRouter');
     }
   }
 });
@@ -34,7 +33,6 @@ router.post('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  // console.log(req.params, 'hfhfhfh');
   await Dog.findByIdAndDelete(req.params.id);
   res.sendStatus(200);
 });
@@ -47,12 +45,12 @@ router.post('/avatar/:id', uploadMulter.single('file'), async (req, res) => {
     }
     const { filename } = req.file;
     const dog = await Dog.findById(req.params.id);
-    const imgPuth = 'http://localhost:3001/img/';
+    const imgPuth = 'http://127.0.0.1:3001/img/';
     dog.avatar = imgPuth + filename;
     await dog.save();
     return res.json({ avatar: dog.avatar, id: dog._id });
   } catch (e) {
-    console.log(e);
+    console.log(e, 'from dogRouter post avatar/:id');
     return res.status(400).json({ message: 'Upload avatar error' });
   }
 });

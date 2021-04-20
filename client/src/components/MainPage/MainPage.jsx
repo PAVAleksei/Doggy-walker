@@ -2,6 +2,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Pap
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled"
 import LayerIcon from "@material-ui/icons/Layers"
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +53,45 @@ const useStyles = makeStyles((theme) => ({
 
 function MainPage() {
   const classes = useStyles();
-  const cards = [1, 2, 3, 4, 5, 6]
+  const history = useHistory()
+
+  const cards = [
+    {
+      name: 'Выгул что надо',
+      description: 'Отличные выгульщики, любят животных',
+      img: 'https://static.tildacdn.com/tild3339-6661-4334-a261-393339663332/progulka-s-sobakami-.jpg',
+    },
+    {
+      name: 'Собаки довольны',
+      description: 'Все отлично, спасибо вашему сервису',
+      img: 'https://www.belanta.vet/vet-blog/wp-content/uploads/2019/02/%D0%BF%D1%80%D0%BE%D0%B3%D1%83%D0%BB%D0%BA%D0%B0-%D1%81-%D1%81%D0%BE%D0%B1%D0%B0%D0%BA%D0%B0%D0%BC%D0%B8.jpg',
+    },
+
+    {
+      name: 'Супер сервис',
+      description: 'Спасибо, что выгуляли собаку, в 6 утра в дождь',
+      img: 'https://cs8.pikabu.ru/post_img/big/2017/05/16/6/149492691719887715.jpg',
+    },
+    {
+      name: 'В минус 20',
+      description: 'Собаке хорошо, а я дома и мне тоже хорошо',
+      img: 'https://zooclub.ru/attach/2009.jpg',
+    },
+    {
+      name: 'Большой размер',
+      description: 'Наконец-то мы нашли выгульщика',
+      img: 'https://i.ytimg.com/vi/E9Ud1wr-ENc/maxresdefault.jpg',
+    },
+
+    {
+      name: 'Довольный пёсель',
+      description: 'Отличный сервис, всем рекомендую',
+      img: 'https://kot-pes.com/wp-content/uploads/2018/07/dovolnaya-sobaka.jpg',
+    }
+  ]
+  const servisHandle = () => {
+    history.push('/services')
+  }
   return (
     <>
       < main >
@@ -73,10 +112,10 @@ function MainPage() {
               </Typography>
                   <Typography
                     component="h5"
-                    color="inherit"
+                    color="black"
                     paragraph
                   >
-                    Ищите сервис выгула и передержки для вашей собаки в Москве?
+                    Выгуляй питомца не выходя на улицу
               </Typography>
                 </div>
               </Grid>
@@ -87,7 +126,7 @@ function MainPage() {
 
       <div className={classes.mainContent}>
         <Container maxWidth="md">
-          <Typography variant="h2" color="textPrimary" aling="center" gutterBottom>Doggy Walker</Typography>
+          <Typography variant="h2" color="textPrimary" aling="center" gutterBottom>Все для собак</Typography>
           <Typography variant="h5" color="textSecondary" aling="center" paragraph>
             Ищите сервис выгула и передержки для вашей собаки в Москве?
             Профессиональная забота о вашем питомце!
@@ -97,10 +136,10 @@ function MainPage() {
           <div className={classes.MainButtons}>
             <Grid container spacing={5} justify="center">
               <Grid item>
-                <Button variant="contained" color="primary">Donations</Button>
+                <Button onClick={servisHandle} variant="contained" color="primary">К Услугам</Button>
               </Grid>
               <Grid item>
-                <Button variant="outlined" color="primary">Learn more</Button>
+                <Button variant="outlined" color="primary">Подробнее</Button>
               </Grid>
             </Grid>
           </div>
@@ -110,24 +149,24 @@ function MainPage() {
             {
               cards.map(card => (
                 <Grid item key={card} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
+                  <Card className={classes.card} elevation={5}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image="https://cdn21.img.ria.ru/images/156270/94/1562709428_0:160:3072:1888_600x0_80_0_0_df31909c22a728716eec73fa49b6e13d.jpg"
+                      image={card.img}
                       title="image title"
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography variant="h5" gutterBottom>
-                        Приют собак
+                        {card.name}
                         </Typography>
                       <Typography>
-                        Приют собак вбо м ылимлочатмлодлчтм амичмиаолчита
+                      {card.description}
                         </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size='small' color='primary'>
+                      {/* <Button size='small' color='primary'>
                         Подробнее
-                      </Button>
+                      </Button> */}
 
                       {/* <LayerIcon />
                       <PlayCircleFilledIcon /> */}

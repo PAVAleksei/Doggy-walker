@@ -6,7 +6,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { User } = require('../db/models/user.model');
 
 passport.serializeUser((user, done) => {
-  // console.log(user);
   done(null, user._id);
 });
 
@@ -19,7 +18,8 @@ passport.deserializeUser((id, done) => {
 const authUser = async (req, email, password, done) => {
   try {
     if (/login/.test(req.path)) {
-      const user = await User.findOne({ email }).populate('orders').lean().exec();
+      const user = await User.findOne({ email }).populate('orders').populate('animal').lean()
+        .exec();
 
       if (!user) { return done(null, false, { message: 'Неверный логин или пароль' }); }
       if (await bcrypt.compare(password, user.password)) { return done(null, user); }
@@ -30,7 +30,8 @@ const authUser = async (req, email, password, done) => {
         req.body.lastname,
         req.body.kind)
     ) {
-      const user = await User.findOne({ email }).populate('orders').lean().exec();
+      const user = await User.findOne({ email }).populate('orders').populate('animal').lean()
+        .exec();
       if (!user) {
         try {
           const hashPass = await bcrypt.hash(password, 10);
@@ -86,21 +87,15 @@ passport.use(
 passport.use(
   new GoogleStrategy(
     {
-      // options for google strategy
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/auth/google/redirect',
     },
     (accessToken, refreshToken, profile, done) => {
-      // check if user already exists in our own db
       User.findOne({ googleId: profile.id }).populate('orders').then((currentUser) => {
         if (currentUser) {
-          // already have this user
-          // console.log('user is: ', currentUser)
           done(null, currentUser);
         } else {
-          // if not, create user in our db
-
           const { givenName: firstname, familyName: lastname } = profile.name;
           new User({
             googleId: profile.id,
@@ -111,7 +106,6 @@ passport.use(
           })
             .save()
             .then((newUser) => {
-              // console.log('created new user: ', newUser)
               done(null, newUser);
             });
         }

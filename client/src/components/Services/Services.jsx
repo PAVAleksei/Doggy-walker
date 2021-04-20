@@ -61,7 +61,7 @@ function Services() {
             {
               cards.map(card => (
                 <Grid item key={card} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
+                  <Card className={classes.card} elevation={5}>
                     <CardMedia
                       className={classes.cardMedia}
                       image={card.img}

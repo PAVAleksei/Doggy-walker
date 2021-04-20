@@ -2,7 +2,6 @@
 const router = require('express').Router();
 const multer = require('multer');
 const { User } = require('../db/models/user.model');
-// const { Order } = require('../db/models/order.model');
 const { Dog } = require('../db/models/dog.model');
 const uploadMulter = require('../config/multer');
 
@@ -11,7 +10,6 @@ router.get('/checkAuth', async (req, res) => {
     const userId = req.session.passport.user;
     const user = await User.findById(userId).populate('orders').populate('animal');
     const dog = await Dog.findById(userId).populate('owner');
-    // console.log(user, 'user==========jckjxhfgkbvlcmz;skf;xdlbnvlkxm;skfrvzlkn');
     res.json({
       email: user.email,
       firstname: user.firstname,
@@ -23,7 +21,7 @@ router.get('/checkAuth', async (req, res) => {
       orders: user.orders,
       animal: user.animal,
       photo: user.photo,
-			telegram: user.telegram,
+      telegram: user.telegram,
     });
   }
 });
@@ -44,12 +42,12 @@ router.post('/avatar', uploadMulter.single('file'), async (req, res) => {
     }
     const { filename } = req.file;
     const user = await User.findById(req.user._id);
-    const imgPuth = 'http://localhost:3001/img/';
+    const imgPuth = 'http://127.0.0.1:3001/img/';
     user.photo = imgPuth + filename;
     await user.save();
     return res.json(user.photo);
   } catch (e) {
-    console.log(e);
+    console.log(e, 'from userRouter');
     return res.status(400).json({ message: 'Upload avatar error' });
   }
 });

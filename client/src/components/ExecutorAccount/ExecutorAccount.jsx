@@ -57,7 +57,9 @@ function ExecutorAccount() {
     setTimeout(() => {
       setLoad(true);
     }, 200);
-  })
+
+    // все заказы в системе
+  }, []);
 	return (
 		<>
 			{!load ? (

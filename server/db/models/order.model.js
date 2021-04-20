@@ -1,4 +1,4 @@
-const { model, Schema } = require("mongoose");
+const { model, Schema } = require('mongoose');
 
 const OrderSchema = new Schema(
   {
@@ -9,15 +9,15 @@ const OrderSchema = new Schema(
     },
     clientId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
     executorId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
     dogId: {
       type: Schema.Types.ObjectId,
-      ref: "Dog",
+      ref: 'Dog',
     },
     price: {
       type: Number,
@@ -25,9 +25,6 @@ const OrderSchema = new Schema(
     },
     date: {
       type: Date,
-      // default: () => Date.now(),
-      // min: () => Date.now() + 1 * 2 * 60 * 60 * 1000,
-      // max: () => Date.now() + 100 * 24 * 60 * 60 * 1000,
     },
     address: {
       name: String,
@@ -51,12 +48,12 @@ const OrderSchema = new Schema(
     },
     status: {
       type: String,
-      default: 'Открыто'
-    }
+      default: 'Открыто',
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = {
-  Order: model("orders", OrderSchema),
+  Order: model('orders', OrderSchema),
 };

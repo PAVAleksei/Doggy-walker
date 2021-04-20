@@ -1,3 +1,4 @@
+///
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import ExecutorAccount from "./components/ExecutorAccount/ExecutorAccount";
@@ -30,93 +31,95 @@ import { Footer } from "./components/Footer/Footer";
 import { getDogsAC } from "./redux/actionCreators/dogAC";
 
 function App() {
-  const dispatch = useDispatch();
-  const kindUser = useSelector((state) => state.user.kind);
+	const dispatch = useDispatch();
+	const kindUser = useSelector((state) => state.user.kind);
 
-  useEffect(() => {
-    fetch("http://localhost:3001/user/checkAuth", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((resFromServer) => dispatch(signupAC(resFromServer)))
-  }, []);
+	useEffect(() => {
+		fetch("http://127.0.0.1:3001/user/checkAuth", {
+			credentials: "include",
+		})
+			.then((res) => res.json())
+			.then((resFromServer) => dispatch(signupAC(resFromServer)));
+	}, []);
 
-  useEffect(() => {
-    dispatch(setOrders()); // все заказы в системе
-    // dispatch(setOrdersCustomer()); // заказы заказчика
-  }, []);
 
-  useEffect(() => {
-    fetch("http://localhost:3001/api/v1/dog")
-    // fetch(`${window.location.origin}/api/v1/dog`)
-      .then((response) => response.json())
-      .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
-  }, []);
+	useEffect(() => {
+		dispatch(setOrders()); // все заказы в системе
+		// dispatch(setOrdersCustomer()); // заказы заказчика
+	}, []);
 
-  return (
-    <div className="App" >
-      <Router>
-        <Header />
 
-        <Switch>
-          <Route exact path="/order/:id">
-            <DetailOrder />
-          </Route>
-          <Route exact path="/historyOrders">
-            <HistoryOrders />
-          </Route>
-          <Route exact path="/doneOrders">
-            <DoneOrdersList />
-          </Route>
-          <Route exact path="/">
-            <MainPage />
-          </Route>
-          <Route path="/executor">
-            <ExecutorSelect />
-          </Route>
-          <Route path="/customer">
-            <CustomerSelect />
-          </Route>
+	useEffect(() => {
+		fetch("http://127.0.0.1:3001/api/v1/dog")
+		// fetch(`${window.location.origin}/api/v1/dog`)
+			.then((response) => response.json())
+			.then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
+	}, []);
+
+	return (
+		<div className="App" >
+			<Router>
+				<Header />
+
+				<Switch>
+					<Route exact path="/order/:id">
+						<DetailOrder />
+					</Route>
+					<Route exact path="/historyOrders">
+						<HistoryOrders />
+					</Route>
+					<Route exact path="/doneOrders">
+						<DoneOrdersList />
+					</Route>
+					<Route exact path="/">
+						<MainPage />
+					</Route>
+					<Route path="/executor">
+						<ExecutorSelect />
+					</Route>
+					<Route path="/customer">
+						<CustomerSelect />
+					</Route>
           cutomerLogin
           <Route path="/customerLogin">
-            <CustomerLogin />
-          </Route>
-          <Route path="/executorLogin">
-            <ExecutorLogin />
-          </Route>
-          {/* <Route path="/account">
+						<CustomerLogin />
+					</Route>
+					<Route path="/executorLogin">
+						<ExecutorLogin />
+					</Route>
+					{/* <Route path="/account">
             <Account />
             <CenteredGrid />
           </Route> */}
-          <Route path="/account">
-            {kindUser === "Исполнитель" ? <ExecutorAccount /> : <UserAccount />}
-          </Route>
-          <Route path="/services">
-            <Services />
-          </Route>
-          <Route path="/order">
-            <OrderForm />
-          </Route>
-          <Route path="/verification">
-            <Verification />
-          </Route>
-          <Route path="/addDog">
-            <AddDog />
-          </Route>
-          <Route path="/edit/:id">
-            <EditDog />
-          </Route>
-          <Route path="/dog/:id">
-            <Dog />
-          </Route>
-          <Route path="/user/:id">
-            <EditUser />
-          </Route>
-        </Switch>
-        <Footer />
-      </Router>
-    </div>
-  );
+					<Route path="/account">
+						{kindUser === "Исполнитель" ? <ExecutorAccount /> : <UserAccount />}
+					</Route>
+					<Route path="/services">
+						<Services />
+					</Route>
+					<Route path="/order">
+						<OrderForm />
+					</Route>
+					<Route path="/verification">
+						<Verification />
+					</Route>
+					<Route path="/addDog">
+						<AddDog />
+					</Route>
+					<Route path="/edit/:id">
+						<EditDog />
+					</Route>
+					<Route path="/dog/:id">
+						<Dog />
+					</Route>
+					<Route path="/user/:id">
+						<EditUser />
+					</Route>
+				</Switch>
+				<Footer />
+			</Router>
+		</div>
+	);
 }
 
 export default App;

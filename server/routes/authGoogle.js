@@ -23,8 +23,8 @@ router.post('/register', (req, res, next) => {
         kind: user.kind,
         orders: user.orders,
         verification: user.verification,
-				district: user.district,
-				
+        district: user.district,
+        animal: user.animal,
       });
     });
   })(req, res, next);
@@ -55,7 +55,7 @@ router.post('/login', (req, res, next) => {
         animal: user.animal,
         photo: user.photo,
       });
-      res.redirect('http://localhost:3000');
+      res.redirect('http://127.0.0.1:3000');
     });
   })(req, res, next);
 });
@@ -63,7 +63,7 @@ router.post('/login', (req, res, next) => {
 router.get('/logout', async (req, res) => {
   await req.logout();
   res.clearCookie(req.app.get('cookieName'));
-  res.redirect('http://localhost:3000');
+  res.redirect('http://127.0.0.1:3000');
 });
 
 router.get(
@@ -74,7 +74,7 @@ router.get(
 );
 
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  res.redirect('http://localhost:3000');
+  res.redirect('http://127.0.0.1:3000');
 });
 
 module.exports = router;

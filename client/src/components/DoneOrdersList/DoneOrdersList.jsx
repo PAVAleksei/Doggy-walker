@@ -16,41 +16,41 @@ import Louder from "../Louder/Louder";
 import { getDogsAC } from "../../redux/actionCreators/dogAC";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    paddingTop: 10,
-  },
-  item: {
-    display: "flex",
-    justifyContent: "space-between;",
-    alignItems: "stretch",
-  },
+	root: {
+		flexGrow: 1,
+	},
+	paper: {
+		padding: theme.spacing(1),
+		textAlign: "center",
+		color: theme.palette.text.secondary,
+		paddingTop: 10,
+	},
+	item: {
+		display: "flex",
+		justifyContent: "space-between;",
+		alignItems: "stretch",
+	},
 }));
 
 function DoneOrders() {
-  const history = useHistory();
-  const classes = useStyles();
-  const dispatch = useDispatch();
+	const history = useHistory();
+	const classes = useStyles();
+	const dispatch = useDispatch();
 
   const orders = useSelector((state) => state.user.orders).filter(
     (el) => el.closed
   );
   ///возможно прблема из-за него
-  useEffect(() => {
-    fetch("http://localhost:3001/user/checkAuth", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((resFromServer) => dispatch(signupAC(resFromServer)));
-  }, []);
+//   useEffect(() => {
+//     fetch("http://127.0.0.1:3001/user/checkAuth", {
+//       credentials: "include",
+//     })
+//       .then((res) => res.json())
+//       .then((resFromServer) => dispatch(signupAC(resFromServer)));
+//   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/v1/dog")
+    fetch("http://127.0.0.1:3001/api/v1/dog")
       .then((response) => response.json())
       .then((responseFromServer) => dispatch(getDogsAC(responseFromServer)));
   }, []);
@@ -134,10 +134,12 @@ function DoneOrders() {
                       color="primary"
                     >
                       Личный кабинет
+
                     </Button>
-                  </Grid>
-                </Box>
-              </Grid>
+											</Grid>
+										</Box>
+									</Grid>
+
 
               <Grid item xs={8} direction="column">
                 <Grid item>
@@ -165,6 +167,7 @@ function DoneOrders() {
       )}
     </>
   );
+
 }
 
 export default DoneOrders;
