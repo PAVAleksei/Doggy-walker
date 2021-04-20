@@ -1,9 +1,9 @@
-const { Markup } = require('telegraf')
+const { Markup } = require('telegraf');
 
 function getMainMenu() {
-	return Markup.keyboard([
-		['Авторизоваться'],
-	]).resize().extra()
+  return Markup.keyboard([
+    ['Авторизоваться'],
+  ]).resize().extra();
 }
 
-module.exports = {getMainMenu}
+module.exports = { getMainMenu };

@@ -1,4 +1,4 @@
-function authenticated(req,res,next) {
+function authenticated(req, res, next) {
   if (req.user._id) {
     return next();
   }
